@@ -15,6 +15,18 @@
       <div class="notification-header">
         <span class="title">通知中心</span>
         <el-space>
+          <el-tooltip
+            :content="browserNotificationTooltip"
+            placement="bottom"
+          >
+            <el-button
+              :icon="isBrowserNotificationEnabled ? BellFilled : Bell"
+              :type="isBrowserNotificationEnabled ? 'primary' : 'default'"
+              size="small"
+              circle
+              @click="handleToggleBrowserNotification"
+            />
+          </el-tooltip>
           <el-button
             v-if="unreadCount > 0"
             link
@@ -100,6 +112,7 @@ import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   Bell,
+  BellFilled,
   Clock,
   Warning,
   EditPen,
@@ -114,6 +127,21 @@ const notificationStore = useNotificationStore()
 
 const notifications = computed(() => notificationStore.notifications)
 const unreadCount = computed(() => notificationStore.unreadCount)
+
+// 浏览器通知状态
+const isBrowserNotificationSupported = computed(() => notificationStore.isBrowserNotificationSupported)
+const isBrowserNotificationEnabled = computed(() => notificationStore.isBrowserNotificationEnabled)
+
+// 浏览器通知提示文本
+const browserNotificationTooltip = computed(() => {
+  if (!isBrowserNotificationSupported.value) {
+    return '您的浏览器不支持推送通知'
+  }
+  if (isBrowserNotificationEnabled.value) {
+    return '浏览器推送通知已启用'
+  }
+  return '点击启用浏览器推送通知'
+})
 
 // 获取通知图标
 const getIcon = (type) => {
@@ -200,6 +228,38 @@ const handleClearAll = async () => {
 // 删除单个通知
 const handleRemove = (notificationId) => {
   notificationStore.removeNotification(notificationId)
+}
+
+// 切换浏览器推送通知
+const handleToggleBrowserNotification = async () => {
+  if (!isBrowserNotificationSupported.value) {
+    ElMessage.warning('您的浏览器不支持推送通知功能')
+    return
+  }
+
+  if (isBrowserNotificationEnabled.value) {
+    ElMessage.info('浏览器推送通知已启用，如需关闭请在浏览器设置中操作')
+    return
+  }
+
+  try {
+    const granted = await notificationStore.requestBrowserNotificationPermission()
+    if (granted) {
+      ElMessage.success('浏览器推送通知已启用')
+
+      // 发送测试通知
+      notificationStore.sendBrowserNotification({
+        title: '通知已启用',
+        body: '您将收到重要任务的浏览器推送通知',
+        requireInteraction: false
+      })
+    } else {
+      ElMessage.warning('浏览器推送通知权限被拒绝')
+    }
+  } catch (error) {
+    console.error('启用浏览器通知失败:', error)
+    ElMessage.error('启用浏览器通知失败，请稍后重试')
+  }
 }
 </script>
 

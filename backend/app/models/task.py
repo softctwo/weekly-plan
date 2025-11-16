@@ -1,7 +1,7 @@
 """
 任务和复盘模型
 """
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime, Text, Enum as SQLEnum
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime, Text, Enum as SQLEnum, Index
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from enum import Enum
@@ -33,6 +33,12 @@ class FollowUpAction(str, Enum):
 class WeeklyTask(Base):
     """周计划任务表 - REQ-3.1, REQ-3.3"""
     __tablename__ = "weekly_tasks"
+    __table_args__ = (
+        # 复合索引优化常见查询
+        Index('idx_user_week', 'user_id', 'year', 'week_number'),  # 按用户和周次查询
+        Index('idx_status_key', 'status', 'is_key_task'),  # 按状态和重点任务过滤
+        Index('idx_user_status', 'user_id', 'status'),  # 按用户和状态查询
+    )
 
     id = Column(Integer, primary_key=True, index=True)
 
