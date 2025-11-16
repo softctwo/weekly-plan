@@ -4,7 +4,10 @@
       <template #header>
         <div class="card-header">
           <span>团队视图</span>
-          <div>
+          <div style="display: flex; gap: 10px">
+            <el-button type="warning" :icon="MagicStick" @click="showAIAnalysisDialog = true">
+              AI分析
+            </el-button>
             <el-select v-model="selectedWeek" placeholder="选择周次" @change="loadTeamData">
               <el-option
                 v-for="week in recentWeeks"
@@ -313,6 +316,12 @@
         <el-button @click="showDetailDialog = false">关闭</el-button>
       </template>
     </el-dialog>
+
+    <!-- AI分析对话框 -->
+    <AIAnalysisDialog
+      v-model="showAIAnalysisDialog"
+      :team-members="teamMembers"
+    />
   </div>
 </template>
 
@@ -324,10 +333,12 @@ import {
   List,
   CircleCheck,
   TrendCharts,
-  StarFilled
+  StarFilled,
+  MagicStick
 } from '@element-plus/icons-vue'
 import { getTeamDashboard, getMemberDetail, addComment, markAsReviewed as markReviewedAPI } from '@/api/dashboard'
 import { useNotificationStore } from '@/store/notification'
+import AIAnalysisDialog from '@/components/AIAnalysisDialog.vue'
 import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 
@@ -342,6 +353,7 @@ const teamData = ref(null)
 const teamMembers = ref([])
 const selectedWeek = ref(null)
 const showDetailDialog = ref(false)
+const showAIAnalysisDialog = ref(false)
 const currentMember = ref(null)
 const memberDetail = ref(null)
 const memberComments = ref([])
