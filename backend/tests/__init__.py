@@ -1,1 +1,3 @@
-"""测试包"""
+"""
+Tests package for weekly-plan backend
+"""

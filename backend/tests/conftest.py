@@ -1,6 +1,5 @@
 """
-测试配置文件
-提供pytest fixtures供所有测试使用
+Pytest configuration and fixtures for weekly-plan tests
 """
 import pytest
 from fastapi.testclient import TestClient
@@ -9,17 +8,19 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from app.main import app
-from app.db.base import Base, get_db
+from app.db.base import Base
+from app.api.deps import get_db
 from app.core.security import get_password_hash
 from app.models.user import User, Department
 from app.models.role import Role, Responsibility, TaskType
+from app.utils.init_data import roles_data
 
 
-# 测试数据库配置 - 使用内存SQLite
-SQLALCHEMY_TEST_DATABASE_URL = "sqlite:///:memory:"
+# Test database setup
+SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
 
 engine = create_engine(
-    SQLALCHEMY_TEST_DATABASE_URL,
+    SQLALCHEMY_DATABASE_URL,
     connect_args={"check_same_thread": False},
     poolclass=StaticPool,
 )
@@ -28,31 +29,19 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 
 @pytest.fixture(scope="function")
 def db_session():
-    """
-    创建测试数据库会话
-
-    每个测试函数都会创建一个新的数据库会话
-    测试完成后自动清理
-    """
-    # 创建所有表
+    """Create a fresh database session for each test"""
     Base.metadata.create_all(bind=engine)
-
     session = TestingSessionLocal()
     try:
         yield session
     finally:
         session.close()
-        # 清理所有表
         Base.metadata.drop_all(bind=engine)
 
 
 @pytest.fixture(scope="function")
 def client(db_session):
-    """
-    创建测试客户端
-
-    覆盖app的数据库依赖，使用测试数据库
-    """
+    """Create a test client with overridden database dependency"""
     def override_get_db():
         try:
             yield db_session
@@ -65,45 +54,24 @@ def client(db_session):
     app.dependency_overrides.clear()
 
 
-@pytest.fixture
+@pytest.fixture(scope="function")
 def test_department(db_session):
-    """创建测试部门"""
-    department = Department(
-        name="测试部门",
-        description="测试用部门"
-    )
-    db_session.add(department)
+    """Create a test department"""
+    dept = Department(name="测试部门", description="用于测试的部门")
+    db_session.add(dept)
     db_session.commit()
-    db_session.refresh(department)
-    return department
+    db_session.refresh(dept)
+    return dept
 
 
-@pytest.fixture
-def test_user(db_session, test_department):
-    """创建测试用户（普通员工）"""
-    user = User(
-        username="testuser",
-        email="test@example.com",
-        hashed_password=get_password_hash("testpass123"),
-        full_name="测试用户",
-        user_type="employee",
-        department_id=test_department.id,
-        is_active=True
-    )
-    db_session.add(user)
-    db_session.commit()
-    db_session.refresh(user)
-    return user
-
-
-@pytest.fixture
-def test_admin(db_session, test_department):
-    """创建测试管理员"""
+@pytest.fixture(scope="function")
+def test_admin_user(db_session, test_department):
+    """Create a test admin user"""
     admin = User(
-        username="admin",
-        email="admin@example.com",
+        username="test_admin",
+        email="admin@test.com",
+        full_name="测试管理员",
         hashed_password=get_password_hash("admin123"),
-        full_name="管理员",
         user_type="admin",
         department_id=test_department.id,
         is_active=True
@@ -114,14 +82,14 @@ def test_admin(db_session, test_department):
     return admin
 
 
-@pytest.fixture
-def test_manager(db_session, test_department):
-    """创建测试管理者"""
+@pytest.fixture(scope="function")
+def test_manager_user(db_session, test_department):
+    """Create a test manager user"""
     manager = User(
-        username="manager",
-        email="manager@example.com",
+        username="test_manager",
+        email="manager@test.com",
+        full_name="测试经理",
         hashed_password=get_password_hash("manager123"),
-        full_name="经理",
         user_type="manager",
         department_id=test_department.id,
         is_active=True
@@ -132,82 +100,144 @@ def test_manager(db_session, test_department):
     return manager
 
 
-@pytest.fixture
-def test_role(db_session):
-    """创建测试岗位"""
-    role = Role(
-        name="研发工程师",
-        name_en="R&D Engineer",
-        description="研发岗位",
+@pytest.fixture(scope="function")
+def test_employee_user(db_session, test_department, test_manager_user):
+    """Create a test employee user"""
+    employee = User(
+        username="test_employee",
+        email="employee@test.com",
+        full_name="测试员工",
+        hashed_password=get_password_hash("employee123"),
+        user_type="employee",
+        department_id=test_department.id,
+        manager_id=test_manager_user.id,
         is_active=True
     )
+    db_session.add(employee)
+    db_session.commit()
+    db_session.refresh(employee)
+    return employee
+
+
+@pytest.fixture(scope="function")
+def test_role(db_session):
+    """Create a test role with responsibilities and task types"""
+    role = Role(
+        name="测试岗位",
+        name_en="Test Role",
+        description="用于测试的岗位"
+    )
     db_session.add(role)
+    db_session.flush()
+
+    # Add a responsibility
+    resp = Responsibility(
+        role_id=role.id,
+        name="测试职责",
+        sort_order=1
+    )
+    db_session.add(resp)
+    db_session.flush()
+
+    # Add task types
+    for i in range(3):
+        task_type = TaskType(
+            responsibility_id=resp.id,
+            name=f"测试任务类型{i+1}",
+            sort_order=i+1
+        )
+        db_session.add(task_type)
+
     db_session.commit()
     db_session.refresh(role)
     return role
 
 
-@pytest.fixture
-def test_responsibility(db_session, test_role):
-    """创建测试职责"""
-    responsibility = Responsibility(
-        name="需求分析与技术设计",
-        description="分析需求并设计技术方案",
-        role_id=test_role.id,
-        sort_order=1,
-        is_active=True
-    )
-    db_session.add(responsibility)
+@pytest.fixture(scope="function")
+def init_roles(db_session):
+    """Initialize all 13 roles from init_data"""
+    for idx, role_data in enumerate(roles_data, 1):
+        role = Role(
+            name=role_data["name"],
+            name_en=role_data["name_en"],
+            description=role_data["description"]
+        )
+        db_session.add(role)
+        db_session.flush()
+
+        for resp_idx, resp_data in enumerate(role_data["responsibilities"], 1):
+            responsibility = Responsibility(
+                role_id=role.id,
+                name=resp_data["name"],
+                sort_order=resp_idx
+            )
+            db_session.add(responsibility)
+            db_session.flush()
+
+            for task_idx, task_name in enumerate(resp_data["task_types"], 1):
+                task_type = TaskType(
+                    responsibility_id=responsibility.id,
+                    name=task_name,
+                    sort_order=task_idx
+                )
+                db_session.add(task_type)
+
     db_session.commit()
-    db_session.refresh(responsibility)
-    return responsibility
+    return db_session.query(Role).all()
 
 
-@pytest.fixture
-def test_task_type(db_session, test_responsibility):
-    """创建测试任务类型"""
-    task_type = TaskType(
-        name="需求文档编写",
-        description="编写需求规格说明书",
-        responsibility_id=test_responsibility.id,
-        sort_order=1,
-        is_active=True
-    )
-    db_session.add(task_type)
-    db_session.commit()
-    db_session.refresh(task_type)
-    return task_type
-
-
-@pytest.fixture
-def auth_headers(client, test_user):
-    """
-    获取认证头
-
-    返回包含有效JWT token的headers
-    """
+@pytest.fixture(scope="function")
+def admin_token(client, test_admin_user):
+    """Get authentication token for admin user"""
     response = client.post(
         "/api/auth/login",
         data={
-            "username": test_user.username,
-            "password": "testpass123"
-        }
-    )
-    assert response.status_code == 200
-    token = response.json()["access_token"]
-    return {"Authorization": f"Bearer {token}"}
-
-
-@pytest.fixture
-def admin_headers(client, test_admin):
-    """获取管理员认证头"""
-    response = client.post(
-        "/api/auth/login",
-        data={
-            "username": test_admin.username,
+            "username": "test_admin",
             "password": "admin123"
         }
     )
-    assert response.status_code == 200
-    token = response.json()["access_token"]
-    return {"Authorization": f"Bearer {token}"}
+    return response.json()["access_token"]
+
+
+@pytest.fixture(scope="function")
+def manager_token(client, test_manager_user):
+    """Get authentication token for manager user"""
+    response = client.post(
+        "/api/auth/login",
+        data={
+            "username": "test_manager",
+            "password": "manager123"
+        }
+    )
+    return response.json()["access_token"]
+
+
+@pytest.fixture(scope="function")
+def employee_token(client, test_employee_user):
+    """Get authentication token for employee user"""
+    response = client.post(
+        "/api/auth/login",
+        data={
+            "username": "test_employee",
+            "password": "employee123"
+        }
+    )
+    return response.json()["access_token"]
+
+
+@pytest.fixture(scope="function")
+def auth_headers(admin_token):
+    """Get authorization headers for admin"""
+    return {"Authorization": f"Bearer {admin_token}"}
+
+
+@pytest.fixture(scope="function")
+def manager_headers(manager_token):
+    """Get authorization headers for manager"""
+    return {"Authorization": f"Bearer {manager_token}"}
+
+
+@pytest.fixture(scope="function")
+def employee_headers(employee_token):
+    """Get authorization headers for employee"""
+    return {"Authorization": f"Bearer {employee_token}"}

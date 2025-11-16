@@ -25,9 +25,6 @@ pytz==2023.3
 # HTTP客户端（用于AI API调用）
 httpx==0.26.0
 
-# 限流
-slowapi==0.1.9
-
 # 测试
 pytest==7.4.3
 pytest-cov==4.1.0
