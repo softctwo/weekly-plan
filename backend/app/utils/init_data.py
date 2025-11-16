@@ -5,6 +5,7 @@
 from sqlalchemy.orm import Session
 from ..models.role import Role, Responsibility, TaskType
 from ..models.user import User, Department
+from ..models.llm_config import LLMConfig
 from ..core.security import get_password_hash
 
 
@@ -564,6 +565,33 @@ def init_sample_data(db: Session):
         print(f"✓ 创建示例员工: {employee.username} (密码: 123456)")
 
 
+def init_llm_config(db: Session):
+    """初始化默认的大模型配置"""
+    # 检查是否已存在配置
+    existing = db.query(LLMConfig).filter(LLMConfig.is_deleted == False).first()
+    if existing:
+        print("✓ 大模型配置已存在，跳过初始化")
+        return
+
+    # 创建默认的Deepseek配置
+    deepseek_config = LLMConfig(
+        name="Deepseek默认配置",
+        provider="deepseek",
+        api_key="sk-5b9262ddae444a629054f94d4f222476",
+        api_base="https://api.deepseek.com/v1/chat/completions",
+        model_name="deepseek-chat",
+        is_active=True,
+        max_tokens=4000,
+        temperature="0.7",
+        description="默认的Deepseek AI配置，用于工作计划分析和评审"
+    )
+
+    db.add(deepseek_config)
+    db.commit()
+    db.refresh(deepseek_config)
+    print(f"✓ 创建默认大模型配置: {deepseek_config.name} (已激活)")
+
+
 def initialize_database(db: Session):
     """完整的数据库初始化流程"""
     print("=" * 60)
@@ -578,6 +606,9 @@ def initialize_database(db: Session):
 
     # 初始化示例数据
     init_sample_data(db)
+
+    # 初始化大模型配置
+    init_llm_config(db)
 
     print("\n" + "=" * 60)
     print("数据库初始化完成！")

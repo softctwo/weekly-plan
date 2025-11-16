@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .core.config import settings
 from .db.base import Base, engine
-from .api.endpoints import auth, users, roles, tasks, dashboard
+from .api.endpoints import auth, users, roles, tasks, dashboard, ai_analysis
 
 # 创建数据库表
 Base.metadata.create_all(bind=engine)
@@ -32,6 +32,7 @@ app.include_router(users.router, prefix="/api/users", tags=["用户管理"])
 app.include_router(roles.router, prefix="/api/roles", tags=["岗位职责库"])
 app.include_router(tasks.router, prefix="/api/tasks", tags=["任务管理"])
 app.include_router(dashboard.router, prefix="/api/dashboard", tags=["仪表盘"])
+app.include_router(ai_analysis.router, prefix="/api/ai", tags=["AI分析"])
 
 
 @app.get("/")

@@ -49,6 +49,7 @@
           </template>
           <el-menu-item index="/admin/users">用户管理</el-menu-item>
           <el-menu-item index="/admin/roles">岗位职责库</el-menu-item>
+          <el-menu-item index="/admin/llm-config">大模型配置</el-menu-item>
         </el-sub-menu>
       </el-menu>
     </el-aside>

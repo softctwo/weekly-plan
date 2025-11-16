@@ -55,6 +55,12 @@ const routes = [
         name: 'AdminRoles',
         component: () => import('@/views/admin/Roles.vue'),
         meta: { title: '岗位职责库', requiresAdmin: true }
+      },
+      {
+        path: 'admin/llm-config',
+        name: 'AdminLLMConfig',
+        component: () => import('@/views/admin/LLMConfig.vue'),
+        meta: { title: '大模型配置', requiresAdmin: true }
       }
     ]
   }
