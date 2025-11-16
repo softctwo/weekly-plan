@@ -1,0 +1,19 @@
+{
+  "timestamp": "2025-11-16T14:12:31.160291",
+  "tests_passed": 136,
+  "tests_failed": 5,
+  "warnings": [],
+  "errors": [
+    "岗位 研发工程师 任务类型数量: 期望 13，实际 12",
+    "岗位 售前工程师 任务类型数量: 期望 12，实际 11",
+    "岗位 业务工程师 任务类型数量: 期望 14，实际 13",
+    "岗位 信息中心 任务类型数量: 期望 8，实际 7",
+    "总任务类型数量: 期望 136，实际 132"
+  ],
+  "statistics": {
+    "total_positions": 13,
+    "total_responsibilities": 45,
+    "total_task_types": 132
+  },
+  "details": {}
+}
