@@ -409,7 +409,7 @@ ReportComment (周报评论)
 | [PRD.md](PRD.md) | 产品需求规格说明书 V1.1 |
 | [QUICKSTART.md](QUICKSTART.md) | 5分钟快速启动指南 |
 | [CLAUDE.md](CLAUDE.md) | AI助手开发指南 |
-| [PROJECT_README.md](PROJECT_README.md) | 技术架构详解 |
+| [docs/PROJECT_README.md](docs/PROJECT_README.md) | 技术架构详解 |
 | [ROLES_INIT_DATA.md](ROLES_INIT_DATA.md) | 13个岗位初始化数据清单 |
 | [frontend/CACHING.md](frontend/CACHING.md) | 前端缓存策略文档 |
 
