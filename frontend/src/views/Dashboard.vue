@@ -126,9 +126,11 @@ import {
   Star
 } from '@element-plus/icons-vue'
 import { getEmployeeDashboard } from '@/api/dashboard'
+import { useCacheStore } from '@/store/cache'
 import dayjs from 'dayjs'
 
 const router = useRouter()
+const cacheStore = useCacheStore()
 
 const statistics = ref({
   total_tasks: 0,
@@ -150,7 +152,12 @@ const getCurrentWeek = () => {
 const loadDashboard = async () => {
   try {
     const params = getCurrentWeek()
-    const data = await getEmployeeDashboard(params)
+
+    // 使用缓存策略获取仪表盘数据
+    const data = await cacheStore.getDashboardCache(async () => {
+      return await getEmployeeDashboard(params)
+    })
+
     statistics.value = data.statistics
     keyTasks.value = data.key_tasks || []
   } catch (error) {
