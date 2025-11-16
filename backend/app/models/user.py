@@ -58,4 +58,4 @@ class User(Base):
     # 一对多关系
     weekly_tasks = relationship("WeeklyTask", back_populates="user", foreign_keys="WeeklyTask.user_id")
     assigned_tasks = relationship("WeeklyTask", back_populates="assigner", foreign_keys="WeeklyTask.assigned_by_manager_id")
-    comments = relationship("ReportComment", back_populates="manager")
+    comments = relationship("ReportComment", back_populates="manager", foreign_keys="ReportComment.manager_id")
