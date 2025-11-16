@@ -5,9 +5,23 @@
         <div class="card-header">
           <span>数据统计报表</span>
           <el-space>
-            <el-button type="success" :icon="Download" @click="exportReport">
-              导出报表
-            </el-button>
+            <el-dropdown @command="handleExportCommand">
+              <el-button type="success" :icon="Download">
+                导出报表<el-icon class="el-icon--right"><arrow-down /></el-icon>
+              </el-button>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item command="excel">
+                    <el-icon><Document /></el-icon>
+                    导出为 Excel
+                  </el-dropdown-item>
+                  <el-dropdown-item command="pdf">
+                    <el-icon><Document /></el-icon>
+                    导出为 PDF
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
             <el-button type="primary" :icon="Refresh" @click="loadReportData">
               刷新数据
             </el-button>
@@ -97,29 +111,15 @@
         </el-col>
       </el-row>
 
-      <!-- 状态分布和趋势图表 -->
+      <!-- 状态分布和趋势图表 (ECharts) -->
       <el-row :gutter="20" style="margin-bottom: 30px">
         <el-col :span="12">
           <el-card shadow="hover">
             <template #header>
               <span>任务状态分布</span>
             </template>
-            <div class="chart-container">
-              <div
-                v-for="status in statusDistribution"
-                :key="status.name"
-                class="status-bar"
-              >
-                <div class="status-label">
-                  {{ status.label }}
-                  <span class="status-count">({{ status.count }})</span>
-                </div>
-                <el-progress
-                  :percentage="status.percentage"
-                  :color="status.color"
-                  :stroke-width="20"
-                />
-              </div>
+            <div class="echarts-container">
+              <v-chart :option="statusChartOption" autoresize />
             </div>
           </el-card>
         </el-col>
@@ -128,24 +128,8 @@
             <template #header>
               <span>周任务完成趋势</span>
             </template>
-            <div class="chart-container">
-              <div v-for="week in weeklyTrend" :key="week.week" class="trend-item">
-                <div class="trend-label">
-                  第{{ week.week }}周
-                  <span class="trend-date">{{ week.date }}</span>
-                </div>
-                <div class="trend-bar-wrapper">
-                  <div
-                    class="trend-bar"
-                    :style="{
-                      width: week.rate + '%',
-                      backgroundColor: getTrendColor(week.rate)
-                    }"
-                  >
-                    <span class="trend-text">{{ week.rate }}%</span>
-                  </div>
-                </div>
-              </div>
+            <div class="echarts-container">
+              <v-chart :option="trendChartOption" autoresize />
             </div>
           </el-card>
         </el-col>
@@ -242,12 +226,38 @@ import {
   StarFilled,
   Warning,
   Download,
-  Refresh
+  Refresh,
+  ArrowDown,
+  Document
 } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/user'
 import request from '@/api/request'
 import * as XLSX from 'xlsx'
 import dayjs from 'dayjs'
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
+import VChart from 'vue-echarts'
+import { use } from 'echarts/core'
+import { CanvasRenderer } from 'echarts/renderers'
+import { PieChart, BarChart, LineChart } from 'echarts/charts'
+import {
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent
+} from 'echarts/components'
+
+// 注册 ECharts 组件
+use([
+  CanvasRenderer,
+  PieChart,
+  BarChart,
+  LineChart,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent
+])
 
 const userStore = useUserStore()
 
@@ -269,6 +279,94 @@ const statusDistribution = ref([])
 const weeklyTrend = ref([])
 const memberPerformance = ref([])
 const taskTypeStats = ref([])
+
+// ECharts 图表配置
+const statusChartOption = computed(() => ({
+  tooltip: {
+    trigger: 'item',
+    formatter: '{b}: {c} ({d}%)'
+  },
+  legend: {
+    orient: 'vertical',
+    left: 'left'
+  },
+  series: [
+    {
+      name: '任务状态',
+      type: 'pie',
+      radius: ['40%', '70%'],
+      avoidLabelOverlap: false,
+      itemStyle: {
+        borderRadius: 10,
+        borderColor: '#fff',
+        borderWidth: 2
+      },
+      label: {
+        show: true,
+        formatter: '{b}\n{c} ({d}%)'
+      },
+      emphasis: {
+        label: {
+          show: true,
+          fontSize: 16,
+          fontWeight: 'bold'
+        }
+      },
+      data: statusDistribution.value.map(item => ({
+        value: item.count,
+        name: item.label,
+        itemStyle: { color: item.color }
+      }))
+    }
+  ]
+}))
+
+const trendChartOption = computed(() => ({
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow'
+    }
+  },
+  grid: {
+    left: '3%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+  xAxis: {
+    type: 'category',
+    data: weeklyTrend.value.map(w => `第${w.week}周`),
+    axisLabel: {
+      rotate: 30
+    }
+  },
+  yAxis: {
+    type: 'value',
+    max: 100,
+    axisLabel: {
+      formatter: '{value}%'
+    }
+  },
+  series: [
+    {
+      name: '完成率',
+      type: 'bar',
+      data: weeklyTrend.value.map(w => ({
+        value: w.rate,
+        itemStyle: {
+          color: getTrendColor(w.rate)
+        }
+      })),
+      label: {
+        show: true,
+        position: 'top',
+        formatter: '{c}%'
+      },
+      barWidth: '60%'
+    }
+  ]
+}))
 
 // 设置默认日期范围（最近一月）
 onMounted(() => {
@@ -397,8 +495,17 @@ const getTrendColor = (rate) => {
   return '#f56c6c'
 }
 
-// 导出报表
-const exportReport = () => {
+// 处理导出命令
+const handleExportCommand = (command) => {
+  if (command === 'excel') {
+    exportExcelReport()
+  } else if (command === 'pdf') {
+    exportPDFReport()
+  }
+}
+
+// 导出 Excel 报表
+const exportExcelReport = () => {
   if (!dateRange.value || dateRange.value.length !== 2) {
     ElMessage.warning('请先选择日期范围并加载数据')
     return
@@ -464,10 +571,144 @@ const exportReport = () => {
     const filename = `工作报表_${dateRange.value[0]}_${dateRange.value[1]}.xlsx`
     XLSX.writeFile(wb, filename)
 
-    ElMessage.success('报表导出成功')
+    ElMessage.success('Excel 报表导出成功')
   } catch (error) {
     console.error('导出失败:', error)
     ElMessage.error('导出报表失败')
+  }
+}
+
+// 导出 PDF 报表
+const exportPDFReport = () => {
+  if (!dateRange.value || dateRange.value.length !== 2) {
+    ElMessage.warning('请先选择日期范围并加载数据')
+    return
+  }
+
+  try {
+    // 创建 PDF 文档
+    const doc = new jsPDF()
+
+    // 添加中文字体支持 (使用内置字体)
+    doc.setFont('helvetica')
+
+    let yPos = 20
+
+    // 标题
+    doc.setFontSize(20)
+    doc.text('Work Report', 105, yPos, { align: 'center' })
+    yPos += 15
+
+    // 统计周期
+    doc.setFontSize(12)
+    doc.text(`Period: ${dateRange.value[0]} to ${dateRange.value[1]}`, 20, yPos)
+    yPos += 15
+
+    // 核心指标表格
+    doc.autoTable({
+      startY: yPos,
+      head: [['Metric', 'Value']],
+      body: [
+        ['Total Tasks', reportData.value.total_tasks],
+        ['Completed Tasks', reportData.value.completed_tasks],
+        ['Key Tasks', reportData.value.key_tasks],
+        ['Delayed Tasks', reportData.value.delayed_tasks],
+        ['Completion Rate', `${reportData.value.completion_rate}%`],
+        ['Key Task Completion Rate', `${reportData.value.key_completion_rate}%`],
+        ['Delay Rate', `${reportData.value.delay_rate}%`]
+      ],
+      theme: 'grid',
+      headStyles: { fillColor: [67, 97, 238] }
+    })
+
+    yPos = doc.lastAutoTable.finalY + 15
+
+    // 任务状态分布
+    if (statusDistribution.value.length > 0) {
+      doc.setFontSize(14)
+      doc.text('Task Status Distribution', 20, yPos)
+      yPos += 10
+
+      doc.autoTable({
+        startY: yPos,
+        head: [['Status', 'Count', 'Percentage']],
+        body: statusDistribution.value.map(item => [
+          item.label,
+          item.count,
+          `${item.percentage}%`
+        ]),
+        theme: 'striped',
+        headStyles: { fillColor: [67, 97, 238] }
+      })
+
+      yPos = doc.lastAutoTable.finalY + 15
+    }
+
+    // 任务类型统计
+    if (taskTypeStats.value.length > 0) {
+      // 检查是否需要新页面
+      if (yPos > 250) {
+        doc.addPage()
+        yPos = 20
+      }
+
+      doc.setFontSize(14)
+      doc.text('Task Type Statistics', 20, yPos)
+      yPos += 10
+
+      doc.autoTable({
+        startY: yPos,
+        head: [['Task Type', 'Count', 'Completed', 'In Progress', 'Todo', 'Completion Rate']],
+        body: taskTypeStats.value.map(item => [
+          item.task_type,
+          item.count,
+          item.completed,
+          item.in_progress,
+          item.todo,
+          `${item.completion_rate}%`
+        ]),
+        theme: 'striped',
+        headStyles: { fillColor: [67, 97, 238] },
+        styles: { fontSize: 8 }
+      })
+
+      yPos = doc.lastAutoTable.finalY + 15
+    }
+
+    // 团队绩效（仅管理者）
+    if (userStore.isManager && memberPerformance.value.length > 0) {
+      // 添加新页面
+      doc.addPage()
+      yPos = 20
+
+      doc.setFontSize(14)
+      doc.text('Team Performance', 20, yPos)
+      yPos += 10
+
+      doc.autoTable({
+        startY: yPos,
+        head: [['Member', 'Total', 'Completed', 'Key Tasks', 'Completion Rate', 'Avg Days']],
+        body: memberPerformance.value.map(item => [
+          item.member_name,
+          item.total_tasks,
+          item.completed_tasks,
+          item.key_tasks,
+          `${item.completion_rate}%`,
+          item.avg_completion_days
+        ]),
+        theme: 'striped',
+        headStyles: { fillColor: [67, 97, 238] }
+      })
+    }
+
+    // 保存 PDF
+    const filename = `Work_Report_${dateRange.value[0]}_${dateRange.value[1]}.pdf`
+    doc.save(filename)
+
+    ElMessage.success('PDF report exported successfully')
+  } catch (error) {
+    console.error('PDF export failed:', error)
+    ElMessage.error('Failed to export PDF report')
   }
 }
 </script>
@@ -544,6 +785,11 @@ const exportReport = () => {
 
 .chart-container {
   padding: 10px 0;
+}
+
+.echarts-container {
+  height: 300px;
+  width: 100%;
 }
 
 .status-bar {
