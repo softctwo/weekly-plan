@@ -30,6 +30,11 @@
           <span>周复盘</span>
         </el-menu-item>
 
+        <el-menu-item index="/reports">
+          <el-icon><TrendCharts /></el-icon>
+          <span>数据报表</span>
+        </el-menu-item>
+
         <!-- 管理者菜单 -->
         <el-menu-item v-if="userStore.isManager" index="/team">
           <el-icon><User /></el-icon>
@@ -99,6 +104,7 @@ import {
   DataBoard,
   List,
   DocumentChecked,
+  TrendCharts,
   User,
   Setting,
   ArrowDown

@@ -33,6 +33,12 @@ const routes = [
         meta: { title: '周复盘' }
       },
       {
+        path: 'reports',
+        name: 'Reports',
+        component: () => import('@/views/Reports.vue'),
+        meta: { title: '数据报表' }
+      },
+      {
         path: 'team',
         name: 'Team',
         component: () => import('@/views/Team.vue'),
