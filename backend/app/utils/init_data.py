@@ -26,6 +26,7 @@ def init_roles_and_responsibilities(db: Session):
                         "技术方案设计",
                         "功能编码实现",
                         "单元测试编写",
+                        "集成测试编写",
                         "代码审查 (Code Review)"
                     ]
                 },
@@ -245,7 +246,8 @@ def init_roles_and_responsibilities(db: Session):
                     "task_types": [
                         "客户需求初步沟通与引导",
                         "标准产品宣讲 (Demo)",
-                        "产品PoC (Proof of Concept) 测试支持"
+                        "产品PoC (Proof of Concept) 测试支持",
+                        "竞品分析与对比"
                     ]
                 },
                 {
@@ -323,7 +325,8 @@ def init_roles_and_responsibilities(db: Session):
                     "task_types": [
                         "客户业务部门访谈（风控、清算等）",
                         "业务流程与场景梳理",
-                        "业务术语表（Glossary）定义与对齐"
+                        "业务术语表（Glossary）定义与对齐",
+                        "业务需求文档评审"
                     ]
                 },
                 {
@@ -443,7 +446,8 @@ def init_roles_and_responsibilities(db: Session):
                     "task_types": [
                         "服务器/网络维护",
                         "公司内部系统运维（OA, CRM, SVN）",
-                        "数据备份与恢复"
+                        "数据备份与恢复",
+                        "IT资产管理与盘点"
                     ]
                 },
                 {
