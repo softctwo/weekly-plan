@@ -3,8 +3,9 @@
 """
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from datetime import datetime
+import logging
 
 from ...api.deps import get_db, get_current_user, get_current_manager
 from ...models.user import User
@@ -12,6 +13,7 @@ from ...models.task import WeeklyTask, TaskReview, TaskStatus, FollowUpAction
 from ...schemas import task as schemas
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
 
 
 # 周计划管理 - REQ-3.1
@@ -40,8 +42,19 @@ def get_my_tasks(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    """获取我的任务列表 - REQ-3.3"""
-    query = db.query(WeeklyTask).filter(WeeklyTask.user_id == current_user.id)
+    """
+    获取我的任务列表 - REQ-3.3
+
+    使用joinedload优化关联查询，避免N+1问题
+    """
+    logger.info(f"Fetching tasks for user {current_user.id}, week={week_number}, year={year}")
+
+    # 使用joinedload预加载关联数据，避免N+1查询
+    query = db.query(WeeklyTask).options(
+        joinedload(WeeklyTask.task_type),
+        joinedload(WeeklyTask.assigner),
+        joinedload(WeeklyTask.review)
+    ).filter(WeeklyTask.user_id == current_user.id)
 
     if week_number:
         query = query.filter(WeeklyTask.week_number == week_number)
@@ -50,7 +63,10 @@ def get_my_tasks(
     if is_key_task is not None:
         query = query.filter(WeeklyTask.is_key_task == is_key_task)
 
-    return query.order_by(WeeklyTask.is_key_task.desc(), WeeklyTask.created_at).all()
+    tasks = query.order_by(WeeklyTask.is_key_task.desc(), WeeklyTask.created_at).all()
+    logger.info(f"Found {len(tasks)} tasks for user {current_user.id}")
+
+    return tasks
 
 
 @router.get("/delayed-tasks", response_model=List[schemas.WeeklyTask])
