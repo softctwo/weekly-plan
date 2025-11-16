@@ -16,7 +16,9 @@
     "axios": "^1.6.5",
     "element-plus": "^2.5.2",
     "@element-plus/icons-vue": "^2.3.1",
-    "dayjs": "^1.11.10"
+    "dayjs": "^1.11.10",
+    "vuedraggable": "^4.1.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.2",
