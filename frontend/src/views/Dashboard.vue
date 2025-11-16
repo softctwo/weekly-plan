@@ -127,10 +127,13 @@ import {
 } from '@element-plus/icons-vue'
 import { getEmployeeDashboard } from '@/api/dashboard'
 import { useCacheStore } from '@/store/cache'
+import { useNotificationStore } from '@/store/notification'
+import { getMyTasks } from '@/api/tasks'
 import dayjs from 'dayjs'
 
 const router = useRouter()
 const cacheStore = useCacheStore()
+const notificationStore = useNotificationStore()
 
 const statistics = ref({
   total_tasks: 0,
@@ -160,8 +163,40 @@ const loadDashboard = async () => {
 
     statistics.value = data.statistics
     keyTasks.value = data.key_tasks || []
+
+    // 检查任务并生成通知
+    await checkAndGenerateNotifications(params)
   } catch (error) {
     ElMessage.error('加载仪表盘数据失败')
+  }
+}
+
+// 检查任务并生成通知
+const checkAndGenerateNotifications = async (params) => {
+  try {
+    // 获取本周所有任务
+    const tasks = await getMyTasks(params)
+
+    // 检查任务通知
+    notificationStore.checkTaskNotifications(tasks)
+
+    // 检查是否需要周复盘（周日提醒）
+    const today = dayjs()
+    if (today.day() === 0) { // 周日
+      const lastWeek = today.subtract(1, 'week')
+      const lastWeekTasks = await getMyTasks({
+        week_number: lastWeek.week(),
+        year: lastWeek.year()
+      })
+
+      // 如果上周有未完成任务，提醒进行复盘
+      const incompleteTasks = lastWeekTasks.filter(t => t.status !== 'completed')
+      if (incompleteTasks.length > 0) {
+        notificationStore.addReviewReminder(lastWeek.week(), lastWeek.year())
+      }
+    }
+  } catch (error) {
+    console.error('生成通知失败:', error)
   }
 }
 

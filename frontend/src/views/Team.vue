@@ -327,8 +327,11 @@ import {
   StarFilled
 } from '@element-plus/icons-vue'
 import { getTeamDashboard, getMemberDetail, addComment, markAsReviewed as markReviewedAPI } from '@/api/dashboard'
+import { useNotificationStore } from '@/store/notification'
 import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
+
+const notificationStore = useNotificationStore()
 
 dayjs.extend(weekOfYear)
 
@@ -425,10 +428,21 @@ const loadTeamData = async () => {
     })
     teamData.value = data
     teamMembers.value = data.team_members || []
+
+    // 检查待审阅的成员并生成通知
+    checkPendingReviews()
   } catch (error) {
     ElMessage.error('加载团队数据失败')
   } finally {
     loading.value = false
+  }
+}
+
+// 检查待审阅的成员
+const checkPendingReviews = () => {
+  const pendingCount = teamMembers.value.filter(m => !m.is_reviewed).length
+  if (pendingCount > 0) {
+    notificationStore.addTeamReviewReminder(pendingCount)
   }
 }
 

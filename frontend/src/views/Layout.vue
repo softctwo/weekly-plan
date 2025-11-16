@@ -57,23 +57,29 @@
         </div>
 
         <div class="header-right">
-          <el-dropdown @command="handleCommand">
-            <span class="user-dropdown">
-              <el-icon><User /></el-icon>
-              {{ userStore.userInfo?.full_name || '用户' }}
-              <el-icon class="el-icon--right"><ArrowDown /></el-icon>
-            </span>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item disabled>
-                  {{ userStore.userInfo?.username }}
-                </el-dropdown-item>
-                <el-dropdown-item divided command="logout">
-                  退出登录
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
+          <el-space :size="15">
+            <!-- 通知中心 -->
+            <NotificationCenter />
+
+            <!-- 用户下拉菜单 -->
+            <el-dropdown @command="handleCommand">
+              <span class="user-dropdown">
+                <el-icon><User /></el-icon>
+                {{ userStore.userInfo?.full_name || '用户' }}
+                <el-icon class="el-icon--right"><ArrowDown /></el-icon>
+              </span>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item disabled>
+                    {{ userStore.userInfo?.username }}
+                  </el-dropdown-item>
+                  <el-dropdown-item divided command="logout">
+                    退出登录
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </el-space>
         </div>
       </el-header>
 
@@ -86,7 +92,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import {
@@ -98,10 +104,22 @@ import {
   ArrowDown
 } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/user'
+import { useNotificationStore } from '@/store/notification'
+import NotificationCenter from '@/components/NotificationCenter.vue'
 
 const route = useRoute()
 const router = useRouter()
 const userStore = useUserStore()
+const notificationStore = useNotificationStore()
+
+// 初始化时添加欢迎通知
+onMounted(() => {
+  const userName = userStore.userInfo?.full_name || '用户'
+  notificationStore.addSystemNotification(
+    '欢迎使用周计划系统',
+    `${userName}，欢迎回来！祝您工作顺利。`
+  )
+})
 
 const activeMenu = computed(() => route.path)
 const currentPageTitle = computed(() => route.meta?.title || '首页')
