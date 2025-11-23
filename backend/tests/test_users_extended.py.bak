@@ -1,0 +1,373 @@
+"""
+Additional tests for users API endpoints to improve coverage
+"""
+import pytest
+from fastapi import status
+
+
+@pytest.mark.api
+@pytest.mark.users
+class TestUsersAPIExtended:
+    """Extended tests for users API endpoints"""
+
+    def test_get_user_profile(self, client, admin_token, test_admin_user):
+        """Test getting user profile"""
+        response = client.get(
+            "/api/users/profile",
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert data["id"] == test_admin_user.id
+        assert data["username"] == test_admin_user.username
+        assert "roles" in data
+        assert "department" in data
+
+    def test_update_user_profile(self, client, admin_token):
+        """Test updating user profile"""
+        update_data = {
+            "full_name": "更新的管理员姓名",
+            "email": "updated_admin@test.com"
+        }
+        
+        response = client.put(
+            "/api/users/profile",
+            json=update_data,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert data["full_name"] == update_data["full_name"]
+        assert data["email"] == update_data["email"]
+
+    def test_update_user_profile_invalid_email(self, client, admin_token):
+        """Test updating profile with invalid email"""
+        update_data = {
+            "email": "invalid-email-format"
+        }
+        
+        response = client.put(
+            "/api/users/profile",
+            json=update_data,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+
+    def test_change_password_success(self, client, employee_token):
+        """Test successful password change"""
+        password_data = {
+            "current_password": "employee123",
+            "new_password": "newpassword123",
+            "confirm_password": "newpassword123"
+        }
+        
+        response = client.post(
+            "/api/users/change-password",
+            json=password_data,
+            headers={"Authorization": f"Bearer {employee_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        assert response.json()["message"] == "密码修改成功"
+
+    def test_change_password_wrong_current(self, client, employee_token):
+        """Test password change with wrong current password"""
+        password_data = {
+            "current_password": "wrongpassword",
+            "new_password": "newpassword123",
+            "confirm_password": "newpassword123"
+        }
+        
+        response = client.post(
+            "/api/users/change-password",
+            json=password_data,
+            headers={"Authorization": f"Bearer {employee_token}"}
+        )
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert "当前密码错误" in response.json()["detail"]
+
+    def test_change_password_mismatch(self, client, employee_token):
+        """Test password change with mismatched confirmation"""
+        password_data = {
+            "current_password": "employee123",
+            "new_password": "newpassword123",
+            "confirm_password": "differentpassword"
+        }
+        
+        response = client.post(
+            "/api/users/change-password",
+            json=password_data,
+            headers={"Authorization": f"Bearer {employee_token}"}
+        )
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert "新密码不匹配" in response.json()["detail"]
+
+    def test_get_user_preferences(self, client, admin_token):
+        """Test getting user preferences"""
+        response = client.get(
+            "/api/users/preferences",
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "theme" in data
+        assert "language" in data
+        assert "notifications" in data
+
+    def test_update_user_preferences(self, client, admin_token):
+        """Test updating user preferences"""
+        preferences_data = {
+            "theme": "dark",
+            "language": "en-US",
+            "notifications": {
+                "email": True,
+                "browser": False,
+                "mobile": True
+            }
+        }
+        
+        response = client.put(
+            "/api/users/preferences",
+            json=preferences_data,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert data["theme"] == "dark"
+        assert data["language"] == "en-US"
+
+    def test_get_user_activity_log(self, client, admin_token):
+        """Test getting user activity log"""
+        params = {
+            "limit": 20,
+            "activity_types": ["login", "task_created", "task_completed"]
+        }
+        
+        response = client.get(
+            "/api/users/activity-log",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "activities" in data
+        assert isinstance(data["activities"], list)
+        assert len(data["activities"]) <= 20
+
+    def test_get_user_statistics(self, client, admin_token):
+        """Test getting user statistics"""
+        params = {
+            "period": "30d",
+            "metrics": ["tasks_completed", "hours_worked", "efficiency_score"]
+        }
+        
+        response = client.get(
+            "/api/users/statistics",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "period" in data
+        assert "metrics" in data
+        assert "trends" in data
+
+    def test_get_team_members(self, client, manager_token):
+        """Test getting team members for manager"""
+        response = client.get(
+            "/api/users/team-members",
+            headers={"Authorization": f"Bearer {manager_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "team_members" in data
+        assert isinstance(data["team_members"], list)
+
+    def test_get_team_members_employee_forbidden(self, client, employee_token):
+        """Test that employees cannot get team members"""
+        response = client.get(
+            "/api/users/team-members",
+            headers={"Authorization": f"Bearer {employee_token}"}
+        )
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    def test_deactivate_user_success(self, client, admin_token, test_employee_user):
+        """Test deactivating a user"""
+        response = client.post(
+            f"/api/users/{test_employee_user.id}/deactivate",
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert data["is_active"] is False
+
+    def test_deactivate_user_self_forbidden(self, client, admin_token, test_admin_user):
+        """Test that users cannot deactivate themselves"""
+        response = client.post(
+            f"/api/users/{test_admin_user.id}/deactivate",
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    def test_activate_user_success(self, client, admin_token, test_employee_user):
+        """Test activating a user"""
+        # First deactivate
+        client.post(
+            f"/api/users/{test_employee_user.id}/deactivate",
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        
+        # Then activate
+        response = client.post(
+            f"/api/users/{test_employee_user.id}/activate",
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert data["is_active"] is True
+
+    def test_reset_user_password_success(self, client, admin_token, test_employee_user):
+        """Test resetting user password as admin"""
+        reset_data = {
+            "new_password": "resetpassword123",
+            "send_notification": False
+        }
+        
+        response = client.post(
+            f"/api/users/{test_employee_user.id}/reset-password",
+            json=reset_data,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        assert response.json()["message"] == "密码重置成功"
+
+    def test_reset_user_password_employee_forbidden(self, client, employee_token, test_employee_user):
+        """Test that employees cannot reset passwords"""
+        reset_data = {"new_password": "newpassword123"}
+        
+        response = client.post(
+            f"/api/users/{test_employee_user.id}/reset-password",
+            json=reset_data,
+            headers={"Authorization": f"Bearer {employee_token}"}
+        )
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    def test_get_user_workload(self, client, admin_token, test_employee_user):
+        """Test getting user workload"""
+        params = {
+            "period": "current_week",
+            "include_completed": True
+        }
+        
+        response = client.get(
+            f"/api/users/{test_employee_user.id}/workload",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "current_tasks" in data
+        assert "total_hours" in data
+        assert "capacity_utilization" in data
+
+    def test_get_user_performance_review(self, client, admin_token, test_employee_user):
+        """Test getting user performance review"""
+        params = {
+            "period": "last_month",
+            "include_ai_insights": True
+        }
+        
+        response = client.get(
+            f"/api/users/{test_employee_user.id}/performance-review",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "review_period" in data
+        assert "performance_metrics" in data
+        assert "achievements" in data
+        assert "areas_for_improvement" in data
+
+    def test_assign_user_role_success(self, client, admin_token, test_employee_user, test_role):
+        """Test assigning a role to user"""
+        assign_data = {
+            "role_id": test_role.id,
+            "assigned_by": "admin_test",
+            "assignment_reason": "项目需要"
+        }
+        
+        response = client.post(
+            f"/api/users/{test_employee_user.id}/assign-role",
+            json=assign_data,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert data["role_id"] == test_role.id
+
+    def test_remove_user_role_success(self, client, admin_token, test_employee_user, test_role):
+        """Test removing a role from user"""
+        # First assign a role
+        assign_data = {"role_id": test_role.id}
+        client.post(
+            f"/api/users/{test_employee_user.id}/assign-role",
+            json=assign_data,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        
+        # Then remove it
+        response = client.delete(
+            f"/api/users/{test_employee_user.id}/roles/{test_role.id}",
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+
+    def test_export_user_data(self, client, admin_token, test_employee_user):
+        """Test exporting user data"""
+        params = {
+            "format": "json",
+            "include": ["profile", "tasks", "reviews", "activity_log"],
+            "date_range": "last_90_days"
+        }
+        
+        response = client.get(
+            f"/api/users/{test_employee_user.id}/export",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "user_data" in data
+        assert "export_metadata" in data
+
+    def test_search_users_success(self, client, admin_token):
+        """Test searching users"""
+        params = {
+            "query": "test",
+            "search_fields": ["username", "full_name", "email"],
+            "user_types": ["employee"],
+            "limit": 10
+        }
+        
+        response = client.get(
+            "/api/users/search",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "users" in data
+        assert "total_count" in data
+        assert isinstance(data["users"], list)
+
+    def test_get_user_permissions(self, client, admin_token, test_employee_user):
+        """Test getting user permissions"""
+        response = client.get(
+            f"/api/users/{test_employee_user.id}/permissions",
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "permissions" in data
+        assert "roles" in data
+        assert isinstance(data["permissions"], list)

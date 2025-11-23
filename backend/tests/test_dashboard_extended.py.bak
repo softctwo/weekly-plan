@@ -1,0 +1,357 @@
+"""
+Tests for dashboard API endpoints to improve coverage
+"""
+import pytest
+from fastapi import status
+from datetime import datetime, date
+
+
+@pytest.mark.api
+@pytest.mark.dashboard
+class TestDashboardAPI:
+    """Test dashboard endpoints"""
+
+    def test_get_dashboard_overview_success(self, client, admin_token):
+        """Test getting dashboard overview"""
+        response = client.get(
+            "/api/dashboard/overview",
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "task_statistics" in data
+        assert "user_statistics" in data
+        assert "recent_activities" in data
+        assert "role_distribution" in data
+
+    def test_get_dashboard_overview_employee(self, client, employee_token):
+        """Test getting dashboard overview for employee"""
+        response = client.get(
+            "/api/dashboard/overview",
+            headers={"Authorization": f"Bearer {employee_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        # Employee should see limited data
+        assert "task_statistics" in data
+        assert "user_statistics" in data
+
+    def test_get_dashboard_overview_unauthorized(self, client):
+        """Test getting dashboard overview without auth"""
+        response = client.get("/api/dashboard/overview")
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    def test_get_my_team_dashboard_success(self, client, manager_token):
+        """Test getting team dashboard for manager"""
+        response = client.get(
+            "/api/dashboard/my-team",
+            headers={"Authorization": f"Bearer {manager_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "team_members" in data
+        assert "team_tasks" in data
+        assert "team_performance" in data
+
+    def test_get_my_team_dashboard_employee_forbidden(self, client, employee_token):
+        """Test that employees cannot access team dashboard"""
+        response = client.get(
+            "/api/dashboard/my-team",
+            headers={"Authorization": f"Bearer {employee_token}"}
+        )
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    def test_get_task_completion_trends(self, client, admin_token):
+        """Test getting task completion trends"""
+        params = {
+            "period": "30d",  # Last 30 days
+            "user_type": "all"
+        }
+        
+        response = client.get(
+            "/api/dashboard/tasks/completion-trends",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "trends" in data
+        assert isinstance(data["trends"], list)
+
+    def test_get_task_completion_trends_invalid_period(self, client, admin_token):
+        """Test getting trends with invalid period"""
+        params = {"period": "invalid"}
+        
+        response = client.get(
+            "/api/dashboard/tasks/completion-trends",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    def test_get_role_performance_metrics(self, client, admin_token):
+        """Test getting role performance metrics"""
+        params = {
+            "start_date": "2024-01-01",
+            "end_date": "2024-01-31"
+        }
+        
+        response = client.get(
+            "/api/dashboard/roles/performance-metrics",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "role_metrics" in data
+        assert isinstance(data["role_metrics"], list)
+
+    def test_get_role_performance_metrics_invalid_date(self, client, admin_token):
+        """Test getting role metrics with invalid date range"""
+        params = {
+            "start_date": "2024-01-31",
+            "end_date": "2024-01-01"  # End before start
+        }
+        
+        response = client.get(
+            "/api/dashboard/roles/performance-metrics",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    def test_get_department_statistics(self, client, admin_token):
+        """Test getting department statistics"""
+        response = client.get(
+            "/api/dashboard/departments/statistics",
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "departments" in data
+        assert isinstance(data["departments"], list)
+
+    def test_get_weekly_summary_report(self, client, admin_token):
+        """Test getting weekly summary report"""
+        params = {
+            "week_start": "2024-01-01"
+        }
+        
+        response = client.get(
+            "/api/dashboard/reports/weekly-summary",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "summary" in data
+        assert "highlights" in data
+        assert "issues" in data
+
+    def test_get_weekly_summary_report_invalid_week(self, client, admin_token):
+        """Test getting weekly summary with invalid week"""
+        params = {"week_start": "invalid-date"}
+        
+        response = client.get(
+            "/api/dashboard/reports/weekly-summary",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    def test_get_performance_leaderboard(self, client, admin_token):
+        """Test getting performance leaderboard"""
+        params = {
+            "metric": "completion_rate",
+            "period": "week",
+            "limit": 10
+        }
+        
+        response = client.get(
+            "/api/dashboard/performance/leaderboard",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "leaderboard" in data
+        assert isinstance(data["leaderboard"], list)
+        assert len(data["leaderboard"]) <= 10
+
+    def test_get_workload_distribution(self, client, admin_token):
+        """Test getting workload distribution"""
+        params = {
+            "period": "current_week",
+            "group_by": "role"
+        }
+        
+        response = client.get(
+            "/api/dashboard/workload/distribution",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "distribution" in data
+        assert "total_tasks" in data
+
+    def test_get_ai_insights_summary(self, client, admin_token):
+        """Test getting AI insights summary"""
+        params = {
+            "period": "7d",
+            "insight_types": ["performance", "suggestions"]
+        }
+        
+        response = client.get(
+            "/api/dashboard/ai-insights/summary",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "insights" in data
+        assert isinstance(data["insights"], list)
+
+    def test_get_alerts_and_notifications(self, client, admin_token):
+        """Test getting alerts and notifications"""
+        params = {
+            "status": "active",
+            "severity": ["high", "medium"]
+        }
+        
+        response = client.get(
+            "/api/dashboard/alerts",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "alerts" in data
+        assert isinstance(data["alerts"], list)
+
+    def test_get_key_performance_indicators(self, client, admin_token):
+        """Test getting KPIs"""
+        params = {
+            "period": "month",
+            "kpi_types": ["productivity", "quality", "efficiency"]
+        }
+        
+        response = client.get(
+            "/api/dashboard/kpis",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "kpis" in data
+        assert "period" in data
+
+    def test_get_task_category_analysis(self, client, admin_token):
+        """Test getting task category analysis"""
+        response = client.get(
+            "/api/dashboard/tasks/category-analysis",
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "categories" in data
+        assert "distribution" in data
+
+    def test_get_user_activity_timeline(self, client, admin_token):
+        """Test getting user activity timeline"""
+        params = {
+            "user_id": "all",
+            "activity_types": ["task_created", "task_completed", "login"],
+            "limit": 50
+        }
+        
+        response = client.get(
+            "/api/dashboard/activity/timeline",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "activities" in data
+        assert isinstance(data["activities"], list)
+
+    def test_get_completion_rate_comparison(self, client, admin_token):
+        """Test getting completion rate comparison"""
+        params = {
+            "periods": ["current_week", "previous_week", "same_week_last_month"],
+            "group_by": "department"
+        }
+        
+        response = client.get(
+            "/api/dashboard/completion-rate/comparison",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "comparisons" in data
+        assert "periods" in data
+
+    def test_get_resource_utilization_report(self, client, admin_token):
+        """Test getting resource utilization report"""
+        params = {
+            "start_date": "2024-01-01",
+            "end_date": "2024-01-31",
+            "resource_types": ["human", "time"]
+        }
+        
+        response = client.get(
+            "/api/dashboard/reports/resource-utilization",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "utilization" in data
+        assert "efficiency_score" in data
+
+    def test_get_team_collaboration_metrics(self, client, admin_token):
+        """Test getting team collaboration metrics"""
+        response = client.get(
+            "/api/dashboard/collaboration/metrics",
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "collaboration_score" in data
+        assert "team_dynamics" in data
+
+    def test_get_goal_progress_tracking(self, client, admin_token):
+        """Test getting goal progress tracking"""
+        params = {
+            "goal_type": "weekly",
+            "timeframe": "current"
+        }
+        
+        response = client.get(
+            "/api/dashboard/goals/progress",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "goals" in data
+        assert "overall_progress" in data
+
+    def test_export_dashboard_data(self, client, admin_token):
+        """Test exporting dashboard data"""
+        params = {
+            "format": "json",
+            "sections": ["overview", "trends", "performance"],
+            "date_range": "last_30_days"
+        }
+        
+        response = client.get(
+            "/api/dashboard/export",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "export_data" in data
+        assert "metadata" in data

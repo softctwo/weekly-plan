@@ -40,32 +40,39 @@ echo ""
 case "${1:-all}" in
     "quick")
         echo "Running quick tests (no coverage)..."
+        export ENV_FILE=".env.test"
         pytest -v
         ;;
     "coverage")
         echo "Running tests with coverage report..."
+        export ENV_FILE=".env.test"
         pytest --cov=app --cov-report=html --cov-report=term-missing
         echo ""
         echo -e "${GREEN}Coverage report generated in htmlcov/index.html${NC}"
         ;;
     "api")
         echo "Running API tests only..."
+        export ENV_FILE=".env.test"
         pytest -v -m api
         ;;
     "model")
         echo "Running model tests only..."
+        export ENV_FILE=".env.test"
         pytest -v -m model
         ;;
     "unit")
         echo "Running unit tests only..."
+        export ENV_FILE=".env.test"
         pytest -v -m unit
         ;;
     "verbose")
         echo "Running tests with maximum verbosity..."
+        export ENV_FILE=".env.test"
         pytest -vv --tb=long
         ;;
     *)
         echo "Running all tests with coverage..."
+        export ENV_FILE=".env.test"
         pytest --cov=app --cov-report=html --cov-report=term-missing
         echo ""
         echo -e "${GREEN}✓ All tests completed!${NC}"

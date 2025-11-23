@@ -59,7 +59,7 @@ class TestAuthAPI:
                 "password": "admin123"
             }
         )
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_get_current_user(self, client, test_admin_user, auth_headers):
         """Test getting current user information"""

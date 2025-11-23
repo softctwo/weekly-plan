@@ -4,37 +4,101 @@
       <template #header>
         <div class="card-header">
           <span>大模型配置管理</span>
-          <el-button type="primary" :icon="Plus" @click="showCreateDialog = true">
+          <el-button
+            type="primary"
+            :icon="Plus"
+            @click="showCreateDialog = true"
+          >
             新建配置
           </el-button>
         </div>
       </template>
 
       <!-- 配置列表 -->
-      <el-table :data="configs" v-loading="loading" stripe>
-        <el-table-column prop="name" label="配置名称" width="200" />
-        <el-table-column prop="provider" label="提供商" width="120">
+      <el-table
+        v-loading="loading"
+        :data="configs"
+        stripe
+      >
+        <el-table-column
+          prop="name"
+          label="配置名称"
+          width="200"
+        />
+        <el-table-column
+          prop="provider"
+          label="提供商"
+          width="120"
+        >
           <template #default="{ row }">
-            <el-tag v-if="row.provider === 'deepseek'" type="primary">Deepseek</el-tag>
-            <el-tag v-else-if="row.provider === 'openai'" type="success">OpenAI</el-tag>
-            <el-tag v-else>{{ row.provider }}</el-tag>
+            <el-tag
+              v-if="row.provider === 'deepseek'"
+              type="primary"
+            >
+              Deepseek
+            </el-tag>
+            <el-tag
+              v-else-if="row.provider === 'openai'"
+              type="success"
+            >
+              OpenAI
+            </el-tag>
+            <el-tag v-else>
+              {{ row.provider }}
+            </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="model_name" label="模型名称" width="150" />
-        <el-table-column prop="api_key" label="API Key" width="200">
+        <el-table-column
+          prop="model_name"
+          label="模型名称"
+          width="150"
+        />
+        <el-table-column
+          prop="api_key"
+          label="API Key"
+          width="200"
+        >
           <template #default="{ row }">
             <span>{{ maskApiKey(row.api_key) }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="max_tokens" label="Max Tokens" width="120" align="center" />
-        <el-table-column prop="temperature" label="Temperature" width="120" align="center" />
-        <el-table-column label="状态" width="100" align="center">
+        <el-table-column
+          prop="max_tokens"
+          label="Max Tokens"
+          width="120"
+          align="center"
+        />
+        <el-table-column
+          prop="temperature"
+          label="Temperature"
+          width="120"
+          align="center"
+        />
+        <el-table-column
+          label="状态"
+          width="100"
+          align="center"
+        >
           <template #default="{ row }">
-            <el-tag v-if="row.is_active" type="success">已激活</el-tag>
-            <el-tag v-else type="info">未激活</el-tag>
+            <el-tag
+              v-if="row.is_active"
+              type="success"
+            >
+              已激活
+            </el-tag>
+            <el-tag
+              v-else
+              type="info"
+            >
+              未激活
+            </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="250" fixed="right">
+        <el-table-column
+          label="操作"
+          width="250"
+          fixed="right"
+        >
           <template #default="{ row }">
             <el-button-group>
               <el-button
@@ -45,7 +109,11 @@
               >
                 激活
               </el-button>
-              <el-button size="small" type="primary" @click="showEditDialog(row)">
+              <el-button
+                size="small"
+                type="primary"
+                @click="showEditDialog(row)"
+              >
                 编辑
               </el-button>
               <el-popconfirm
@@ -53,7 +121,12 @@
                 @confirm="deleteConfig(row.id)"
               >
                 <template #reference>
-                  <el-button size="small" type="danger">删除</el-button>
+                  <el-button
+                    size="small"
+                    type="danger"
+                  >
+                    删除
+                  </el-button>
                 </template>
               </el-popconfirm>
             </el-button-group>
@@ -63,7 +136,12 @@
 
       <!-- 测试连接 -->
       <div style="margin-top: 20px">
-        <el-button type="warning" :icon="Connection" @click="testConnection" :loading="testing">
+        <el-button
+          type="warning"
+          :icon="Connection"
+          :loading="testing"
+          @click="testConnection"
+        >
           测试当前激活配置的连接
         </el-button>
       </div>
@@ -76,23 +154,44 @@
       width="600px"
     >
       <el-form
+        ref="configFormRef"
         :model="configForm"
         :rules="configRules"
-        ref="configFormRef"
         label-width="120px"
       >
-        <el-form-item label="配置名称" prop="name">
-          <el-input v-model="configForm.name" placeholder="例如：Deepseek默认配置" />
+        <el-form-item
+          label="配置名称"
+          prop="name"
+        >
+          <el-input
+            v-model="configForm.name"
+            placeholder="例如：Deepseek默认配置"
+          />
         </el-form-item>
 
-        <el-form-item label="提供商" prop="provider">
-          <el-select v-model="configForm.provider" placeholder="选择提供商">
-            <el-option label="Deepseek" value="deepseek" />
-            <el-option label="OpenAI" value="openai" />
+        <el-form-item
+          label="提供商"
+          prop="provider"
+        >
+          <el-select
+            v-model="configForm.provider"
+            placeholder="选择提供商"
+          >
+            <el-option
+              label="Deepseek"
+              value="deepseek"
+            />
+            <el-option
+              label="OpenAI"
+              value="openai"
+            />
           </el-select>
         </el-form-item>
 
-        <el-form-item label="API Key" prop="api_key">
+        <el-form-item
+          label="API Key"
+          prop="api_key"
+        >
           <el-input
             v-model="configForm.api_key"
             type="password"
@@ -111,11 +210,20 @@
           </div>
         </el-form-item>
 
-        <el-form-item label="模型名称" prop="model_name">
-          <el-input v-model="configForm.model_name" placeholder="例如：deepseek-chat" />
+        <el-form-item
+          label="模型名称"
+          prop="model_name"
+        >
+          <el-input
+            v-model="configForm.model_name"
+            placeholder="例如：deepseek-chat"
+          />
         </el-form-item>
 
-        <el-form-item label="Max Tokens" prop="max_tokens">
+        <el-form-item
+          label="Max Tokens"
+          prop="max_tokens"
+        >
           <el-input-number
             v-model="configForm.max_tokens"
             :min="100"
@@ -124,7 +232,10 @@
           />
         </el-form-item>
 
-        <el-form-item label="Temperature" prop="temperature">
+        <el-form-item
+          label="Temperature"
+          prop="temperature"
+        >
           <el-input
             v-model="configForm.temperature"
             placeholder="0.0-1.0，推荐0.7"
@@ -142,8 +253,14 @@
       </el-form>
 
       <template #footer>
-        <el-button @click="showDialog = false">取消</el-button>
-        <el-button type="primary" @click="handleSubmit" :loading="submitting">
+        <el-button @click="showDialog = false">
+          取消
+        </el-button>
+        <el-button
+          type="primary"
+          :loading="submitting"
+          @click="handleSubmit"
+        >
           确定
         </el-button>
       </template>
@@ -188,7 +305,7 @@ const configRules = {
 }
 
 // 加载配置列表
-const loadConfigs = async () => {
+const loadConfigs = async() => {
   loading.value = true
   try {
     const response = await request({
@@ -205,7 +322,7 @@ const loadConfigs = async () => {
 
 // 遮掩API Key显示
 const maskApiKey = (key) => {
-  if (!key || key.length < 10) return '******'
+  if (!key || key.length < 10) {return '******'}
   return key.substring(0, 7) + '****' + key.substring(key.length - 4)
 }
 
@@ -217,11 +334,11 @@ const showEditDialog = (config) => {
 }
 
 // 提交表单
-const handleSubmit = async () => {
-  if (!configFormRef.value) return
+const handleSubmit = async() => {
+  if (!configFormRef.value) {return}
 
-  await configFormRef.value.validate(async (valid) => {
-    if (!valid) return
+  await configFormRef.value.validate(async(valid) => {
+    if (!valid) {return}
 
     submitting.value = true
     try {
@@ -254,7 +371,7 @@ const handleSubmit = async () => {
 }
 
 // 激活配置
-const activateConfig = async (configId) => {
+const activateConfig = async(configId) => {
   try {
     await request({
       url: `/ai/llm-configs/${configId}/activate`,
@@ -268,7 +385,7 @@ const activateConfig = async (configId) => {
 }
 
 // 删除配置
-const deleteConfig = async (configId) => {
+const deleteConfig = async(configId) => {
   try {
     await request({
       url: `/ai/llm-configs/${configId}`,
@@ -282,7 +399,7 @@ const deleteConfig = async (configId) => {
 }
 
 // 测试连接
-const testConnection = async () => {
+const testConnection = async() => {
   testing.value = true
   try {
     const response = await request({

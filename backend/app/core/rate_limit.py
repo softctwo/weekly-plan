@@ -25,7 +25,7 @@ async def rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded):
     当请求超过限流阈值时返回429状态码
     """
     logger.warning(
-        f"Rate limit exceeded for {request.client.host} - "
+        f"Rate limit exceeded for {request.client.host if request.client else 'unknown'} - "
         f"Path: {request.url.path}"
     )
     return JSONResponse(

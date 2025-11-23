@@ -8,6 +8,9 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import App from './App.vue'
 import router from './router'
 
+// 导入全局记忆系统
+import { useMemoryStore } from './store/memory'
+
 const app = createApp(App)
 
 // 注册所有图标
@@ -18,5 +21,9 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.use(createPinia())
 app.use(router)
 app.use(ElementPlus, { locale: zhCn })
+
+// 初始化全局记忆系统
+const memoryStore = useMemoryStore()
+memoryStore.initializeMemory()
 
 app.mount('#app')

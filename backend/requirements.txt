@@ -12,15 +12,17 @@ psycopg2-binary==2.9.9  # PostgreSQL驱动
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
 python-dotenv==1.0.0
+bcrypt==4.1.2
 
 # 数据验证
 pydantic==2.5.3
 pydantic-settings==2.1.0
-email-validator==2.1.0
+email-validator==2.0.0
 
 # 工具
 python-dateutil==2.8.2
 pytz==2023.3
+slowapi==0.1.9
 
 # HTTP客户端（用于AI API调用）
 httpx==0.26.0

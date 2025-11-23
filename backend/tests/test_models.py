@@ -155,8 +155,17 @@ class TestRoleModel:
 class TestTaskModel:
     """Test WeeklyTask model"""
 
-    def test_create_weekly_task(self, db_session, test_employee_user):
-        """Test creating a weekly task"""
+    def test_create_weekly_task(self, db_session, test_employee_user, test_role):
+        """Test creating a weekly task with time attributes and role association"""
+        from app.models.role import TaskType
+        
+        # 获取一个任务类型用于关联
+        task_type = db_session.query(TaskType).first()
+        
+        from datetime import datetime, timedelta
+        now = datetime.now()
+        planned_end = now + timedelta(hours=2)
+        
         task = WeeklyTask(
             user_id=test_employee_user.id,
             year=2025,
@@ -164,7 +173,11 @@ class TestTaskModel:
             title="测试任务",
             description="任务描述",
             status="todo",
-            is_key_task=False
+            is_key_task=False,
+            linked_task_type_id=task_type.id,  # 强制关联岗责
+            planned_start_time=now,
+            planned_end_time=planned_end,
+            planned_duration=120  # 2小时
         )
         db_session.add(task)
         db_session.commit()
@@ -172,32 +185,61 @@ class TestTaskModel:
         assert task.id is not None
         assert task.title == "测试任务"
         assert task.status == "todo"
+        assert task.linked_task_type_id == task_type.id
+        assert task.planned_duration == 120
 
-    def test_task_user_relationship(self, db_session, test_employee_user):
-        """Test task-user relationship"""
+    def test_task_user_relationship(self, db_session, test_employee_user, test_role):
+        """Test task-user relationship with role association"""
+        from app.models.role import TaskType
+        
+        # 获取一个任务类型用于关联
+        task_type = db_session.query(TaskType).first()
+        
+        from datetime import datetime, timedelta
+        now = datetime.now()
+        planned_end = now + timedelta(hours=1)
+        
         task = WeeklyTask(
             user_id=test_employee_user.id,
             year=2025,
             week_number=46,
             title="测试任务",
-            status="todo"
+            status="todo",
+            linked_task_type_id=task_type.id,  # 强制关联岗责
+            planned_start_time=now,
+            planned_end_time=planned_end,
+            planned_duration=60  # 1小时
         )
         db_session.add(task)
         db_session.commit()
 
         assert task.user == test_employee_user
+        assert task.linked_task_type_id == task_type.id
 
-    def test_task_status_values(self, db_session, test_employee_user):
-        """Test task status values"""
+    def test_task_status_values(self, db_session, test_employee_user, test_role):
+        """Test task status values with time attributes"""
+        from app.models.role import TaskType
+        
+        # 获取一个任务类型用于关联
+        task_type = db_session.query(TaskType).first()
+        
         valid_statuses = ["todo", "in_progress", "completed", "delayed"]
 
         for status in valid_statuses:
+            from datetime import datetime, timedelta
+            now = datetime.now()
+            planned_end = now + timedelta(minutes=30)
+            
             task = WeeklyTask(
                 user_id=test_employee_user.id,
                 year=2025,
                 week_number=46,
                 title=f"Task {status}",
-                status=status
+                status=status,
+                linked_task_type_id=task_type.id,  # 强制关联岗责
+                planned_start_time=now,
+                planned_end_time=planned_end,
+                planned_duration=30  # 30分钟
             )
             db_session.add(task)
 
@@ -206,15 +248,28 @@ class TestTaskModel:
         tasks = db_session.query(WeeklyTask).all()
         assert len(tasks) == len(valid_statuses)
 
-    def test_key_task_flag(self, db_session, test_employee_user):
-        """Test key task flagging"""
+    def test_key_task_flag(self, db_session, test_employee_user, test_role):
+        """Test key task flagging with time attributes"""
+        from app.models.role import TaskType
+        
+        # 获取一个任务类型用于关联
+        task_type = db_session.query(TaskType).first()
+        
+        from datetime import datetime, timedelta
+        now = datetime.now()
+        planned_end = now + timedelta(hours=1)
+        
         normal_task = WeeklyTask(
             user_id=test_employee_user.id,
             year=2025,
             week_number=46,
             title="普通任务",
             status="todo",
-            is_key_task=False
+            is_key_task=False,
+            linked_task_type_id=task_type.id,  # 强制关联岗责
+            planned_start_time=now,
+            planned_end_time=planned_end,
+            planned_duration=60  # 1小时
         )
 
         key_task = WeeklyTask(
@@ -223,7 +278,11 @@ class TestTaskModel:
             week_number=46,
             title="重点任务",
             status="todo",
-            is_key_task=True
+            is_key_task=True,
+            linked_task_type_id=task_type.id,  # 强制关联岗责
+            planned_start_time=now,
+            planned_end_time=planned_end,
+            planned_duration=60  # 1小时
         )
 
         db_session.add_all([normal_task, key_task])

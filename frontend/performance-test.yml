@@ -1,0 +1,60 @@
+# Artillery API负载测试配置
+config:
+  target: 'http://localhost:8000'
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: "Warm up"
+    - duration: 120
+      arrivalRate: 10
+      name: "Load test"
+    - duration: 60
+      arrivalRate: 20
+      name: "Stress test"
+  processor: "./test-processor.js"
+
+scenarios:
+  - name: "用户认证流程"
+    weight: 30
+    flow:
+      - post:
+          url: "/api/auth/login"
+          json:
+            username: "testuser_{{ $randomInt(1, 100) }}"
+            password: "testpass"
+          capture:
+            - json: "$.access_token"
+              as: "authToken"
+
+  - name: "获取仪表板数据"
+    weight: 40
+    flow:
+      - get:
+          url: "/api/dashboard/statistics"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+
+  - name: "任务管理操作"
+    weight: 20
+    flow:
+      - get:
+          url: "/api/tasks"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+      - post:
+          url: "/api/tasks"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          json:
+            title: "Load Test Task {{ $randomString() }}"
+            description: "Generated during load test"
+            priority: "medium"
+            due_date: "{{ $timestamp() }}"
+
+  - name: "获取用户信息"
+    weight: 10
+    flow:
+      - get:
+          url: "/api/users/me"
+          headers:
+            Authorization: "Bearer {{ authToken }}"

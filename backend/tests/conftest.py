@@ -8,16 +8,38 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from app.main import app
+from app.core.config import settings
 from app.db.base import Base
 from app.api.deps import get_db
 from app.core.security import get_password_hash
 from app.models.user import User, Department
 from app.models.role import Role, Responsibility, TaskType
-from app.utils.init_data import roles_data
+from app.utils.init_data import init_roles_and_responsibilities
 
 
 # Test database setup
 SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
+
+from fastapi.testclient import TestClient
+from app.main import app
+
+
+@pytest.fixture(scope="function")
+def client(db_session):
+    """Create a test client with database session"""
+    from app.api.deps import get_db
+    
+    def override_get_db():
+        try:
+            yield db_session
+        finally:
+            pass
+    
+    app.dependency_overrides[get_db] = override_get_db
+    with TestClient(app) as test_client:
+        yield test_client
+    app.dependency_overrides.clear()
+
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
@@ -30,6 +52,8 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 @pytest.fixture(scope="function")
 def db_session():
     """Create a fresh database session for each test"""
+    # 测试模式下关闭限流等副作用
+    settings.TESTING = True
     Base.metadata.create_all(bind=engine)
     session = TestingSessionLocal()
     try:
@@ -65,8 +89,8 @@ def test_department(db_session):
 
 
 @pytest.fixture(scope="function")
-def test_admin_user(db_session, test_department):
-    """Create a test admin user"""
+def test_admin_user(db_session, test_department, init_roles):
+    """Create a test admin user with role association"""
     admin = User(
         username="test_admin",
         email="admin@test.com",
@@ -79,6 +103,14 @@ def test_admin_user(db_session, test_department):
     db_session.add(admin)
     db_session.commit()
     db_session.refresh(admin)
+    
+    # 为管理员用户关联第一个岗位
+    from app.models.role import Role
+    first_role = db_session.query(Role).first()
+    if first_role:
+        admin.roles.append(first_role)
+        db_session.commit()
+    
     return admin
 
 
@@ -156,33 +188,7 @@ def test_role(db_session):
 @pytest.fixture(scope="function")
 def init_roles(db_session):
     """Initialize all 13 roles from init_data"""
-    for idx, role_data in enumerate(roles_data, 1):
-        role = Role(
-            name=role_data["name"],
-            name_en=role_data["name_en"],
-            description=role_data["description"]
-        )
-        db_session.add(role)
-        db_session.flush()
-
-        for resp_idx, resp_data in enumerate(role_data["responsibilities"], 1):
-            responsibility = Responsibility(
-                role_id=role.id,
-                name=resp_data["name"],
-                sort_order=resp_idx
-            )
-            db_session.add(responsibility)
-            db_session.flush()
-
-            for task_idx, task_name in enumerate(resp_data["task_types"], 1):
-                task_type = TaskType(
-                    responsibility_id=responsibility.id,
-                    name=task_name,
-                    sort_order=task_idx
-                )
-                db_session.add(task_type)
-
-    db_session.commit()
+    init_roles_and_responsibilities(db_session)
     return db_session.query(Role).all()
 
 

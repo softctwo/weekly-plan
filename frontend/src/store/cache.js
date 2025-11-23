@@ -36,7 +36,7 @@ export const useCacheStore = defineStore('cache', () => {
    * @returns {boolean}
    */
   const isCacheValid = (timestamp) => {
-    if (!timestamp) return false
+    if (!timestamp) {return false}
     return Date.now() - timestamp < CACHE_TTL
   }
 
@@ -45,7 +45,7 @@ export const useCacheStore = defineStore('cache', () => {
    * @param {Function} fetchFn 获取数据的函数
    * @returns {Promise<any>}
    */
-  const getRolesCache = async (fetchFn) => {
+  const getRolesCache = async(fetchFn) => {
     if (isCacheValid(rolesCache.value.timestamp) && rolesCache.value.data) {
       console.log('[Cache] Using cached roles data')
       return rolesCache.value.data
@@ -65,7 +65,7 @@ export const useCacheStore = defineStore('cache', () => {
    * @param {Function} fetchFn 获取数据的函数
    * @returns {Promise<any>}
    */
-  const getTeamMembersCache = async (fetchFn) => {
+  const getTeamMembersCache = async(fetchFn) => {
     if (isCacheValid(teamMembersCache.value.timestamp) && teamMembersCache.value.data) {
       console.log('[Cache] Using cached team members data')
       return teamMembersCache.value.data
@@ -86,7 +86,7 @@ export const useCacheStore = defineStore('cache', () => {
    * @param {Function} fetchFn 获取数据的函数
    * @returns {Promise<any>}
    */
-  const getTasksCache = async (key, fetchFn) => {
+  const getTasksCache = async(key, fetchFn) => {
     const cache = tasksCache.value[key]
     if (cache && isCacheValid(cache.timestamp)) {
       console.log(`[Cache] Using cached tasks data for ${key}`)
@@ -107,7 +107,7 @@ export const useCacheStore = defineStore('cache', () => {
    * @param {Function} fetchFn 获取数据的函数
    * @returns {Promise<any>}
    */
-  const getDashboardCache = async (fetchFn) => {
+  const getDashboardCache = async(fetchFn) => {
     if (isCacheValid(dashboardCache.value.timestamp) && dashboardCache.value.data) {
       console.log('[Cache] Using cached dashboard data')
       return dashboardCache.value.data

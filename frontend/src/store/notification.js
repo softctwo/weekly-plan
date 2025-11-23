@@ -148,14 +148,14 @@ export const useNotificationStore = defineStore('notification', () => {
     const time = dayjs(dateStr)
     const diffMinutes = now.diff(time, 'minute')
 
-    if (diffMinutes < 1) return '刚刚'
-    if (diffMinutes < 60) return `${diffMinutes}分钟前`
+    if (diffMinutes < 1) {return '刚刚'}
+    if (diffMinutes < 60) {return `${diffMinutes}分钟前`}
 
     const diffHours = now.diff(time, 'hour')
-    if (diffHours < 24) return `${diffHours}小时前`
+    if (diffHours < 24) {return `${diffHours}小时前`}
 
     const diffDays = now.diff(time, 'day')
-    if (diffDays < 7) return `${diffDays}天前`
+    if (diffDays < 7) {return `${diffDays}天前`}
 
     return time.format('YYYY-MM-DD HH:mm')
   }
@@ -284,7 +284,7 @@ export const useNotificationStore = defineStore('notification', () => {
   /**
    * 请求浏览器通知权限
    */
-  const requestBrowserNotificationPermission = async () => {
+  const requestBrowserNotificationPermission = async() => {
     if (!isBrowserNotificationSupported.value) {
       console.warn('浏览器不支持 Notification API')
       return false

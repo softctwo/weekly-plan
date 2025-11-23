@@ -5,8 +5,15 @@
     popper-class="notification-popover"
   >
     <template #reference>
-      <el-badge :value="unreadCount" :hidden="unreadCount === 0" :max="99">
-        <el-button circle :icon="Bell" />
+      <el-badge
+        :value="unreadCount"
+        :hidden="unreadCount === 0"
+        :max="99"
+      >
+        <el-button
+          circle
+          :icon="Bell"
+        />
       </el-badge>
     </template>
 
@@ -57,7 +64,10 @@
           @click="handleNotificationClick(notification)"
         >
           <div class="notification-icon">
-            <el-icon :size="24" :color="getIconColor(notification.priority)">
+            <el-icon
+              :size="24"
+              :color="getIconColor(notification.priority)"
+            >
               <component :is="getIcon(notification.type)" />
             </el-icon>
           </div>
@@ -73,7 +83,9 @@
                 {{ notification.priority === 'urgent' ? '紧急' : '重要' }}
               </el-tag>
             </div>
-            <div class="notification-message">{{ notification.message }}</div>
+            <div class="notification-message">
+              {{ notification.message }}
+            </div>
             <div class="notification-time">
               {{ notificationStore.formatNotificationTime(notification.createdAt) }}
             </div>
@@ -98,8 +110,16 @@
       </div>
 
       <!-- 底部操作 -->
-      <div v-if="notifications.length > 0" class="notification-footer">
-        <el-button link type="danger" size="small" @click="handleClearAll">
+      <div
+        v-if="notifications.length > 0"
+        class="notification-footer"
+      >
+        <el-button
+          link
+          type="danger"
+          size="small"
+          @click="handleClearAll"
+        >
           清空所有通知
         </el-button>
       </div>
@@ -196,7 +216,7 @@ const handleMarkAllRead = () => {
 }
 
 // 清空已读通知
-const handleClearRead = async () => {
+const handleClearRead = async() => {
   try {
     await ElMessageBox.confirm(
       '确定要清空所有已读通知吗？',
@@ -211,7 +231,7 @@ const handleClearRead = async () => {
 }
 
 // 清空所有通知
-const handleClearAll = async () => {
+const handleClearAll = async() => {
   try {
     await ElMessageBox.confirm(
       '确定要清空所有通知吗？此操作不可恢复！',
@@ -231,7 +251,7 @@ const handleRemove = (notificationId) => {
 }
 
 // 切换浏览器推送通知
-const handleToggleBrowserNotification = async () => {
+const handleToggleBrowserNotification = async() => {
   if (!isBrowserNotificationSupported.value) {
     ElMessage.warning('您的浏览器不支持推送通知功能')
     return

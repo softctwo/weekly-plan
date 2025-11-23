@@ -1,0 +1,3746 @@
+{
+  "config": {
+    "configFile": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright.config.js",
+    "rootDir": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 7
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "playwright-report/results.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "playwright-report/results.xml"
+        }
+      ],
+      [
+        "list",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 7
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e",
+        "testIgnore": [
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "**/*.spec.js"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 7
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e",
+        "testIgnore": [
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "**/*.spec.js"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 7
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e",
+        "testIgnore": [
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "**/*.spec.js"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 7
+        },
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e",
+        "testIgnore": [
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "**/*.spec.js"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 7
+        },
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e",
+        "testIgnore": [
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "**/*.spec.js"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 7,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://localhost:3000",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "auth.spec.js",
+      "file": "auth.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "认证功能",
+          "file": "auth.spec.js",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "页面应该正确显示登录表单",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5846,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.login-title')\nExpected substring: \u001b[32m\"岗责驱动的周工作计划管理系统\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.login-title')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.login-title')\nExpected substring: \u001b[32m\"岗责驱动的周工作计划管理系统\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.login-title')\u001b[22m\n\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js:18:48",
+                        "location": {
+                          "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js",
+                          "column": 48,
+                          "line": 18
+                        },
+                        "snippet": "  16 |     // 检查主要元素\n  17 |     await expect(page.locator('.login-container')).toBeVisible()\n> 18 |     await expect(page.locator('.login-title')).toContainText('岗责驱动的周工作计划管理系统')\n     |                                                ^\n  19 |\n  20 |     // 检查表单元素\n  21 |     await expect(page.locator('input[type=\"text\"]')).toBeVisible()"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js",
+                            "column": 48,
+                            "line": 18
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.login-title')\nExpected substring: \u001b[32m\"岗责驱动的周工作计划管理系统\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.login-title')\u001b[22m\n\n\n  16 |     // 检查主要元素\n  17 |     await expect(page.locator('.login-container')).toBeVisible()\n> 18 |     await expect(page.locator('.login-title')).toContainText('岗责驱动的周工作计划管理系统')\n     |                                                ^\n  19 |\n  20 |     // 检查表单元素\n  21 |     await expect(page.locator('input[type=\"text\"]')).toBeVisible()\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js:18:48"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:40:59.347Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-页面应该正确显示登录表单-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-页面应该正确显示登录表单-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-页面应该正确显示登录表单-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js",
+                        "column": 48,
+                        "line": 18
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-79e8c4eb8bdda6d85da2",
+              "file": "auth.spec.js",
+              "line": 12,
+              "column": 7
+            },
+            {
+              "title": "应该显示验证错误信息",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "timedOut",
+                      "duration": 30924,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js",
+                            "column": 16,
+                            "line": 28
+                          },
+                          "message": "Error: page.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  26 |   test('应该显示验证错误信息', async({ page }) => {\n  27 |     // 点击登录按钮但不填写表单\n> 28 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  29 |\n  30 |     // 检查错误信息\n  31 |     await expect(page.locator('.error-message')).toBeVisible()\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js:28:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:40:59.349Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该显示验证错误信息-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该显示验证错误信息-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该显示验证错误信息-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-82d19c6d9e8450277e65",
+              "file": "auth.spec.js",
+              "line": 26,
+              "column": 7
+            },
+            {
+              "title": "应该显示登录失败错误",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "timedOut",
+                      "duration": 30147,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js",
+                            "column": 16,
+                            "line": 39
+                          },
+                          "message": "Error: page.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  37 |     await page.fill('input[type=\"text\"]', 'wronguser')\n  38 |     await page.fill('input[type=\"password\"]', 'wrongpass')\n> 39 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  40 |\n  41 |     // 检查错误信息\n  42 |     await expect(page.locator('.error-message')).toBeVisible()\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js:39:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:40:59.351Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该显示登录失败错误-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该显示登录失败错误-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该显示登录失败错误-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-1ca6a36b85233d1d3b62",
+              "file": "auth.spec.js",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "应该能够成功登录",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "timedOut",
+                      "duration": 30144,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js",
+                            "column": 16,
+                            "line": 50
+                          },
+                          "message": "Error: page.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  48 |     await page.fill('input[type=\"text\"]', 'admin')\n  49 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 50 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  51 |\n  52 |     // 检查登录成功后跳转到仪表板\n  53 |     await expect(page).toHaveURL('/dashboard')\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js:50:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:40:59.346Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该能够成功登录-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该能够成功登录-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该能够成功登录-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-3c1fe0a86a9367557fd9",
+              "file": "auth.spec.js",
+              "line": 46,
+              "column": 7
+            },
+            {
+              "title": "应该支持回车键登录",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 994,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:40:59.347Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-5fdd1e7836dac51db082",
+              "file": "auth.spec.js",
+              "line": 61,
+              "column": 7
+            },
+            {
+              "title": "应该显示加载状态",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "timedOut",
+                      "duration": 30148,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js",
+                            "column": 23,
+                            "line": 80
+                          },
+                          "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  78 |     // 点击登录并检查加载状态\n  79 |     const loginButton = page.locator('button[type=\"submit\"]')\n> 80 |     await loginButton.click()\n     |                       ^\n  81 |\n  82 |     // 检查按钮禁用状态\n  83 |     await expect(loginButton).toBeDisabled()\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js:80:23"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:40:59.351Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该显示加载状态-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该显示加载状态-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该显示加载状态-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-967e3d38f9ee2269815e",
+              "file": "auth.spec.js",
+              "line": 73,
+              "column": 7
+            },
+            {
+              "title": "应该记住登录状态",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 6,
+                      "status": "timedOut",
+                      "duration": 30145,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js",
+                            "column": 16,
+                            "line": 90
+                          },
+                          "message": "Error: page.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  88 |     await page.fill('input[type=\"text\"]', 'admin')\n  89 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 90 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  91 |\n  92 |     // 等待登录完成\n  93 |     await expect(page).toHaveURL('/dashboard')\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js:90:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:40:59.349Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该记住登录状态-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该记住登录状态-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该记住登录状态-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-0d469ce852d602d363a1",
+              "file": "auth.spec.js",
+              "line": 86,
+              "column": 7
+            },
+            {
+              "title": "应该能够退出登录",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
+                      "status": "timedOut",
+                      "duration": 30123,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js",
+                            "column": 16,
+                            "line": 112
+                          },
+                          "message": "Error: page.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  110 |     await page.fill('input[type=\"text\"]', 'admin')\n  111 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 112 |     await page.click('button[type=\"submit\"]')\n      |                ^\n  113 |     await expect(page).toHaveURL('/dashboard')\n  114 |\n  115 |     // 退出登录\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js:112:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:41:01.520Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该能够退出登录-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该能够退出登录-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该能够退出登录-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-620f988a8c4a440be9bb",
+              "file": "auth.spec.js",
+              "line": 108,
+              "column": 7
+            },
+            {
+              "title": "应该处理网络错误",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 30125,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js",
+                            "column": 16,
+                            "line": 134
+                          },
+                          "message": "Error: page.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  132 |     await page.fill('input[type=\"text\"]', 'admin')\n  133 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 134 |     await page.click('button[type=\"submit\"]')\n      |                ^\n  135 |\n  136 |     // 检查错误信息\n  137 |     await expect(page.locator('.error-message')).toBeVisible()\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js:134:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:41:06.627Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该处理网络错误-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该处理网络错误-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该处理网络错误-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-334b5a7917de1c5de61d",
+              "file": "auth.spec.js",
+              "line": 127,
+              "column": 7
+            },
+            {
+              "title": "应该支持密码显示/隐藏",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 2,
+                      "status": "timedOut",
+                      "duration": 30138,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js",
+                            "column": 24,
+                            "line": 149
+                          },
+                          "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.password-toggle')\u001b[22m\n\n\n  147 |\n  148 |     // 点击显示密码\n> 149 |     await toggleButton.click()\n      |                        ^\n  150 |     await expect(passwordInput).toHaveAttribute('type', 'text')\n  151 |\n  152 |     // 点击隐藏密码\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/auth.spec.js:149:24"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:41:30.962Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该支持密码显示-隐藏-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该支持密码显示-隐藏-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/auth-认证功能-应该支持密码显示-隐藏-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-30aa3e66bcadf4e5bed5",
+              "file": "auth.spec.js",
+              "line": 141,
+              "column": 7
+            },
+            {
+              "title": "页面应该正确显示登录表单",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-5048cdb56dd4e52d237a",
+              "file": "auth.spec.js",
+              "line": 12,
+              "column": 7
+            },
+            {
+              "title": "应该显示验证错误信息",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-2e4269ba2689ba05c16b",
+              "file": "auth.spec.js",
+              "line": 26,
+              "column": 7
+            },
+            {
+              "title": "应该显示登录失败错误",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-6f68053951734b561c99",
+              "file": "auth.spec.js",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "应该能够成功登录",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-f8f9c1fd2172948eb30d",
+              "file": "auth.spec.js",
+              "line": 46,
+              "column": 7
+            },
+            {
+              "title": "应该支持回车键登录",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-a60da9b1fcb49d7db9f2",
+              "file": "auth.spec.js",
+              "line": 61,
+              "column": 7
+            },
+            {
+              "title": "应该显示加载状态",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-1a6c91d12eeb18d7366f",
+              "file": "auth.spec.js",
+              "line": 73,
+              "column": 7
+            },
+            {
+              "title": "应该记住登录状态",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-e7a6c7a460df0d3606b5",
+              "file": "auth.spec.js",
+              "line": 86,
+              "column": 7
+            },
+            {
+              "title": "应该能够退出登录",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-a528a486d0860f61b2b3",
+              "file": "auth.spec.js",
+              "line": 108,
+              "column": 7
+            },
+            {
+              "title": "应该处理网络错误",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-7d55e33f39a34b7af781",
+              "file": "auth.spec.js",
+              "line": 127,
+              "column": 7
+            },
+            {
+              "title": "应该支持密码显示/隐藏",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-a33421143dc8c6a3810d",
+              "file": "auth.spec.js",
+              "line": 141,
+              "column": 7
+            },
+            {
+              "title": "页面应该正确显示登录表单",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-8dac82aef59621972702",
+              "file": "auth.spec.js",
+              "line": 12,
+              "column": 7
+            },
+            {
+              "title": "应该显示验证错误信息",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-73ebf176d6b0e0dcdea4",
+              "file": "auth.spec.js",
+              "line": 26,
+              "column": 7
+            },
+            {
+              "title": "应该显示登录失败错误",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-ad8ba11319a66b2624b4",
+              "file": "auth.spec.js",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "应该能够成功登录",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-bda56242eed59084e4e3",
+              "file": "auth.spec.js",
+              "line": 46,
+              "column": 7
+            },
+            {
+              "title": "应该支持回车键登录",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-33a62a4b5372786e9b48",
+              "file": "auth.spec.js",
+              "line": 61,
+              "column": 7
+            },
+            {
+              "title": "应该显示加载状态",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-b370107b48cfba44651b",
+              "file": "auth.spec.js",
+              "line": 73,
+              "column": 7
+            },
+            {
+              "title": "应该记住登录状态",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-c960fb42b784c47acb34",
+              "file": "auth.spec.js",
+              "line": 86,
+              "column": 7
+            },
+            {
+              "title": "应该能够退出登录",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-de636e675a0f1856d73a",
+              "file": "auth.spec.js",
+              "line": 108,
+              "column": 7
+            },
+            {
+              "title": "应该处理网络错误",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-560989abaef990b0dfa1",
+              "file": "auth.spec.js",
+              "line": 127,
+              "column": 7
+            },
+            {
+              "title": "应该支持密码显示/隐藏",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-e190052020d8f602b227",
+              "file": "auth.spec.js",
+              "line": 141,
+              "column": 7
+            },
+            {
+              "title": "页面应该正确显示登录表单",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-95a0deddc4a1abc6573c",
+              "file": "auth.spec.js",
+              "line": 12,
+              "column": 7
+            },
+            {
+              "title": "应该显示验证错误信息",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-712ebde48475ca21f829",
+              "file": "auth.spec.js",
+              "line": 26,
+              "column": 7
+            },
+            {
+              "title": "应该显示登录失败错误",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-73b5adb13ee7e5a376c7",
+              "file": "auth.spec.js",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "应该能够成功登录",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-9a3131a4f32179a94826",
+              "file": "auth.spec.js",
+              "line": 46,
+              "column": 7
+            },
+            {
+              "title": "应该支持回车键登录",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-ddda99ecde780f32c6a3",
+              "file": "auth.spec.js",
+              "line": 61,
+              "column": 7
+            },
+            {
+              "title": "应该显示加载状态",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-02b631899d9ddf0cb091",
+              "file": "auth.spec.js",
+              "line": 73,
+              "column": 7
+            },
+            {
+              "title": "应该记住登录状态",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-852e68214cee79bc126e",
+              "file": "auth.spec.js",
+              "line": 86,
+              "column": 7
+            },
+            {
+              "title": "应该能够退出登录",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-f9b444f7730141c38dc8",
+              "file": "auth.spec.js",
+              "line": 108,
+              "column": 7
+            },
+            {
+              "title": "应该处理网络错误",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-1edb97fb9c4e2b96d192",
+              "file": "auth.spec.js",
+              "line": 127,
+              "column": 7
+            },
+            {
+              "title": "应该支持密码显示/隐藏",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-a8dc2fb7225e1f0a753c",
+              "file": "auth.spec.js",
+              "line": 141,
+              "column": 7
+            },
+            {
+              "title": "页面应该正确显示登录表单",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-d4be6f4b18a0534ddad8",
+              "file": "auth.spec.js",
+              "line": 12,
+              "column": 7
+            },
+            {
+              "title": "应该显示验证错误信息",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-004df629efb0a5a72c53",
+              "file": "auth.spec.js",
+              "line": 26,
+              "column": 7
+            },
+            {
+              "title": "应该显示登录失败错误",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-3749a850afbeaac92924",
+              "file": "auth.spec.js",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "应该能够成功登录",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-b4b18567a431902e77df",
+              "file": "auth.spec.js",
+              "line": 46,
+              "column": 7
+            },
+            {
+              "title": "应该支持回车键登录",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-98ce87f6c9af2e59fe3a",
+              "file": "auth.spec.js",
+              "line": 61,
+              "column": 7
+            },
+            {
+              "title": "应该显示加载状态",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-e3afa8404823082eca49",
+              "file": "auth.spec.js",
+              "line": 73,
+              "column": 7
+            },
+            {
+              "title": "应该记住登录状态",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-8046095722b55d46e16c",
+              "file": "auth.spec.js",
+              "line": 86,
+              "column": 7
+            },
+            {
+              "title": "应该能够退出登录",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-d08b091a736ddaeb0ef0",
+              "file": "auth.spec.js",
+              "line": 108,
+              "column": 7
+            },
+            {
+              "title": "应该处理网络错误",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-233d5f867441db017946",
+              "file": "auth.spec.js",
+              "line": 127,
+              "column": 7
+            },
+            {
+              "title": "应该支持密码显示/隐藏",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d5ed79a6b333c2ba7209-aedc6829bbebff795703",
+              "file": "auth.spec.js",
+              "line": 141,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "dashboard.spec.js",
+      "file": "dashboard.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "仪表板功能",
+          "file": "dashboard.spec.js",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "应该正确显示仪表板页面",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 3,
+                      "status": "timedOut",
+                      "duration": 30137,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:7:8",
+                        "location": {
+                          "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                          "column": 8,
+                          "line": 7
+                        },
+                        "snippet": "   5 |\n   6 | test.describe('仪表板功能', () => {\n>  7 |   test.beforeEach(async({ page }) => {\n     |        ^\n   8 |     // 登录\n   9 |     await page.goto('/login')\n  10 |     await page.fill('input[type=\"text\"]', 'admin')"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 8,
+                            "line": 7
+                          },
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n   5 |\n   6 | test.describe('仪表板功能', () => {\n>  7 |   test.beforeEach(async({ page }) => {\n     |        ^\n   8 |     // 登录\n   9 |     await page.goto('/login')\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:7:8"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 16,
+                            "line": 12
+                          },
+                          "message": "Error: page.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:41:30.963Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该正确显示仪表板页面-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该正确显示仪表板页面-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该正确显示仪表板页面-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                        "column": 8,
+                        "line": 7
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-ed6eacbbe0e5dab5f45c",
+              "file": "dashboard.spec.js",
+              "line": 16,
+              "column": 7
+            },
+            {
+              "title": "应该显示统计卡片",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 6,
+                      "status": "timedOut",
+                      "duration": 30134,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:7:8",
+                        "location": {
+                          "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                          "column": 8,
+                          "line": 7
+                        },
+                        "snippet": "   5 |\n   6 | test.describe('仪表板功能', () => {\n>  7 |   test.beforeEach(async({ page }) => {\n     |        ^\n   8 |     // 登录\n   9 |     await page.goto('/login')\n  10 |     await page.fill('input[type=\"text\"]', 'admin')"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 8,
+                            "line": 7
+                          },
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n   5 |\n   6 | test.describe('仪表板功能', () => {\n>  7 |   test.beforeEach(async({ page }) => {\n     |        ^\n   8 |     // 登录\n   9 |     await page.goto('/login')\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:7:8"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 16,
+                            "line": 12
+                          },
+                          "message": "Error: page.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:41:30.964Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该显示统计卡片-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该显示统计卡片-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该显示统计卡片-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                        "column": 8,
+                        "line": 7
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-b6e0d4d6dedab2bfae0c",
+              "file": "dashboard.spec.js",
+              "line": 25,
+              "column": 7
+            },
+            {
+              "title": "应该显示完成率进度条",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 5,
+                      "status": "timedOut",
+                      "duration": 30136,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:7:8",
+                        "location": {
+                          "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                          "column": 8,
+                          "line": 7
+                        },
+                        "snippet": "   5 |\n   6 | test.describe('仪表板功能', () => {\n>  7 |   test.beforeEach(async({ page }) => {\n     |        ^\n   8 |     // 登录\n   9 |     await page.goto('/login')\n  10 |     await page.fill('input[type=\"text\"]', 'admin')"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 8,
+                            "line": 7
+                          },
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n   5 |\n   6 | test.describe('仪表板功能', () => {\n>  7 |   test.beforeEach(async({ page }) => {\n     |        ^\n   8 |     // 登录\n   9 |     await page.goto('/login')\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:7:8"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 16,
+                            "line": 12
+                          },
+                          "message": "Error: page.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:41:30.964Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该显示完成率进度条-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该显示完成率进度条-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该显示完成率进度条-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                        "column": 8,
+                        "line": 7
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-5943a2e29215e25cf0fe",
+              "file": "dashboard.spec.js",
+              "line": 37,
+              "column": 7
+            },
+            {
+              "title": "应该显示本周任务列表",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 1,
+                      "status": "timedOut",
+                      "duration": 30131,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:7:8",
+                        "location": {
+                          "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                          "column": 8,
+                          "line": 7
+                        },
+                        "snippet": "   5 |\n   6 | test.describe('仪表板功能', () => {\n>  7 |   test.beforeEach(async({ page }) => {\n     |        ^\n   8 |     // 登录\n   9 |     await page.goto('/login')\n  10 |     await page.fill('input[type=\"text\"]', 'admin')"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 8,
+                            "line": 7
+                          },
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n   5 |\n   6 | test.describe('仪表板功能', () => {\n>  7 |   test.beforeEach(async({ page }) => {\n     |        ^\n   8 |     // 登录\n   9 |     await page.goto('/login')\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:7:8"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 16,
+                            "line": 12
+                          },
+                          "message": "Error: page.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:41:31.723Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该显示本周任务列表-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该显示本周任务列表-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该显示本周任务列表-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                        "column": 8,
+                        "line": 7
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-5ef8f73936640f219a8d",
+              "file": "dashboard.spec.js",
+              "line": 49,
+              "column": 7
+            },
+            {
+              "title": "应该能够刷新数据",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 4,
+                      "status": "timedOut",
+                      "duration": 30126,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:7:8",
+                        "location": {
+                          "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                          "column": 8,
+                          "line": 7
+                        },
+                        "snippet": "   5 |\n   6 | test.describe('仪表板功能', () => {\n>  7 |   test.beforeEach(async({ page }) => {\n     |        ^\n   8 |     // 登录\n   9 |     await page.goto('/login')\n  10 |     await page.fill('input[type=\"text\"]', 'admin')"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 8,
+                            "line": 7
+                          },
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n   5 |\n   6 | test.describe('仪表板功能', () => {\n>  7 |   test.beforeEach(async({ page }) => {\n     |        ^\n   8 |     // 登录\n   9 |     await page.goto('/login')\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:7:8"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 16,
+                            "line": 12
+                          },
+                          "message": "Error: page.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:41:31.916Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该能够刷新数据-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该能够刷新数据-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该能够刷新数据-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                        "column": 8,
+                        "line": 7
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-224c33412b847f277b4a",
+              "file": "dashboard.spec.js",
+              "line": 63,
+              "column": 7
+            },
+            {
+              "title": "应该能够快速创建任务",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 30124,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:7:8",
+                        "location": {
+                          "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                          "column": 8,
+                          "line": 7
+                        },
+                        "snippet": "   5 |\n   6 | test.describe('仪表板功能', () => {\n>  7 |   test.beforeEach(async({ page }) => {\n     |        ^\n   8 |     // 登录\n   9 |     await page.goto('/login')\n  10 |     await page.fill('input[type=\"text\"]', 'admin')"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 8,
+                            "line": 7
+                          },
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n   5 |\n   6 | test.describe('仪表板功能', () => {\n>  7 |   test.beforeEach(async({ page }) => {\n     |        ^\n   8 |     // 登录\n   9 |     await page.goto('/login')\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:7:8"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 16,
+                            "line": 12
+                          },
+                          "message": "Error: page.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:41:37.105Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该能够快速创建任务-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该能够快速创建任务-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该能够快速创建任务-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                        "column": 8,
+                        "line": 7
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-654737a0c8dc3f6ed1b3",
+              "file": "dashboard.spec.js",
+              "line": 77,
+              "column": 7
+            },
+            {
+              "title": "应该能够筛选任务",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 3,
+                      "status": "interrupted",
+                      "duration": 14943,
+                      "error": {
+                        "message": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n",
+                        "stack": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16",
+                        "location": {
+                          "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                          "column": 16,
+                          "line": 12
+                        },
+                        "snippet": "  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 16,
+                            "line": 12
+                          },
+                          "message": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:42:01.514Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该能够筛选任务-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该能够筛选任务-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                        "column": 16,
+                        "line": 12
+                      }
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-4788da50afc4b7e7c54b",
+              "file": "dashboard.spec.js",
+              "line": 97,
+              "column": 7
+            },
+            {
+              "title": "应该显示图表数据",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 5,
+                      "status": "interrupted",
+                      "duration": 14955,
+                      "error": {
+                        "message": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n",
+                        "stack": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16",
+                        "location": {
+                          "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                          "column": 16,
+                          "line": 12
+                        },
+                        "snippet": "  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 16,
+                            "line": 12
+                          },
+                          "message": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:42:01.515Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该显示图表数据-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该显示图表数据-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                        "column": 16,
+                        "line": 12
+                      }
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-a9f57a1dd7b2b0fa12de",
+              "file": "dashboard.spec.js",
+              "line": 114,
+              "column": 7
+            },
+            {
+              "title": "应该能够导航到任务详情",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 6,
+                      "status": "interrupted",
+                      "duration": 14941,
+                      "error": {
+                        "message": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n",
+                        "stack": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16",
+                        "location": {
+                          "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                          "column": 16,
+                          "line": 12
+                        },
+                        "snippet": "  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 16,
+                            "line": 12
+                          },
+                          "message": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:42:01.514Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该能够导航到任务详情-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该能够导航到任务详情-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                        "column": 16,
+                        "line": 12
+                      }
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-288d63a391cfe38d6eff",
+              "file": "dashboard.spec.js",
+              "line": 128,
+              "column": 7
+            },
+            {
+              "title": "应该响应式适配移动端",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 2,
+                      "status": "interrupted",
+                      "duration": 14949,
+                      "error": {
+                        "message": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n",
+                        "stack": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16",
+                        "location": {
+                          "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                          "column": 16,
+                          "line": 12
+                        },
+                        "snippet": "  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 16,
+                            "line": 12
+                          },
+                          "message": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:42:01.515Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该响应式适配移动端-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该响应式适配移动端-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                        "column": 16,
+                        "line": 12
+                      }
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-479099794b8ed107f46c",
+              "file": "dashboard.spec.js",
+              "line": 140,
+              "column": 7
+            },
+            {
+              "title": "应该显示通知中心",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 1,
+                      "status": "interrupted",
+                      "duration": 14276,
+                      "error": {
+                        "message": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n",
+                        "stack": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16",
+                        "location": {
+                          "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                          "column": 16,
+                          "line": 12
+                        },
+                        "snippet": "  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 16,
+                            "line": 12
+                          },
+                          "message": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:42:02.215Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该显示通知中心-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该显示通知中心-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                        "column": 16,
+                        "line": 12
+                      }
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-e1fd68254d6ec99e08f6",
+              "file": "dashboard.spec.js",
+              "line": 155,
+              "column": 7
+            },
+            {
+              "title": "应该能够标记重点任务",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 4,
+                      "status": "interrupted",
+                      "duration": 14068,
+                      "error": {
+                        "message": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n",
+                        "stack": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16",
+                        "location": {
+                          "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                          "column": 16,
+                          "line": 12
+                        },
+                        "snippet": "  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 16,
+                            "line": 12
+                          },
+                          "message": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:42:02.419Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该能够标记重点任务-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该能够标记重点任务-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                        "column": 16,
+                        "line": 12
+                      }
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-198c3ee1a0e6f444f5fc",
+              "file": "dashboard.spec.js",
+              "line": 172,
+              "column": 7
+            },
+            {
+              "title": "应该能够更新任务状态",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "interrupted",
+                      "duration": 8911,
+                      "error": {
+                        "message": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n",
+                        "stack": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16",
+                        "location": {
+                          "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                          "column": 16,
+                          "line": 12
+                        },
+                        "snippet": "  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                            "column": 16,
+                            "line": 12
+                          },
+                          "message": "Error: page.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]')\u001b[22m\n\n\n  10 |     await page.fill('input[type=\"text\"]', 'admin')\n  11 |     await page.fill('input[type=\"password\"]', 'admin123')\n> 12 |     await page.click('button[type=\"submit\"]')\n     |                ^\n  13 |     await expect(page).toHaveURL('/dashboard')\n  14 |   })\n  15 |\n    at /Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js:12:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T02:42:07.581Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该能够更新任务状态-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/playwright-report/dashboard-仪表板功能-应该能够更新任务状态-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/zhangyanlong/workspaces/weekly-plan/frontend/e2e/dashboard.spec.js",
+                        "column": 16,
+                        "line": 12
+                      }
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-14d1db31f9e47b3fe13f",
+              "file": "dashboard.spec.js",
+              "line": 188,
+              "column": 7
+            },
+            {
+              "title": "应该能够导出数据",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-a836fe6be4a7fe76f80a",
+              "file": "dashboard.spec.js",
+              "line": 211,
+              "column": 7
+            },
+            {
+              "title": "应该正确显示仪表板页面",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-329e91fd847a9cf462b9",
+              "file": "dashboard.spec.js",
+              "line": 16,
+              "column": 7
+            },
+            {
+              "title": "应该显示统计卡片",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-fb1caa5e0b2db07faeb6",
+              "file": "dashboard.spec.js",
+              "line": 25,
+              "column": 7
+            },
+            {
+              "title": "应该显示完成率进度条",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-0ee40ae05d3c99c5de51",
+              "file": "dashboard.spec.js",
+              "line": 37,
+              "column": 7
+            },
+            {
+              "title": "应该显示本周任务列表",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-d67bb89aeace4638365a",
+              "file": "dashboard.spec.js",
+              "line": 49,
+              "column": 7
+            },
+            {
+              "title": "应该能够刷新数据",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-0fcb29c9a0a59cb130b4",
+              "file": "dashboard.spec.js",
+              "line": 63,
+              "column": 7
+            },
+            {
+              "title": "应该能够快速创建任务",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-0890130d1a1874a43437",
+              "file": "dashboard.spec.js",
+              "line": 77,
+              "column": 7
+            },
+            {
+              "title": "应该能够筛选任务",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-33ac792b8a63f48c707b",
+              "file": "dashboard.spec.js",
+              "line": 97,
+              "column": 7
+            },
+            {
+              "title": "应该显示图表数据",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-810c277ea5659aa08b5b",
+              "file": "dashboard.spec.js",
+              "line": 114,
+              "column": 7
+            },
+            {
+              "title": "应该能够导航到任务详情",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-a245f1d56842d6ba0a67",
+              "file": "dashboard.spec.js",
+              "line": 128,
+              "column": 7
+            },
+            {
+              "title": "应该响应式适配移动端",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-8e216cc38f0f996a4592",
+              "file": "dashboard.spec.js",
+              "line": 140,
+              "column": 7
+            },
+            {
+              "title": "应该显示通知中心",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-32ba8abd7d0806ebadd0",
+              "file": "dashboard.spec.js",
+              "line": 155,
+              "column": 7
+            },
+            {
+              "title": "应该能够标记重点任务",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-2a2c0c302a1619d8c428",
+              "file": "dashboard.spec.js",
+              "line": 172,
+              "column": 7
+            },
+            {
+              "title": "应该能够更新任务状态",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-64a20044b836e8ce8d97",
+              "file": "dashboard.spec.js",
+              "line": 188,
+              "column": 7
+            },
+            {
+              "title": "应该能够导出数据",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-9a1011c2fcb0e670fec3",
+              "file": "dashboard.spec.js",
+              "line": 211,
+              "column": 7
+            },
+            {
+              "title": "应该正确显示仪表板页面",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-5b9380a01f3dd9d071e3",
+              "file": "dashboard.spec.js",
+              "line": 16,
+              "column": 7
+            },
+            {
+              "title": "应该显示统计卡片",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-53408fb8d65984de9916",
+              "file": "dashboard.spec.js",
+              "line": 25,
+              "column": 7
+            },
+            {
+              "title": "应该显示完成率进度条",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-eb5f7708e15b536b1dc7",
+              "file": "dashboard.spec.js",
+              "line": 37,
+              "column": 7
+            },
+            {
+              "title": "应该显示本周任务列表",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-35bfd73b0c37ca97c8af",
+              "file": "dashboard.spec.js",
+              "line": 49,
+              "column": 7
+            },
+            {
+              "title": "应该能够刷新数据",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-b192ad3f540e720554b8",
+              "file": "dashboard.spec.js",
+              "line": 63,
+              "column": 7
+            },
+            {
+              "title": "应该能够快速创建任务",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-060396fe18629dba82d5",
+              "file": "dashboard.spec.js",
+              "line": 77,
+              "column": 7
+            },
+            {
+              "title": "应该能够筛选任务",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-4a225da78a675a5c49f0",
+              "file": "dashboard.spec.js",
+              "line": 97,
+              "column": 7
+            },
+            {
+              "title": "应该显示图表数据",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-a3e0a00d71b4e15147dd",
+              "file": "dashboard.spec.js",
+              "line": 114,
+              "column": 7
+            },
+            {
+              "title": "应该能够导航到任务详情",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-e5bfaada7f974ac3a682",
+              "file": "dashboard.spec.js",
+              "line": 128,
+              "column": 7
+            },
+            {
+              "title": "应该响应式适配移动端",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-320f1c8070cf21de08ad",
+              "file": "dashboard.spec.js",
+              "line": 140,
+              "column": 7
+            },
+            {
+              "title": "应该显示通知中心",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-2d01660a740305101fdd",
+              "file": "dashboard.spec.js",
+              "line": 155,
+              "column": 7
+            },
+            {
+              "title": "应该能够标记重点任务",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-7775aaf0f44acb22bfbb",
+              "file": "dashboard.spec.js",
+              "line": 172,
+              "column": 7
+            },
+            {
+              "title": "应该能够更新任务状态",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-ed8c843861bfc1054870",
+              "file": "dashboard.spec.js",
+              "line": 188,
+              "column": 7
+            },
+            {
+              "title": "应该能够导出数据",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-717b5514969c521dafe6",
+              "file": "dashboard.spec.js",
+              "line": 211,
+              "column": 7
+            },
+            {
+              "title": "应该正确显示仪表板页面",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-eec972ae722bedb77f2d",
+              "file": "dashboard.spec.js",
+              "line": 16,
+              "column": 7
+            },
+            {
+              "title": "应该显示统计卡片",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-45f2017480cc7521abe8",
+              "file": "dashboard.spec.js",
+              "line": 25,
+              "column": 7
+            },
+            {
+              "title": "应该显示完成率进度条",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-fe2b899204ef6eb57dfd",
+              "file": "dashboard.spec.js",
+              "line": 37,
+              "column": 7
+            },
+            {
+              "title": "应该显示本周任务列表",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-5cd7d5be4954b1d0195f",
+              "file": "dashboard.spec.js",
+              "line": 49,
+              "column": 7
+            },
+            {
+              "title": "应该能够刷新数据",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-28619f17f7da45807c8c",
+              "file": "dashboard.spec.js",
+              "line": 63,
+              "column": 7
+            },
+            {
+              "title": "应该能够快速创建任务",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-e22676d097057569f10a",
+              "file": "dashboard.spec.js",
+              "line": 77,
+              "column": 7
+            },
+            {
+              "title": "应该能够筛选任务",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-294eed7bd3025c1bb9f6",
+              "file": "dashboard.spec.js",
+              "line": 97,
+              "column": 7
+            },
+            {
+              "title": "应该显示图表数据",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-816209292875cd03f3ac",
+              "file": "dashboard.spec.js",
+              "line": 114,
+              "column": 7
+            },
+            {
+              "title": "应该能够导航到任务详情",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-935fc437382a9b477cf4",
+              "file": "dashboard.spec.js",
+              "line": 128,
+              "column": 7
+            },
+            {
+              "title": "应该响应式适配移动端",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-f4e9a7fd078a6294474a",
+              "file": "dashboard.spec.js",
+              "line": 140,
+              "column": 7
+            },
+            {
+              "title": "应该显示通知中心",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-fa90e242c3049d546039",
+              "file": "dashboard.spec.js",
+              "line": 155,
+              "column": 7
+            },
+            {
+              "title": "应该能够标记重点任务",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-1ed32083e56c6d559ee0",
+              "file": "dashboard.spec.js",
+              "line": 172,
+              "column": 7
+            },
+            {
+              "title": "应该能够更新任务状态",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-c539bae97461dbe03f1a",
+              "file": "dashboard.spec.js",
+              "line": 188,
+              "column": 7
+            },
+            {
+              "title": "应该能够导出数据",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-afc277841c8336514fec",
+              "file": "dashboard.spec.js",
+              "line": 211,
+              "column": 7
+            },
+            {
+              "title": "应该正确显示仪表板页面",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-58f688cab658458900d7",
+              "file": "dashboard.spec.js",
+              "line": 16,
+              "column": 7
+            },
+            {
+              "title": "应该显示统计卡片",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-d574375008b088ecc72e",
+              "file": "dashboard.spec.js",
+              "line": 25,
+              "column": 7
+            },
+            {
+              "title": "应该显示完成率进度条",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-a58bc8d17daf02b60ced",
+              "file": "dashboard.spec.js",
+              "line": 37,
+              "column": 7
+            },
+            {
+              "title": "应该显示本周任务列表",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-f57b0d8e40fc381257d7",
+              "file": "dashboard.spec.js",
+              "line": 49,
+              "column": 7
+            },
+            {
+              "title": "应该能够刷新数据",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-022dffac9ec7e3f7d646",
+              "file": "dashboard.spec.js",
+              "line": 63,
+              "column": 7
+            },
+            {
+              "title": "应该能够快速创建任务",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-45a181af9ad527274374",
+              "file": "dashboard.spec.js",
+              "line": 77,
+              "column": 7
+            },
+            {
+              "title": "应该能够筛选任务",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-7b6a7740b9ca10cf5362",
+              "file": "dashboard.spec.js",
+              "line": 97,
+              "column": 7
+            },
+            {
+              "title": "应该显示图表数据",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-f8185ff2558c9301fd49",
+              "file": "dashboard.spec.js",
+              "line": 114,
+              "column": 7
+            },
+            {
+              "title": "应该能够导航到任务详情",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-388cc570d99af1145f18",
+              "file": "dashboard.spec.js",
+              "line": 128,
+              "column": 7
+            },
+            {
+              "title": "应该响应式适配移动端",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-a30b735f60c61a662a87",
+              "file": "dashboard.spec.js",
+              "line": 140,
+              "column": 7
+            },
+            {
+              "title": "应该显示通知中心",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-616f4489e688dfd54953",
+              "file": "dashboard.spec.js",
+              "line": 155,
+              "column": 7
+            },
+            {
+              "title": "应该能够标记重点任务",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-40277c7b9b0c787f5ca0",
+              "file": "dashboard.spec.js",
+              "line": 172,
+              "column": 7
+            },
+            {
+              "title": "应该能够更新任务状态",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-128b8e3d8e693926783d",
+              "file": "dashboard.spec.js",
+              "line": 188,
+              "column": 7
+            },
+            {
+              "title": "应该能够导出数据",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a1bb41a2bd6df77ed2f7-5ef220a651f628c22b93",
+              "file": "dashboard.spec.js",
+              "line": 211,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-11-20T02:40:59.005Z",
+    "duration": 77653.58300000001,
+    "expected": 1,
+    "skipped": 104,
+    "unexpected": 15,
+    "flaky": 0
+  }
+}

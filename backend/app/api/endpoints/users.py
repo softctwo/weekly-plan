@@ -73,6 +73,73 @@ def read_user_me(
     return current_user
 
 
+@router.get("/me/roles", response_model=List[schemas.UserRoleWithResponsibilities])
+def read_user_roles(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """获取当前用户的角色信息（包含职责和任务类型）"""
+    # 从数据库重新加载用户角色，包含职责和任务类型
+    from ...models.role import Role, Responsibility, TaskType
+
+    roles = db.query(Role).join(UserRoleLink).filter(
+        UserRoleLink.user_id == current_user.id,
+        Role.is_active == True
+    ).all()
+
+    # 为每个角色加载职责和任务类型
+    result_roles = []
+    for role in roles:
+        # 获取该角色的活跃职责
+        responsibilities = db.query(Responsibility).filter(
+            Responsibility.role_id == role.id,
+            Responsibility.is_active == True
+        ).all()
+
+        # 为每个职责加载任务类型
+        role_data = {
+            "id": role.id,
+            "name": role.name,
+            "name_en": role.name_en,
+            "description": role.description,
+            "is_active": role.is_active,
+            "responsibilities": []
+        }
+
+        for resp in responsibilities:
+            # 获取该职责的活跃任务类型
+            task_types = db.query(TaskType).filter(
+                TaskType.responsibility_id == resp.id,
+                TaskType.is_active == True
+            ).all()
+
+            resp_data = {
+                "id": resp.id,
+                "name": resp.name,
+                "description": resp.description,
+                "is_active": resp.is_active,
+                "sort_order": resp.sort_order,
+                "role_id": resp.role_id,
+                "created_at": resp.created_at,
+                "task_types": [
+                    {
+                        "id": tt.id,
+                        "name": tt.name,
+                        "description": tt.description,
+                        "is_active": tt.is_active,
+                        "sort_order": tt.sort_order,
+                        "responsibility_id": tt.responsibility_id,
+                        "created_at": tt.created_at
+                    }
+                    for tt in task_types
+                ]
+            }
+            role_data["responsibilities"].append(resp_data)
+
+        result_roles.append(role_data)
+    return result_roles
+
+
 @router.get("/{user_id}", response_model=schemas.User)
 def read_user(
     user_id: int,
@@ -187,3 +254,4 @@ def list_departments(
     """获取部门列表"""
     depts = db.query(Department).filter(Department.is_active == True).all()
     return depts
+# Trigger reload

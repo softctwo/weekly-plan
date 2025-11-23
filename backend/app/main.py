@@ -29,8 +29,9 @@ app = FastAPI(
     description="岗责驱动的周工作计划管理系统 API",
 )
 
-# 添加限流器到app state
-app.state.limiter = limiter
+# 添加限流器到app state（测试模式下禁用）
+if not settings.TESTING:
+    app.state.limiter = limiter
 
 # 配置CORS
 app.add_middleware(
@@ -47,7 +48,8 @@ app.add_middleware(
 async def log_requests(request: Request, call_next):
     """记录所有HTTP请求"""
     access_logger = logging.getLogger("access")
-    access_logger.info(f"{request.method} {request.url.path} - Client: {request.client.host}")
+    client_host = request.client.host if request.client else "unknown"
+    access_logger.info(f"{request.method} {request.url.path} - Client: {client_host}")
 
     response = await call_next(request)
 
@@ -57,11 +59,12 @@ async def log_requests(request: Request, call_next):
     return response
 
 
-# 全局异常处理器
-@app.exception_handler(RateLimitExceeded)
-async def custom_rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded):
-    """限流异常处理"""
-    return await rate_limit_exceeded_handler(request, exc)
+# 全局异常处理器（测试模式下禁用限流异常处理）
+if not settings.TESTING:
+    @app.exception_handler(RateLimitExceeded)
+    async def custom_rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded):
+        """限流异常处理"""
+        return await rate_limit_exceeded_handler(request, exc)
 
 
 @app.exception_handler(SQLAlchemyError)

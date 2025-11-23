@@ -19,10 +19,11 @@ export function getMyTasks(params) {
 }
 
 // 获取延期任务
-export function getDelayedTasks() {
+export function getDelayedTasks(params = {}) {
   return request({
     url: '/tasks/delayed-tasks',
-    method: 'get'
+    method: 'get',
+    params
   })
 }
 
@@ -32,6 +33,14 @@ export function updateTask(taskId, data) {
     url: `/tasks/${taskId}`,
     method: 'put',
     data
+  })
+}
+
+// 删除任务
+export function deleteTask(taskId) {
+  return request({
+    url: `/tasks/${taskId}`,
+    method: 'delete'
   })
 }
 
@@ -57,6 +66,24 @@ export function getWeeklyReport(params) {
 export function assignTask(userId, data) {
   return request({
     url: `/tasks/assign/?user_id=${userId}`,
+    method: 'post',
+    data
+  })
+}
+
+// 延期任务带入
+export function carryOverTasks(data) {
+  return request({
+    url: '/tasks/carry-over',
+    method: 'post',
+    data
+  })
+}
+
+// 未复盘兜底处理
+export function applyReviewFallback(data) {
+  return request({
+    url: '/tasks/reviews/fallback',
     method: 'post',
     data
   })

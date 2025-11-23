@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI分析功能测试</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .error { color: red; }
+        .success { color: green; }
+        .warning { color: orange; }
+        pre { background: #f5f5f5; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>AI分析功能诊断测试</h1>
+    
+    <div class="test-section">
+        <h2>1. 基础环境检查</h2>
+        <div id="env-check"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. API连接测试</h2>
+        <div id="api-test"></div>
+        <button onclick="testAPI()">测试API连接</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. AI分析端点测试</h2>
+        <div id="ai-endpoint-test"></div>
+        <button onclick="testAIEndpoint()">测试AI分析端点</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. 团队成员数据测试</h2>
+        <div id="team-data-test"></div>
+        <button onclick="testTeamData()">测试团队数据</button>
+    </div>
+
+    <script>
+        // 基础环境检查
+        function checkEnvironment() {
+            const result = document.getElementById('env-check');
+            let html = '';
+            
+            // 检查localStorage
+            const token = localStorage.getItem('token');
+            html += `<p>Token状态: ${token ? '<span class="success">已存在</span>' : '<span class="error">不存在</span>'}</p>`;
+            
+            // 检查Vue和Element Plus
+            if (typeof Vue !== 'undefined') {
+                html += `<p class="success">Vue.js: 已加载 (${Vue.version})</p>`;
+            } else {
+                html += `<p class="error">Vue.js: 未加载</p>`;
+            }
+            
+            // 检查axios
+            if (typeof axios !== 'undefined') {
+                html += `<p class="success">Axios: 已加载</p>`;
+            } else {
+                html += `<p class="error">Axios: 未加载</p>`;
+            }
+            
+            result.innerHTML = html;
+        }
+        
+        // API连接测试
+        async function testAPI() {
+            const result = document.getElementById('api-test');
+            result.innerHTML = '<p>测试中...</p>';
+            
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('/api/ai/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': token ? `Bearer ${token}` : ''
+                    },
+                    body: JSON.stringify({
+                        analysis_type: 'comprehensive',
+                        start_date: '2024-01-01',
+                        end_date: '2024-01-31'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    result.innerHTML = `<p class="success">API连接成功</p><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    result.innerHTML = `<p class="error">API返回错误: ${response.status}</p><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">连接失败: ${error.message}</p>`;
+            }
+        }
+        
+        // AI端点测试
+        async function testAIEndpoint() {
+            const result = document.getElementById('ai-endpoint-test');
+            result.innerHTML = '<p>测试中...</p>';
+            
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('/api/ai/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': token ? `Bearer ${token}` : ''
+                    },
+                    body: JSON.stringify({
+                        user_id: null,
+                        analysis_type: 'comprehensive',
+                        start_date: '2024-01-01',
+                        end_date: '2024-01-31'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    result.innerHTML = `<p class="success">AI端点正常</p><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    result.innerHTML = `<p class="error">AI端点错误: ${response.status}</p><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">AI端点连接失败: ${error.message}</p>`;
+            }
+        }
+        
+        // 团队数据测试
+        async function testTeamData() {
+            const result = document.getElementById('team-data-test');
+            result.innerHTML = '<p>测试中...</p>';
+            
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('/api/dashboard/team?year=2024&week_number=1', {
+                    headers: {
+                        'Authorization': token ? `Bearer ${token}` : ''
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    const hasTeamMembers = data.team_members && data.team_members.length > 0;
+                    result.innerHTML = `<p class="${hasTeamMembers ? 'success' : 'warning'}">团队数据: ${hasTeamMembers ? '正常' : '无成员数据'}</p><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    result.innerHTML = `<p class="error">团队数据获取失败: ${response.status}</p><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">团队数据连接失败: ${error.message}</p>`;
+            }
+        }
+        
+        // 页面加载时执行环境检查
+        window.onload = function() {
+            checkEnvironment();
+        };
+    </script>
+</body>
+</html>

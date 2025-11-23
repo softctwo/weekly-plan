@@ -9,6 +9,7 @@ import logging
 
 from ...core.security import verify_password, create_access_token
 from ...core.rate_limit import limiter
+from ...core.config import settings
 from ...db.base import get_db
 from ...models.user import User
 from ...schemas.auth import Token
@@ -18,7 +19,6 @@ logger = logging.getLogger(__name__)
 
 
 @router.post("/login", response_model=Token)
-@limiter.limit("5/minute")  # 每分钟最多5次登录尝试
 def login(
     request: Request,
     db: Session = Depends(get_db),
@@ -28,8 +28,21 @@ def login(
     用户登录
     OAuth2兼容的令牌登录，获取访问令牌
 
-    限流策略：每分钟最多5次登录尝试，防止暴力破解
+    限流策略：每分钟最多5次登录尝试，防止暴力破解（生产环境）
     """
+    # 生产环境下启用限流
+    if not settings.TESTING:
+        return limiter.limit("5/minute")(login_internal)(request, db, form_data)
+    else:
+        return login_internal(request, db, form_data)
+
+
+def login_internal(
+    request: Request,
+    db: Session = Depends(get_db),
+    form_data: OAuth2PasswordRequestForm = Depends()
+):
+    """内部登录函数"""
     logger.info(f"Login attempt for username: {form_data.username}")
 
     try:

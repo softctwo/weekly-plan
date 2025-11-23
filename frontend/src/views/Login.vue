@@ -93,11 +93,11 @@ const loginRules = {
   ]
 }
 
-const handleLogin = async () => {
-  if (!loginFormRef.value) return
+const handleLogin = async() => {
+  if (!loginFormRef.value) {return}
 
-  await loginFormRef.value.validate(async (valid) => {
-    if (!valid) return
+  await loginFormRef.value.validate(async(valid) => {
+    if (!valid) {return}
 
     loading.value = true
     try {

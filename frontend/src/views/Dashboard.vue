@@ -3,56 +3,92 @@
     <el-row :gutter="20">
       <!-- 统计卡片 -->
       <el-col :span="6">
-        <el-card shadow="hover" class="stat-card">
+        <el-card
+          shadow="hover"
+          class="stat-card"
+        >
           <div class="stat-content">
             <div class="stat-icon total">
-              <el-icon :size="32"><List /></el-icon>
+              <el-icon :size="32">
+                <List />
+              </el-icon>
             </div>
             <div class="stat-info">
-              <div class="stat-value">{{ statistics.total_tasks }}</div>
-              <div class="stat-label">总任务数</div>
+              <div class="stat-value">
+                {{ statistics.total_tasks }}
+              </div>
+              <div class="stat-label">
+                总任务数
+              </div>
             </div>
           </div>
         </el-card>
       </el-col>
 
       <el-col :span="6">
-        <el-card shadow="hover" class="stat-card">
+        <el-card
+          shadow="hover"
+          class="stat-card"
+        >
           <div class="stat-content">
             <div class="stat-icon completed">
-              <el-icon :size="32"><CircleCheck /></el-icon>
+              <el-icon :size="32">
+                <CircleCheck />
+              </el-icon>
             </div>
             <div class="stat-info">
-              <div class="stat-value">{{ statistics.completed_tasks }}</div>
-              <div class="stat-label">已完成</div>
+              <div class="stat-value">
+                {{ statistics.completed_tasks }}
+              </div>
+              <div class="stat-label">
+                已完成
+              </div>
             </div>
           </div>
         </el-card>
       </el-col>
 
       <el-col :span="6">
-        <el-card shadow="hover" class="stat-card">
+        <el-card
+          shadow="hover"
+          class="stat-card"
+        >
           <div class="stat-content">
             <div class="stat-icon progress">
-              <el-icon :size="32"><Clock /></el-icon>
+              <el-icon :size="32">
+                <Clock />
+              </el-icon>
             </div>
             <div class="stat-info">
-              <div class="stat-value">{{ statistics.in_progress_tasks }}</div>
-              <div class="stat-label">进行中</div>
+              <div class="stat-value">
+                {{ statistics.in_progress_tasks }}
+              </div>
+              <div class="stat-label">
+                进行中
+              </div>
             </div>
           </div>
         </el-card>
       </el-col>
 
       <el-col :span="6">
-        <el-card shadow="hover" class="stat-card">
+        <el-card
+          shadow="hover"
+          class="stat-card"
+        >
           <div class="stat-content">
             <div class="stat-icon key">
-              <el-icon :size="32"><Star /></el-icon>
+              <el-icon :size="32">
+                <Star />
+              </el-icon>
             </div>
             <div class="stat-info">
-              <div class="stat-value">{{ statistics.key_tasks_count }}</div>
-              <div class="stat-label">重点任务</div>
+              <div class="stat-value">
+                {{ statistics.key_tasks_count }}
+              </div>
+              <div class="stat-label">
+                重点任务
+              </div>
             </div>
           </div>
         </el-card>
@@ -60,7 +96,10 @@
     </el-row>
 
     <!-- 完成率 -->
-    <el-row :gutter="20" style="margin-top: 20px">
+    <el-row
+      :gutter="20"
+      style="margin-top: 20px"
+    >
       <el-col :span="24">
         <el-card shadow="hover">
           <template #header>
@@ -80,35 +119,59 @@
     </el-row>
 
     <!-- 重点任务列表 -->
-    <el-row :gutter="20" style="margin-top: 20px">
+    <el-row
+      :gutter="20"
+      style="margin-top: 20px"
+    >
       <el-col :span="24">
         <el-card shadow="hover">
           <template #header>
             <div class="card-header">
               <span>★ 重点任务</span>
-              <el-button type="primary" size="small" @click="goToTasks">
+              <el-button
+                type="primary"
+                size="small"
+                @click="goToTasks"
+              >
                 查看全部
               </el-button>
             </div>
           </template>
 
-          <el-table :data="keyTasks" stripe>
-            <el-table-column prop="title" label="任务标题" />
-            <el-table-column prop="status" label="状态" width="100">
+          <el-table
+            :data="keyTasks"
+            stripe
+          >
+            <el-table-column
+              prop="title"
+              label="任务标题"
+            />
+            <el-table-column
+              prop="status"
+              label="状态"
+              width="100"
+            >
               <template #default="{ row }">
                 <el-tag :type="getStatusType(row.status)">
                   {{ getStatusText(row.status) }}
                 </el-tag>
               </template>
             </el-table-column>
-            <el-table-column prop="created_at" label="创建时间" width="180">
+            <el-table-column
+              prop="created_at"
+              label="创建时间"
+              width="180"
+            >
               <template #default="{ row }">
                 {{ formatDate(row.created_at) }}
               </template>
             </el-table-column>
           </el-table>
 
-          <el-empty v-if="keyTasks.length === 0" description="暂无重点任务" />
+          <el-empty
+            v-if="keyTasks.length === 0"
+            description="暂无重点任务"
+          />
         </el-card>
       </el-col>
     </el-row>
@@ -152,12 +215,12 @@ const getCurrentWeek = () => {
   return { year, week_number: weekNumber }
 }
 
-const loadDashboard = async () => {
+const loadDashboard = async() => {
   try {
     const params = getCurrentWeek()
 
     // 使用缓存策略获取仪表盘数据
-    const data = await cacheStore.getDashboardCache(async () => {
+    const data = await cacheStore.getDashboardCache(async() => {
       return await getEmployeeDashboard(params)
     })
 
@@ -172,7 +235,7 @@ const loadDashboard = async () => {
 }
 
 // 检查任务并生成通知
-const checkAndGenerateNotifications = async (params) => {
+const checkAndGenerateNotifications = async(params) => {
   try {
     // 获取本周所有任务
     const tasks = await getMyTasks(params)
@@ -201,8 +264,8 @@ const checkAndGenerateNotifications = async (params) => {
 }
 
 const getProgressColor = (percentage) => {
-  if (percentage < 30) return '#f56c6c'
-  if (percentage < 70) return '#e6a23c'
+  if (percentage < 30) {return '#f56c6c'}
+  if (percentage < 70) {return '#e6a23c'}
   return '#67c23a'
 }
 

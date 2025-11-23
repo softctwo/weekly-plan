@@ -1,7 +1,10 @@
 <template>
   <el-container class="layout-container">
     <!-- 侧边栏 -->
-    <el-aside width="200px" class="sidebar">
+    <el-aside
+      width="200px"
+      class="sidebar"
+    >
       <div class="logo">
         <h3>周计划系统</h3>
       </div>
@@ -36,20 +39,32 @@
         </el-menu-item>
 
         <!-- 管理者菜单 -->
-        <el-menu-item v-if="userStore.isManager" index="/team">
+        <el-menu-item
+          v-if="userStore.isManager"
+          index="/team"
+        >
           <el-icon><User /></el-icon>
           <span>团队视图</span>
         </el-menu-item>
 
         <!-- 管理员菜单 -->
-        <el-sub-menu v-if="userStore.isAdmin" index="admin">
+        <el-sub-menu
+          v-if="userStore.isAdmin"
+          index="admin"
+        >
           <template #title>
             <el-icon><Setting /></el-icon>
             <span>系统管理</span>
           </template>
-          <el-menu-item index="/admin/users">用户管理</el-menu-item>
-          <el-menu-item index="/admin/roles">岗位职责库</el-menu-item>
-          <el-menu-item index="/admin/llm-config">大模型配置</el-menu-item>
+          <el-menu-item index="/admin/users">
+            用户管理
+          </el-menu-item>
+          <el-menu-item index="/admin/roles">
+            岗位职责库
+          </el-menu-item>
+          <el-menu-item index="/admin/llm-config">
+            大模型配置
+          </el-menu-item>
         </el-sub-menu>
       </el-menu>
     </el-aside>
@@ -79,7 +94,10 @@
                   <el-dropdown-item disabled>
                     {{ userStore.userInfo?.username }}
                   </el-dropdown-item>
-                  <el-dropdown-item divided command="logout">
+                  <el-dropdown-item
+                    divided
+                    command="logout"
+                  >
                     退出登录
                   </el-dropdown-item>
                 </el-dropdown-menu>

@@ -5,10 +5,18 @@
         <div class="card-header">
           <span>我的任务列表</span>
           <div class="header-actions">
-            <el-button type="success" @click="exportToExcel" :icon="Download">
+            <el-button
+              type="success"
+              :icon="Download"
+              @click="exportToExcel"
+            >
               导出Excel
             </el-button>
-            <el-button type="primary" @click="showCreateDialog = true" :icon="Plus">
+            <el-button
+              type="primary"
+              :icon="Plus"
+              @click="showCreateDialog = true"
+            >
               新建任务
             </el-button>
           </div>
@@ -16,39 +24,77 @@
       </template>
 
       <!-- 筛选器和批量操作工具栏 -->
-      <el-row :gutter="10" style="margin-bottom: 20px">
+      <el-row
+        :gutter="10"
+        style="margin-bottom: 20px"
+      >
         <el-col :span="12">
           <el-space wrap>
-            <el-checkbox v-model="filterKeyTasks" @change="loadTasks">
+            <el-checkbox
+              v-model="filterKeyTasks"
+              @change="loadTasks"
+            >
               只看重点任务
             </el-checkbox>
             <el-select
               v-model="filterStatus"
               placeholder="筛选状态"
               clearable
-              @change="loadTasks"
               style="width: 150px"
+              @change="loadTasks"
             >
-              <el-option label="待办" value="todo" />
-              <el-option label="进行中" value="in_progress" />
-              <el-option label="已完成" value="completed" />
-              <el-option label="已延期" value="delayed" />
+              <el-option
+                label="待办"
+                value="todo"
+              />
+              <el-option
+                label="进行中"
+                value="in_progress"
+              />
+              <el-option
+                label="已完成"
+                value="completed"
+              />
+              <el-option
+                label="已延期"
+                value="delayed"
+              />
             </el-select>
           </el-space>
         </el-col>
-        <el-col :span="12" style="text-align: right">
+        <el-col
+          :span="12"
+          style="text-align: right"
+        >
           <el-space v-if="selectedTasks.length > 0">
-            <el-tag type="info">已选择 {{ selectedTasks.length }} 项</el-tag>
-            <el-button size="small" type="primary" @click="showBatchStatusDialog = true">
+            <el-tag type="info">
+              已选择 {{ selectedTasks.length }} 项
+            </el-tag>
+            <el-button
+              size="small"
+              type="primary"
+              @click="showBatchStatusDialog = true"
+            >
               批量更新状态
             </el-button>
-            <el-button size="small" type="warning" @click="batchMarkAsKey">
+            <el-button
+              size="small"
+              type="warning"
+              @click="batchMarkAsKey"
+            >
               批量标记重点
             </el-button>
-            <el-button size="small" type="danger" @click="batchDelete">
+            <el-button
+              size="small"
+              type="danger"
+              @click="batchDelete"
+            >
               批量删除
             </el-button>
-            <el-button size="small" @click="clearSelection">
+            <el-button
+              size="small"
+              @click="clearSelection"
+            >
               清除选择
             </el-button>
           </el-space>
@@ -70,17 +116,20 @@
           v-model="paginatedTasks"
           item-key="id"
           handle=".drag-handle"
-          @end="handleDragEnd"
           :disabled="filterKeyTasks || !!filterStatus"
           class="task-list"
+          @end="handleDragEnd"
         >
           <template #item="{ element }">
-            <div class="task-card" :class="{ 'selected': isSelected(element.id) }">
+            <div
+              class="task-card"
+              :class="{ 'selected': isSelected(element.id) }"
+            >
               <div class="task-card-header">
                 <el-checkbox
                   :model-value="isSelected(element.id)"
-                  @change="toggleSelection(element.id)"
                   class="task-checkbox"
+                  @change="toggleSelection(element.id)"
                 />
                 <el-icon
                   class="drag-handle"
@@ -90,11 +139,18 @@
                   <Rank />
                 </el-icon>
                 <div class="task-title-section">
-                  <el-icon v-if="element.is_key_task" color="#f56c6c" :size="20">
+                  <el-icon
+                    v-if="element.is_key_task"
+                    color="#f56c6c"
+                    :size="20"
+                  >
                     <StarFilled />
                   </el-icon>
                   <span class="task-title">{{ element.title }}</span>
-                  <el-tag :type="getStatusType(element.status)" size="small">
+                  <el-tag
+                    :type="getStatusType(element.status)"
+                    size="small"
+                  >
                     {{ getStatusText(element.status) }}
                   </el-tag>
                 </div>
@@ -118,17 +174,36 @@
                     @confirm="deleteTask(element.id)"
                   >
                     <template #reference>
-                      <el-button size="small" type="danger">删除</el-button>
+                      <el-button
+                        size="small"
+                        type="danger"
+                      >
+                        删除
+                      </el-button>
                     </template>
                   </el-popconfirm>
                 </div>
               </div>
-              <div v-if="element.description" class="task-description">
+              <div
+                v-if="element.description"
+                class="task-description"
+              >
                 {{ element.description }}
               </div>
               <div class="task-meta">
-                <el-tag v-if="element.linked_task_type" size="small" type="info">
+                <el-tag
+                  v-if="element.linked_task_type"
+                  size="small"
+                  type="info"
+                >
                   {{ element.linked_task_type.name }}
+                </el-tag>
+                <el-tag
+                  v-if="element.planned_start_time && element.planned_end_time"
+                  size="small"
+                  type="warning"
+                >
+                  {{ formatDateTime(element.planned_start_time) }} - {{ formatDateTime(element.planned_end_time) }}
                 </el-tag>
                 <span class="task-date">
                   创建时间: {{ formatDate(element.created_at) }}
@@ -158,10 +233,25 @@
     </el-card>
 
     <!-- 创建任务对话框 -->
-    <el-dialog v-model="showCreateDialog" title="新建任务" width="600px">
-      <el-form :model="taskForm" :rules="taskRules" ref="taskFormRef" label-width="100px">
-        <el-form-item label="任务标题" prop="title">
-          <el-input v-model="taskForm.title" placeholder="请输入任务标题" />
+    <el-dialog
+      v-model="showCreateDialog"
+      title="新建任务"
+      width="600px"
+    >
+      <el-form
+        ref="taskFormRef"
+        :model="taskForm"
+        :rules="taskRules"
+        label-width="100px"
+      >
+        <el-form-item
+          label="任务标题"
+          prop="title"
+        >
+          <el-input
+            v-model="taskForm.title"
+            placeholder="请输入任务标题"
+          />
         </el-form-item>
         <el-form-item label="任务描述">
           <el-input
@@ -174,7 +264,11 @@
         <el-form-item label="是否重点">
           <el-switch v-model="taskForm.is_key_task" />
         </el-form-item>
-        <el-form-item label="关联职责">
+        <el-form-item 
+          label="关联职责" 
+          prop="linked_task_type_id"
+          required
+        >
           <el-cascader
             v-model="taskForm.linked_task_type_id"
             :options="responsibilityOptions"
@@ -184,56 +278,146 @@
               children: 'task_types',
               emitPath: false
             }"
-            placeholder="选择职责和任务类型（可选）"
-            clearable
+            placeholder="选择职责和任务类型（必须）"
             filterable
             style="width: 100%"
           />
+          <div class="form-tip">必须选择与您岗位职责相关的任务类型</div>
+        </el-form-item>
+        
+        <!-- 新增：时间属性 -->
+        <el-form-item 
+          label="计划时间" 
+          required
+        >
+          <el-row :gutter="10">
+            <el-col :span="12">
+              <el-form-item prop="planned_start_time">
+                <el-date-picker
+                  v-model="taskForm.planned_start_time"
+                  type="datetime"
+                  placeholder="开始时间"
+                  format="YYYY-MM-DD HH:mm"
+                  value-format="YYYY-MM-DD HH:mm"
+                  style="width: 100%"
+                />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item prop="planned_end_time">
+                <el-date-picker
+                  v-model="taskForm.planned_end_time"
+                  type="datetime"
+                  placeholder="结束时间"
+                  format="YYYY-MM-DD HH:mm"
+                  value-format="YYYY-MM-DD HH:mm"
+                  style="width: 100%"
+                />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <div class="form-tip">精确安排任务执行时间，便于时间管理</div>
         </el-form-item>
       </el-form>
       <template #footer>
-        <el-button @click="showCreateDialog = false">取消</el-button>
-        <el-button type="primary" @click="handleCreateTask" :loading="submitting">
+        <el-button @click="showCreateDialog = false">
+          取消
+        </el-button>
+        <el-button
+          type="primary"
+          :loading="submitting"
+          @click="handleCreateTask"
+        >
           确定
         </el-button>
       </template>
     </el-dialog>
 
     <!-- 更新状态对话框 -->
-    <el-dialog v-model="showStatusDialog" title="更新任务状态" width="400px">
+    <el-dialog
+      v-model="showStatusDialog"
+      title="更新任务状态"
+      width="400px"
+    >
       <el-form label-width="80px">
         <el-form-item label="任务状态">
-          <el-select v-model="statusForm.status" placeholder="选择状态">
-            <el-option label="待办" value="todo" />
-            <el-option label="进行中" value="in_progress" />
-            <el-option label="已完成" value="completed" />
-            <el-option label="已延期" value="delayed" />
+          <el-select
+            v-model="statusForm.status"
+            placeholder="选择状态"
+          >
+            <el-option
+              label="待办"
+              value="todo"
+            />
+            <el-option
+              label="进行中"
+              value="in_progress"
+            />
+            <el-option
+              label="已完成"
+              value="completed"
+            />
+            <el-option
+              label="已延期"
+              value="delayed"
+            />
           </el-select>
         </el-form-item>
       </el-form>
       <template #footer>
-        <el-button @click="showStatusDialog = false">取消</el-button>
-        <el-button type="primary" @click="handleUpdateStatus" :loading="submitting">
+        <el-button @click="showStatusDialog = false">
+          取消
+        </el-button>
+        <el-button
+          type="primary"
+          :loading="submitting"
+          @click="handleUpdateStatus"
+        >
           确定
         </el-button>
       </template>
     </el-dialog>
 
     <!-- 批量更新状态对话框 -->
-    <el-dialog v-model="showBatchStatusDialog" title="批量更新状态" width="400px">
+    <el-dialog
+      v-model="showBatchStatusDialog"
+      title="批量更新状态"
+      width="400px"
+    >
       <el-form label-width="80px">
         <el-form-item label="新状态">
-          <el-select v-model="batchStatusForm.status" placeholder="选择状态">
-            <el-option label="待办" value="todo" />
-            <el-option label="进行中" value="in_progress" />
-            <el-option label="已完成" value="completed" />
-            <el-option label="已延期" value="delayed" />
+          <el-select
+            v-model="batchStatusForm.status"
+            placeholder="选择状态"
+          >
+            <el-option
+              label="待办"
+              value="todo"
+            />
+            <el-option
+              label="进行中"
+              value="in_progress"
+            />
+            <el-option
+              label="已完成"
+              value="completed"
+            />
+            <el-option
+              label="已延期"
+              value="delayed"
+            />
           </el-select>
         </el-form-item>
       </el-form>
       <template #footer>
-        <el-button @click="showBatchStatusDialog = false">取消</el-button>
-        <el-button type="primary" @click="handleBatchUpdateStatus" :loading="submitting">
+        <el-button @click="showBatchStatusDialog = false">
+          取消
+        </el-button>
+        <el-button
+          type="primary"
+          :loading="submitting"
+          @click="handleBatchUpdateStatus"
+        >
           确定
         </el-button>
       </template>
@@ -276,13 +460,20 @@ const taskForm = ref({
   title: '',
   description: '',
   is_key_task: false,
-  linked_task_type_id: null,
+  linked_task_type_id: null,  // 现在是必填项
   week_number: dayjs().week(),
-  year: dayjs().year()
+  year: dayjs().year(),
+  
+  // 新增：时间属性
+  planned_start_time: dayjs().format('YYYY-MM-DD HH:mm'),
+  planned_end_time: dayjs().add(2, 'hour').format('YYYY-MM-DD HH:mm')
 })
 
 const taskRules = {
-  title: [{ required: true, message: '请输入任务标题', trigger: 'blur' }]
+  title: [{ required: true, message: '请输入任务标题', trigger: 'blur' }],
+  linked_task_type_id: [{ required: true, message: '请选择关联的职责', trigger: 'change' }],
+  planned_start_time: [{ required: true, message: '请选择计划开始时间', trigger: 'change' }],
+  planned_end_time: [{ required: true, message: '请选择计划结束时间', trigger: 'change' }]
 }
 
 const statusForm = ref({
@@ -308,10 +499,9 @@ const paginatedTasks = computed({
 })
 
 // 加载职责选项（用于级联选择器）
-const loadResponsibilities = async () => {
+const loadResponsibilities = async() => {
   try {
-    const userInfo = await request({ url: '/users/me', method: 'get' })
-    const roles = userInfo.roles || []
+    const roles = await request({ url: '/users/me/roles', method: 'get' })
 
     // 构建级联选项
     const options = []
@@ -332,13 +522,20 @@ const loadResponsibilities = async () => {
       }
     }
     responsibilityOptions.value = options
+    
+    // 如果没有可用的职责选项，显示提示
+    if (options.length === 0) {
+      ElMessage.warning('您当前没有分配任何岗位职责或相关任务类型，请联系管理员')
+    }
   } catch (error) {
     console.error('加载职责选项失败:', error)
+    ElMessage.error('加载职责选项失败，请刷新页面重试')
+    responsibilityOptions.value = [] // 确保为空数组，避免级联选择器出错
   }
 }
 
 // 加载任务列表
-const loadTasks = async () => {
+const loadTasks = async() => {
   loading.value = true
   try {
     const params = {
@@ -356,7 +553,7 @@ const loadTasks = async () => {
     const cacheKey = `tasks_${params.year}_w${params.week_number}_key${params.is_key_task || 'all'}_status${params.status || 'all'}`
 
     // 使用缓存策略获取任务数据
-    const data = await cacheStore.getTasksCache(cacheKey, async () => {
+    const data = await cacheStore.getTasksCache(cacheKey, async() => {
       return await getMyTasks(params)
     })
 
@@ -372,11 +569,11 @@ const loadTasks = async () => {
 }
 
 // 创建任务
-const handleCreateTask = async () => {
-  if (!taskFormRef.value) return
+const handleCreateTask = async() => {
+  if (!taskFormRef.value) {return}
 
-  await taskFormRef.value.validate(async (valid) => {
-    if (!valid) return
+  await taskFormRef.value.validate(async(valid) => {
+    if (!valid) {return}
 
     submitting.value = true
     try {
@@ -389,7 +586,9 @@ const handleCreateTask = async () => {
         is_key_task: false,
         linked_task_type_id: null,
         week_number: dayjs().week(),
-        year: dayjs().year()
+        year: dayjs().year(),
+        planned_start_time: dayjs().format('YYYY-MM-DD HH:mm'),
+        planned_end_time: dayjs().add(2, 'hour').format('YYYY-MM-DD HH:mm')
       }
 
       // 清除任务和仪表盘缓存
@@ -398,7 +597,20 @@ const handleCreateTask = async () => {
 
       loadTasks()
     } catch (error) {
-      ElMessage.error('创建任务失败')
+      // 显示更详细的错误信息
+      let errorMessage = '创建任务失败'
+      if (error.response?.data?.detail) {
+        const detail = error.response.data.detail
+        if (typeof detail === 'string') {
+          errorMessage = detail
+        } else if (Array.isArray(detail)) {
+          errorMessage = detail.map(item => item.msg || item).join(', ')
+        } else if (typeof detail === 'object') {
+          errorMessage = JSON.stringify(detail)
+        }
+      }
+      ElMessage.error(errorMessage)
+      console.error('创建任务失败:', error)
     } finally {
       submitting.value = false
     }
@@ -413,8 +625,8 @@ const showUpdateStatusDialog = (task) => {
 }
 
 // 更新任务状态
-const handleUpdateStatus = async () => {
-  if (!currentTask.value) return
+const handleUpdateStatus = async() => {
+  if (!currentTask.value) {return}
 
   submitting.value = true
   try {
@@ -435,7 +647,7 @@ const handleUpdateStatus = async () => {
 }
 
 // 切换重点任务标记
-const toggleKeyTask = async (task) => {
+const toggleKeyTask = async(task) => {
   try {
     await updateTask(task.id, { is_key_task: !task.is_key_task })
     ElMessage.success(task.is_key_task ? '已取消重点标记' : '已标记为重点任务')
@@ -451,7 +663,7 @@ const toggleKeyTask = async (task) => {
 }
 
 // 删除任务
-const deleteTask = async (taskId) => {
+const deleteTask = async(taskId) => {
   try {
     await deleteTaskApi(taskId)
     ElMessage.success('任务已删除')
@@ -467,7 +679,7 @@ const deleteTask = async (taskId) => {
 }
 
 // 拖拽结束处理
-const handleDragEnd = async () => {
+const handleDragEnd = async() => {
   // 这里可以调用API保存新的排序
   // 目前只在前端更新顺序
   ElMessage.success('排序已更新')
@@ -492,7 +704,7 @@ const clearSelection = () => {
 }
 
 // 批量更新状态
-const handleBatchUpdateStatus = async () => {
+const handleBatchUpdateStatus = async() => {
   if (selectedTasks.value.length === 0) {
     ElMessage.warning('请先选择任务')
     return
@@ -520,7 +732,7 @@ const handleBatchUpdateStatus = async () => {
 }
 
 // 批量标记重点
-const batchMarkAsKey = async () => {
+const batchMarkAsKey = async() => {
   if (selectedTasks.value.length === 0) {
     ElMessage.warning('请先选择任务')
     return
@@ -552,7 +764,7 @@ const batchMarkAsKey = async () => {
 }
 
 // 批量删除
-const batchDelete = async () => {
+const batchDelete = async() => {
   if (selectedTasks.value.length === 0) {
     ElMessage.warning('请先选择任务')
     return
@@ -656,9 +868,13 @@ const formatDate = (dateStr) => {
   return dateStr ? dayjs(dateStr).format('YYYY-MM-DD HH:mm') : '-'
 }
 
-onMounted(() => {
-  loadTasks()
-  loadResponsibilities()
+const formatDateTime = (dateStr) => {
+  return dateStr ? dayjs(dateStr).format('MM-DD HH:mm') : '-'
+}
+
+onMounted(async () => {
+  await loadResponsibilities()  // 先加载职责选项
+  loadTasks()                   // 再加载任务列表
 })
 </script>
 
@@ -676,6 +892,13 @@ onMounted(() => {
 .header-actions {
   display: flex;
   gap: 10px;
+}
+
+.form-tip {
+  font-size: 12px;
+  color: #909399;
+  margin-top: 5px;
+  line-height: 1.4;
 }
 
 .task-list {

@@ -6,8 +6,13 @@
           <span>数据统计报表</span>
           <el-space>
             <el-dropdown @command="handleExportCommand">
-              <el-button type="success" :icon="Download">
-                导出报表<el-icon class="el-icon--right"><arrow-down /></el-icon>
+              <el-button
+                type="success"
+                :icon="Download"
+              >
+                导出报表<el-icon class="el-icon--right">
+                  <arrow-down />
+                </el-icon>
               </el-button>
               <template #dropdown>
                 <el-dropdown-menu>
@@ -22,7 +27,11 @@
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
-            <el-button type="primary" :icon="Refresh" @click="loadReportData">
+            <el-button
+              type="primary"
+              :icon="Refresh"
+              @click="loadReportData"
+            >
               刷新数据
             </el-button>
           </el-space>
@@ -30,7 +39,10 @@
       </template>
 
       <!-- 时间范围选择 -->
-      <el-row :gutter="20" style="margin-bottom: 20px">
+      <el-row
+        :gutter="20"
+        style="margin-bottom: 20px"
+      >
         <el-col :span="8">
           <el-date-picker
             v-model="dateRange"
@@ -44,37 +56,58 @@
           />
         </el-col>
         <el-col :span="4">
-          <el-button @click="setLastWeek">最近一周</el-button>
+          <el-button @click="setLastWeek">
+            最近一周
+          </el-button>
         </el-col>
         <el-col :span="4">
-          <el-button @click="setLastMonth">最近一月</el-button>
+          <el-button @click="setLastMonth">
+            最近一月
+          </el-button>
         </el-col>
         <el-col :span="4">
-          <el-button @click="setLastQuarter">最近一季</el-button>
+          <el-button @click="setLastQuarter">
+            最近一季
+          </el-button>
         </el-col>
       </el-row>
 
       <!-- 核心指标卡片 -->
-      <el-row :gutter="20" style="margin-bottom: 30px">
+      <el-row
+        :gutter="20"
+        style="margin-bottom: 30px"
+      >
         <el-col :span="6">
           <div class="metric-card">
             <div class="metric-icon tasks">
-              <el-icon :size="40"><List /></el-icon>
+              <el-icon :size="40">
+                <List />
+              </el-icon>
             </div>
             <div class="metric-info">
-              <div class="metric-value">{{ reportData.total_tasks }}</div>
-              <div class="metric-label">总任务数</div>
+              <div class="metric-value">
+                {{ reportData.total_tasks }}
+              </div>
+              <div class="metric-label">
+                总任务数
+              </div>
             </div>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="metric-card">
             <div class="metric-icon completed">
-              <el-icon :size="40"><CircleCheck /></el-icon>
+              <el-icon :size="40">
+                <CircleCheck />
+              </el-icon>
             </div>
             <div class="metric-info">
-              <div class="metric-value">{{ reportData.completed_tasks }}</div>
-              <div class="metric-label">已完成</div>
+              <div class="metric-value">
+                {{ reportData.completed_tasks }}
+              </div>
+              <div class="metric-label">
+                已完成
+              </div>
               <div class="metric-trend">
                 {{ reportData.completion_rate }}% 完成率
               </div>
@@ -84,11 +117,17 @@
         <el-col :span="6">
           <div class="metric-card">
             <div class="metric-icon key">
-              <el-icon :size="40"><StarFilled /></el-icon>
+              <el-icon :size="40">
+                <StarFilled />
+              </el-icon>
             </div>
             <div class="metric-info">
-              <div class="metric-value">{{ reportData.key_tasks }}</div>
-              <div class="metric-label">重点任务</div>
+              <div class="metric-value">
+                {{ reportData.key_tasks }}
+              </div>
+              <div class="metric-label">
+                重点任务
+              </div>
               <div class="metric-trend">
                 {{ reportData.key_completion_rate }}% 完成率
               </div>
@@ -98,11 +137,17 @@
         <el-col :span="6">
           <div class="metric-card">
             <div class="metric-icon delayed">
-              <el-icon :size="40"><Warning /></el-icon>
+              <el-icon :size="40">
+                <Warning />
+              </el-icon>
             </div>
             <div class="metric-info">
-              <div class="metric-value">{{ reportData.delayed_tasks }}</div>
-              <div class="metric-label">延期任务</div>
+              <div class="metric-value">
+                {{ reportData.delayed_tasks }}
+              </div>
+              <div class="metric-label">
+                延期任务
+              </div>
               <div class="metric-trend">
                 {{ reportData.delay_rate }}% 延期率
               </div>
@@ -112,14 +157,20 @@
       </el-row>
 
       <!-- 状态分布和趋势图表 (ECharts) -->
-      <el-row :gutter="20" style="margin-bottom: 30px">
+      <el-row
+        :gutter="20"
+        style="margin-bottom: 30px"
+      >
         <el-col :span="12">
           <el-card shadow="hover">
             <template #header>
               <span>任务状态分布</span>
             </template>
             <div class="echarts-container">
-              <v-chart :option="statusChartOption" autoresize />
+              <v-chart
+                :option="statusChartOption"
+                autoresize
+              />
             </div>
           </el-card>
         </el-col>
@@ -129,25 +180,58 @@
               <span>周任务完成趋势</span>
             </template>
             <div class="echarts-container">
-              <v-chart :option="trendChartOption" autoresize />
+              <v-chart
+                :option="trendChartOption"
+                autoresize
+              />
             </div>
           </el-card>
         </el-col>
       </el-row>
 
       <!-- 岗位职责分析 -->
-      <el-row :gutter="20" style="margin-bottom: 30px" v-if="userStore.isManager">
+      <el-row
+        v-if="userStore.isManager"
+        :gutter="20"
+        style="margin-bottom: 30px"
+      >
         <el-col :span="24">
           <el-card shadow="hover">
             <template #header>
               <span>团队成员绩效统计</span>
             </template>
-            <el-table :data="memberPerformance" stripe>
-              <el-table-column prop="member_name" label="成员姓名" width="150" />
-              <el-table-column prop="total_tasks" label="总任务" width="100" align="center" />
-              <el-table-column prop="completed_tasks" label="已完成" width="100" align="center" />
-              <el-table-column prop="key_tasks" label="重点任务" width="100" align="center" />
-              <el-table-column label="完成率" width="150" align="center">
+            <el-table
+              :data="memberPerformance"
+              stripe
+            >
+              <el-table-column
+                prop="member_name"
+                label="成员姓名"
+                width="150"
+              />
+              <el-table-column
+                prop="total_tasks"
+                label="总任务"
+                width="100"
+                align="center"
+              />
+              <el-table-column
+                prop="completed_tasks"
+                label="已完成"
+                width="100"
+                align="center"
+              />
+              <el-table-column
+                prop="key_tasks"
+                label="重点任务"
+                width="100"
+                align="center"
+              />
+              <el-table-column
+                label="完成率"
+                width="150"
+                align="center"
+              >
                 <template #default="{ row }">
                   <el-progress
                     :percentage="row.completion_rate"
@@ -156,13 +240,26 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column label="平均任务周期" width="150" align="center">
+              <el-table-column
+                label="平均任务周期"
+                width="150"
+                align="center"
+              >
                 <template #default="{ row }">
                   {{ row.avg_completion_days }} 天
                 </template>
               </el-table-column>
-              <el-table-column prop="reviewed_weeks" label="已复盘周数" width="120" align="center" />
-              <el-table-column label="绩效评分" width="120" align="center">
+              <el-table-column
+                prop="reviewed_weeks"
+                label="已复盘周数"
+                width="120"
+                align="center"
+              />
+              <el-table-column
+                label="绩效评分"
+                width="120"
+                align="center"
+              >
                 <template #default="{ row }">
                   <el-rate
                     :model-value="row.performance_score"
@@ -184,13 +281,37 @@
             <template #header>
               <span>任务类型分布统计</span>
             </template>
-            <el-table :data="taskTypeStats" stripe max-height="400">
-              <el-table-column prop="task_type" label="任务类型" width="200" />
-              <el-table-column prop="responsibility" label="所属职责" width="200" />
-              <el-table-column prop="count" label="任务数量" width="120" align="center" />
-              <el-table-column label="完成情况" min-width="300">
+            <el-table
+              :data="taskTypeStats"
+              stripe
+              max-height="400"
+            >
+              <el-table-column
+                prop="task_type"
+                label="任务类型"
+                width="200"
+              />
+              <el-table-column
+                prop="responsibility"
+                label="所属职责"
+                width="200"
+              />
+              <el-table-column
+                prop="count"
+                label="任务数量"
+                width="120"
+                align="center"
+              />
+              <el-table-column
+                label="完成情况"
+                min-width="300"
+              >
                 <template #default="{ row }">
-                  <el-space direction="vertical" :size="0" style="width: 100%">
+                  <el-space
+                    direction="vertical"
+                    :size="0"
+                    style="width: 100%"
+                  >
                     <div style="display: flex; justify-content: space-between">
                       <span>已完成: {{ row.completed }}</span>
                       <span>进行中: {{ row.in_progress }}</span>
@@ -204,7 +325,11 @@
                   </el-space>
                 </template>
               </el-table-column>
-              <el-table-column label="平均用时" width="120" align="center">
+              <el-table-column
+                label="平均用时"
+                width="120"
+                align="center"
+              >
                 <template #default="{ row }">
                   {{ row.avg_days }} 天
                 </template>
@@ -402,7 +527,7 @@ const handleDateChange = () => {
 }
 
 // 加载报表数据
-const loadReportData = async () => {
+const loadReportData = async() => {
   if (!dateRange.value || dateRange.value.length !== 2) {
     ElMessage.warning('请选择日期范围')
     return
@@ -476,22 +601,22 @@ const loadReportData = async () => {
 
 // 计算百分比
 const calculatePercentage = (value, total) => {
-  if (!total || total === 0) return 0
+  if (!total || total === 0) {return 0}
   return Math.round((value / total) * 100)
 }
 
 // 获取进度条颜色
 const getProgressColor = (percentage) => {
-  if (percentage < 30) return '#f56c6c'
-  if (percentage < 70) return '#e6a23c'
+  if (percentage < 30) {return '#f56c6c'}
+  if (percentage < 70) {return '#e6a23c'}
   return '#67c23a'
 }
 
 // 获取趋势条颜色
 const getTrendColor = (rate) => {
-  if (rate >= 80) return '#67c23a'
-  if (rate >= 60) return '#95de64'
-  if (rate >= 40) return '#e6a23c'
+  if (rate >= 80) {return '#67c23a'}
+  if (rate >= 60) {return '#95de64'}
+  if (rate >= 40) {return '#e6a23c'}
   return '#f56c6c'
 }
 

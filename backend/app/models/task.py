@@ -31,13 +31,14 @@ class FollowUpAction(str, Enum):
 
 
 class WeeklyTask(Base):
-    """周计划任务表 - REQ-3.1, REQ-3.3"""
+    """周计划任务表 - REQ-3.1, REQ-3.3 - 优化版：增加时间属性，强制岗责关联"""
     __tablename__ = "weekly_tasks"
     __table_args__ = (
         # 复合索引优化常见查询
         Index('idx_user_week', 'user_id', 'year', 'week_number'),  # 按用户和周次查询
         Index('idx_status_key', 'status', 'is_key_task'),  # 按状态和重点任务过滤
         Index('idx_user_status', 'user_id', 'status'),  # 按用户和状态查询
+        Index('idx_planned_time', 'planned_start_time', 'planned_end_time'),  # 按时间查询
     )
 
     id = Column(Integer, primary_key=True, index=True)
@@ -50,7 +51,17 @@ class WeeklyTask(Base):
     title = Column(String(500), nullable=False, comment="任务标题")
     description = Column(Text, comment="任务详细描述")
 
-    # 任务来源与关联 - REQ-3.1.2
+    # 时间属性 - 新增：精确的计划时间安排
+    planned_start_time = Column(DateTime(timezone=True), nullable=False, comment="计划开始时间")
+    planned_end_time = Column(DateTime(timezone=True), nullable=False, comment="计划结束时间")
+    planned_duration = Column(Integer, nullable=False, comment="计划持续时间（分钟）")
+    
+    # 实际执行时间
+    actual_start_time = Column(DateTime(timezone=True), nullable=True, comment="实际开始时间")
+    actual_end_time = Column(DateTime(timezone=True), nullable=True, comment="实际结束时间")
+    actual_duration = Column(Integer, nullable=True, comment="实际持续时间（分钟）")
+
+    # 任务来源与关联 - REQ-3.1.2 - 强制岗责关联
     source_type = Column(
         SQLEnum(TaskSource),
         nullable=False,
@@ -60,8 +71,8 @@ class WeeklyTask(Base):
     linked_task_type_id = Column(
         Integer,
         ForeignKey("task_types.id"),
-        nullable=True,
-        comment="关联的标准任务类型ID（可追溯职责）"
+        nullable=False,  # 改为必填：强制关联岗责
+        comment="关联的标准任务类型ID（必须可追溯职责）"
     )
 
     # 领导指派 - REQ-5.4

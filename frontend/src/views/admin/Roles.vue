@@ -4,7 +4,10 @@
       <template #header>
         <div class="card-header">
           <span>岗位职责库管理</span>
-          <el-button type="primary" @click="showRoleDialog = true">
+          <el-button
+            type="primary"
+            @click="showRoleDialog = true"
+          >
             <el-icon><Plus /></el-icon>
             新建岗位
           </el-button>
@@ -12,7 +15,10 @@
       </template>
 
       <!-- 岗位列表（折叠面板） -->
-      <el-collapse v-model="activeRoles" v-loading="loading">
+      <el-collapse
+        v-model="activeRoles"
+        v-loading="loading"
+      >
         <el-collapse-item
           v-for="role in roles"
           :key="role.id"
@@ -25,11 +31,18 @@
                   {{ role.is_active ? '启用' : '停用' }}
                 </el-tag>
                 <strong style="margin-left: 10px">{{ role.name }}</strong>
-                <el-tag type="info" size="small" style="margin-left: 10px">
+                <el-tag
+                  type="info"
+                  size="small"
+                  style="margin-left: 10px"
+                >
                   {{ role.name_en }}
                 </el-tag>
               </span>
-              <div class="role-actions" @click.stop>
+              <div
+                class="role-actions"
+                @click.stop
+              >
                 <el-button
                   size="small"
                   type="primary"
@@ -62,7 +75,10 @@
               class="responsibility-item"
             >
               <div class="resp-header">
-                <el-tag :type="resp.is_active ? '' : 'info'" size="large">
+                <el-tag
+                  :type="resp.is_active ? '' : 'info'"
+                  size="large"
+                >
                   {{ resp.name }}
                 </el-tag>
                 <div>
@@ -116,14 +132,35 @@
     </el-card>
 
     <!-- 新建岗位对话框 -->
-    <el-dialog v-model="showRoleDialog" title="新建岗位" width="500px">
-      <el-form :model="roleForm" :rules="roleRules" ref="roleFormRef" label-width="100px">
-        <el-form-item label="岗位名称" prop="name">
-          <el-input v-model="roleForm.name" placeholder="如：研发工程师" />
+    <el-dialog
+      v-model="showRoleDialog"
+      title="新建岗位"
+      width="500px"
+    >
+      <el-form
+        ref="roleFormRef"
+        :model="roleForm"
+        :rules="roleRules"
+        label-width="100px"
+      >
+        <el-form-item
+          label="岗位名称"
+          prop="name"
+        >
+          <el-input
+            v-model="roleForm.name"
+            placeholder="如：研发工程师"
+          />
         </el-form-item>
 
-        <el-form-item label="英文名称" prop="name_en">
-          <el-input v-model="roleForm.name_en" placeholder="如：R&D" />
+        <el-form-item
+          label="英文名称"
+          prop="name_en"
+        >
+          <el-input
+            v-model="roleForm.name_en"
+            placeholder="如：R&D"
+          />
         </el-form-item>
 
         <el-form-item label="岗位描述">
@@ -137,18 +174,39 @@
       </el-form>
 
       <template #footer>
-        <el-button @click="showRoleDialog = false">取消</el-button>
-        <el-button type="primary" @click="handleCreateRole" :loading="submitting">
+        <el-button @click="showRoleDialog = false">
+          取消
+        </el-button>
+        <el-button
+          type="primary"
+          :loading="submitting"
+          @click="handleCreateRole"
+        >
           确定
         </el-button>
       </template>
     </el-dialog>
 
     <!-- 添加职责对话框 -->
-    <el-dialog v-model="showRespDialog" title="添加职责" width="500px">
-      <el-form :model="respForm" :rules="respRules" ref="respFormRef" label-width="100px">
-        <el-form-item label="职责名称" prop="name">
-          <el-input v-model="respForm.name" placeholder="如：产品功能开发" />
+    <el-dialog
+      v-model="showRespDialog"
+      title="添加职责"
+      width="500px"
+    >
+      <el-form
+        ref="respFormRef"
+        :model="respForm"
+        :rules="respRules"
+        label-width="100px"
+      >
+        <el-form-item
+          label="职责名称"
+          prop="name"
+        >
+          <el-input
+            v-model="respForm.name"
+            placeholder="如：产品功能开发"
+          />
         </el-form-item>
 
         <el-form-item label="职责描述">
@@ -161,23 +219,47 @@
         </el-form-item>
 
         <el-form-item label="排序序号">
-          <el-input-number v-model="respForm.sort_order" :min="0" />
+          <el-input-number
+            v-model="respForm.sort_order"
+            :min="0"
+          />
         </el-form-item>
       </el-form>
 
       <template #footer>
-        <el-button @click="showRespDialog = false">取消</el-button>
-        <el-button type="primary" @click="handleCreateResp" :loading="submitting">
+        <el-button @click="showRespDialog = false">
+          取消
+        </el-button>
+        <el-button
+          type="primary"
+          :loading="submitting"
+          @click="handleCreateResp"
+        >
           确定
         </el-button>
       </template>
     </el-dialog>
 
     <!-- 添加任务类型对话框 -->
-    <el-dialog v-model="showTaskTypeDialog" title="添加任务类型" width="500px">
-      <el-form :model="taskTypeForm" :rules="taskTypeRules" ref="taskTypeFormRef" label-width="100px">
-        <el-form-item label="任务类型" prop="name">
-          <el-input v-model="taskTypeForm.name" placeholder="如：需求分析与评审" />
+    <el-dialog
+      v-model="showTaskTypeDialog"
+      title="添加任务类型"
+      width="500px"
+    >
+      <el-form
+        ref="taskTypeFormRef"
+        :model="taskTypeForm"
+        :rules="taskTypeRules"
+        label-width="100px"
+      >
+        <el-form-item
+          label="任务类型"
+          prop="name"
+        >
+          <el-input
+            v-model="taskTypeForm.name"
+            placeholder="如：需求分析与评审"
+          />
         </el-form-item>
 
         <el-form-item label="描述">
@@ -190,13 +272,22 @@
         </el-form-item>
 
         <el-form-item label="排序序号">
-          <el-input-number v-model="taskTypeForm.sort_order" :min="0" />
+          <el-input-number
+            v-model="taskTypeForm.sort_order"
+            :min="0"
+          />
         </el-form-item>
       </el-form>
 
       <template #footer>
-        <el-button @click="showTaskTypeDialog = false">取消</el-button>
-        <el-button type="primary" @click="handleCreateTaskType" :loading="submitting">
+        <el-button @click="showTaskTypeDialog = false">
+          取消
+        </el-button>
+        <el-button
+          type="primary"
+          :loading="submitting"
+          @click="handleCreateTaskType"
+        >
           确定
         </el-button>
       </template>
@@ -259,7 +350,7 @@ const taskTypeRules = {
 }
 
 // 加载岗位列表
-const loadRoles = async () => {
+const loadRoles = async() => {
   loading.value = true
   try {
     const data = await getRoles(true) // 包含停用的岗位
@@ -274,11 +365,11 @@ const loadRoles = async () => {
 }
 
 // 创建岗位
-const handleCreateRole = async () => {
-  if (!roleFormRef.value) return
+const handleCreateRole = async() => {
+  if (!roleFormRef.value) {return}
 
-  await roleFormRef.value.validate(async (valid) => {
-    if (!valid) return
+  await roleFormRef.value.validate(async(valid) => {
+    if (!valid) {return}
 
     submitting.value = true
     try {
@@ -303,11 +394,11 @@ const showAddRespDialog = (role) => {
 }
 
 // 创建职责
-const handleCreateResp = async () => {
-  if (!respFormRef.value || !currentRole.value) return
+const handleCreateResp = async() => {
+  if (!respFormRef.value || !currentRole.value) {return}
 
-  await respFormRef.value.validate(async (valid) => {
-    if (!valid) return
+  await respFormRef.value.validate(async(valid) => {
+    if (!valid) {return}
 
     submitting.value = true
     try {
@@ -334,11 +425,11 @@ const showAddTaskTypeDialog = (resp) => {
 }
 
 // 创建任务类型
-const handleCreateTaskType = async () => {
-  if (!taskTypeFormRef.value || !currentResp.value) return
+const handleCreateTaskType = async() => {
+  if (!taskTypeFormRef.value || !currentResp.value) {return}
 
-  await taskTypeFormRef.value.validate(async (valid) => {
-    if (!valid) return
+  await taskTypeFormRef.value.validate(async(valid) => {
+    if (!valid) {return}
 
     submitting.value = true
     try {
@@ -358,7 +449,7 @@ const handleCreateTaskType = async () => {
 }
 
 // 切换岗位状态
-const toggleRoleStatus = async (role) => {
+const toggleRoleStatus = async(role) => {
   try {
     await ElMessageBox.confirm(
       `确定要${role.is_active ? '停用' : '启用'}岗位 ${role.name} 吗？`,
@@ -381,7 +472,7 @@ const toggleRoleStatus = async (role) => {
 }
 
 // 切换职责状态
-const toggleRespStatus = async (resp) => {
+const toggleRespStatus = async(resp) => {
   try {
     await ElMessageBox.confirm(
       `确定要${resp.is_active ? '停用' : '启用'}职责 ${resp.name} 吗？`,
@@ -404,7 +495,7 @@ const toggleRespStatus = async (resp) => {
 }
 
 // 切换任务类型状态
-const toggleTaskTypeStatus = async (taskType) => {
+const toggleTaskTypeStatus = async(taskType) => {
   try {
     await ElMessageBox.confirm(
       `确定要${taskType.is_active ? '停用' : '启用'}任务类型 ${taskType.name} 吗？`,

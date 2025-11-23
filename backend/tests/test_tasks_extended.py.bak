@@ -1,0 +1,310 @@
+"""
+Additional tests for tasks API endpoints to improve coverage
+"""
+import pytest
+from fastapi import status
+from datetime import datetime, date
+
+
+@pytest.mark.api
+@pytest.mark.tasks
+class TestTasksAPIExtended:
+    """Extended tests for tasks API endpoints"""
+
+    def test_get_delayed_tasks_success(self, client, admin_token, test_admin_user):
+        """Test getting delayed tasks"""
+        response = client.get(
+            "/api/tasks/delayed-tasks",
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert isinstance(data, list)
+
+    def test_get_delayed_tasks_unauthorized(self, client):
+        """Test getting delayed tasks without authentication"""
+        response = client.get("/api/tasks/delayed-tasks")
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    def test_create_task_review_success(self, client, admin_token, test_task):
+        """Test creating a task review"""
+        review_data = {
+            "task_id": test_task.id,
+            "completion_status": "completed",
+            "actual_hours": 8,
+            "difficulties": "任务较复杂但按期完成",
+            "learnings": "学习了新的开发技巧",
+            "improvements": "下次可以更好地预估时间"
+        }
+        
+        response = client.post(
+            "/api/tasks/reviews/",
+            json=review_data,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_201_CREATED
+        data = response.json()
+        assert data["task_id"] == test_task.id
+        assert data["completion_status"] == "completed"
+
+    def test_create_task_review_invalid_data(self, client, admin_token):
+        """Test creating task review with invalid data"""
+        invalid_data = {
+            "task_id": 99999,  # Non-existent task ID
+            "completion_status": "invalid_status"
+        }
+        
+        response = client.post(
+            "/api/tasks/reviews/",
+            json=invalid_data,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+
+    def test_get_weekly_report_success(self, client, admin_token, test_admin_user):
+        """Test getting weekly report"""
+        params = {
+            "start_date": "2024-01-01",
+            "end_date": "2024-01-07"
+        }
+        
+        response = client.get(
+            "/api/tasks/weekly-report",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "summary" in data
+        assert "tasks" in data
+        assert "statistics" in data
+
+    def test_get_weekly_report_invalid_date_range(self, client, admin_token):
+        """Test getting weekly report with invalid date range"""
+        params = {
+            "start_date": "2024-01-07",
+            "end_date": "2024-01-01"  # End date before start date
+        }
+        
+        response = client.get(
+            "/api/tasks/weekly-report",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    def test_assign_task_success(self, client, admin_token, test_employee_user):
+        """Test assigning task to employee"""
+        # First create a task
+        task_data = {
+            "title": "需要指派的任务",
+            "description": "这个任务需要指派给员工",
+            "task_type_id": 1,
+            "estimated_hours": 4,
+            "week_start_date": "2024-01-01"
+        }
+        
+        create_response = client.post(
+            "/api/tasks/",
+            json=task_data,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert create_response.status_code == status.HTTP_201_CREATED
+        task_id = create_response.json()["id"]
+        
+        # Assign the task
+        assign_data = {
+            "user_id": test_employee_user.id,
+            "note": "请按时完成此任务"
+        }
+        
+        response = client.post(
+            f"/api/tasks/assign/?user_id={test_employee_user.id}",
+            json=assign_data,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+
+    def test_assign_task_employee_forbidden(self, client, employee_token):
+        """Test that employees cannot assign tasks"""
+        response = client.post(
+            "/api/tasks/assign/?user_id=1",
+            headers={"Authorization": f"Bearer {employee_token}"}
+        )
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    def test_get_task_statistics(self, client, admin_token):
+        """Test getting task statistics"""
+        response = client.get(
+            "/api/tasks/statistics",
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "total_tasks" in data
+        assert "completed_tasks" in data
+        assert "completion_rate" in data
+
+    def test_update_task_status(self, client, admin_token, test_task):
+        """Test updating task status"""
+        update_data = {
+            "status": "in_progress"
+        }
+        
+        response = client.put(
+            f"/api/tasks/{test_task.id}/status",
+            json=update_data,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert data["status"] == "in_progress"
+
+    def test_update_task_status_invalid(self, client, admin_token, test_task):
+        """Test updating task with invalid status"""
+        update_data = {
+            "status": "invalid_status"
+        }
+        
+        response = client.put(
+            f"/api/tasks/{test_task.id}/status",
+            json=update_data,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+
+    def test_get_tasks_by_date_range(self, client, admin_token):
+        """Test getting tasks within date range"""
+        params = {
+            "start_date": "2024-01-01",
+            "end_date": "2024-01-31"
+        }
+        
+        response = client.get(
+            "/api/tasks/date-range",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert isinstance(data, list)
+
+    def test_get_tasks_by_status(self, client, admin_token):
+        """Test getting tasks filtered by status"""
+        params = {"status": "pending"}
+        
+        response = client.get(
+            "/api/tasks/filter",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert isinstance(data, list)
+
+    def test_create_bulk_tasks(self, client, admin_token):
+        """Test creating multiple tasks at once"""
+        bulk_data = {
+            "tasks": [
+                {
+                    "title": "批量任务1",
+                    "description": "第一个批量任务",
+                    "task_type_id": 1,
+                    "estimated_hours": 2,
+                    "week_start_date": "2024-01-01"
+                },
+                {
+                    "title": "批量任务2", 
+                    "description": "第二个批量任务",
+                    "task_type_id": 2,
+                    "estimated_hours": 3,
+                    "week_start_date": "2024-01-01"
+                }
+            ]
+        }
+        
+        response = client.post(
+            "/api/tasks/bulk",
+            json=bulk_data,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_201_CREATED
+        data = response.json()
+        assert len(data["created_tasks"]) == 2
+
+    def test_export_tasks_to_excel(self, client, admin_token):
+        """Test exporting tasks to Excel format"""
+        params = {
+            "start_date": "2024-01-01",
+            "end_date": "2024-01-31",
+            "format": "xlsx"
+        }
+        
+        response = client.get(
+            "/api/tasks/export",
+            params=params,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        # Check response contains Excel file
+        assert "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" in response.headers["content-type"]
+
+    def test_cancel_task(self, client, admin_token, test_task):
+        """Test cancelling a task"""
+        response = client.post(
+            f"/api/tasks/{test_task.id}/cancel",
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert data["status"] == "cancelled"
+
+    def test_carry_over_delayed_task(self, client, admin_token):
+        """Test carrying over delayed tasks to next week"""
+        carry_data = {
+            "target_week": "2024-01-08",
+            "task_ids": [1, 2, 3]  # Example task IDs
+        }
+        
+        response = client.post(
+            "/api/tasks/carry-over",
+            json=carry_data,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+
+    def test_review_fallback_creates_delay_and_rollover(self, client, admin_token, test_task):
+        """Test that review fallback creates delay and rollover records"""
+        review_data = {
+            "task_id": test_task.id,
+            "completion_status": "incomplete",
+            "actual_hours": 10,
+            "reason_for_incompletion": "时间不够",
+            "needs_rollover": True,
+            "rollover_reason": "任务复杂，需要延续到下周"
+        }
+        
+        response = client.post(
+            "/api/tasks/reviews/fallback",
+            json=review_data,
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == status.HTTP_201_CREATED
+        data = response.json()
+        assert "delay_record" in data
+        assert "rollover_task" in data
+
+    def test_assign_task_requires_direct_subordinate(self, client, manager_token, test_admin_user):
+        """Test that managers can only assign to direct subordinates"""
+        assign_data = {
+            "user_id": test_admin_user.id,  # Manager trying to assign to admin
+            "note": "This should fail"
+        }
+        
+        response = client.post(
+            f"/api/tasks/assign/?user_id={test_admin_user.id}",
+            json=assign_data,
+            headers={"Authorization": f"Bearer {manager_token}"}
+        )
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+        assert "not a direct subordinate" in response.json()["detail"].lower()

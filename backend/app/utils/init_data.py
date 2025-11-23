@@ -9,11 +9,8 @@ from ..models.llm_config import LLMConfig
 from ..core.security import get_password_hash
 
 
-def init_roles_and_responsibilities(db: Session):
-    """初始化岗位职责库数据"""
-
-    # 13个岗位的完整数据结构
-    roles_data = [
+# 13个岗位的完整数据结构
+roles_data = [
         {
             "name": "研发工程师",
             "name_en": "R&D",
@@ -468,6 +465,52 @@ def init_roles_and_responsibilities(db: Session):
         }
     ]
 
+
+def init_roles_and_responsibilities(db: Session):
+    """初始化岗位职责库数据"""
+    print("开始初始化岗位职责数据...")
+
+    for idx, role_data in enumerate(roles_data, 1):
+        # 创建岗位
+        role = Role(
+            name=role_data["name"],
+            name_en=role_data["name_en"],
+            description=role_data["description"]
+        )
+        db.add(role)
+        db.flush()  # 获取role.id
+
+        print(f"{idx}. 创建岗位: {role.name} ({role.name_en})")
+
+        # 创建职责和任务类型
+        for resp_idx, resp_data in enumerate(role_data["responsibilities"], 1):
+            responsibility = Responsibility(
+                role_id=role.id,
+                name=resp_data["name"],
+                sort_order=resp_idx
+            )
+            db.add(responsibility)
+            db.flush()
+
+            print(f"   - 职责 {resp_idx}: {responsibility.name}")
+
+            # 创建任务类型
+            for task_idx, task_name in enumerate(resp_data["task_types"], 1):
+                task_type = TaskType(
+                    responsibility_id=responsibility.id,
+                    name=task_name,
+                    sort_order=task_idx
+                )
+                db.add(task_type)
+
+            print(f"     └─ {len(resp_data['task_types'])} 个任务类型")
+
+    db.commit()
+    print(f"\n✓ 成功初始化 {len(roles_data)} 个岗位的职责数据")
+
+
+def init_roles_and_responsibilities(db: Session):
+    """初始化岗位职责库数据"""
     print("开始初始化岗位职责数据...")
 
     for idx, role_data in enumerate(roles_data, 1):

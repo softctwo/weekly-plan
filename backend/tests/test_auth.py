@@ -10,13 +10,13 @@ from fastapi import status
 class TestAuth:
     """认证相关测试"""
 
-    def test_login_success(self, client, test_user):
+    def test_login_success(self, client, test_admin_user):
         """测试成功登录"""
         response = client.post(
             "/api/auth/login",
             data={
-                "username": test_user.username,
-                "password": "testpass123"
+                "username": test_admin_user.username,
+                "password": "admin123"
             }
         )
         assert response.status_code == status.HTTP_200_OK
@@ -36,28 +36,28 @@ class TestAuth:
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
         assert "用户名或密码错误" in response.json()["detail"]
 
-    def test_login_invalid_password(self, client, test_user):
+    def test_login_invalid_password(self, client, test_admin_user):
         """测试错误密码登录"""
         response = client.post(
             "/api/auth/login",
             data={
-                "username": test_user.username,
+                "username": test_admin_user.username,
                 "password": "wrongpassword"
             }
         )
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
-    def test_login_inactive_user(self, client, test_user, db_session):
+    def test_login_inactive_user(self, client, test_admin_user, db_session):
         """测试停用用户登录"""
         # 停用用户
-        test_user.is_active = False
+        test_admin_user.is_active = False
         db_session.commit()
 
         response = client.post(
             "/api/auth/login",
             data={
-                "username": test_user.username,
-                "password": "testpass123"
+                "username": test_admin_user.username,
+                "password": "admin123"
             }
         )
         assert response.status_code == status.HTTP_400_BAD_REQUEST

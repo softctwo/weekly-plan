@@ -4,7 +4,10 @@
       <template #header>
         <div class="card-header">
           <span>用户管理</span>
-          <el-button type="primary" @click="showCreateDialog = true">
+          <el-button
+            type="primary"
+            @click="showCreateDialog = true"
+          >
             <el-icon><Plus /></el-icon>
             新建用户
           </el-button>
@@ -12,18 +15,41 @@
       </template>
 
       <!-- 用户列表 -->
-      <el-table :data="users" stripe v-loading="loading">
-        <el-table-column prop="username" label="用户名" width="120" />
-        <el-table-column prop="full_name" label="姓名" width="120" />
-        <el-table-column prop="email" label="邮箱" width="200" />
-        <el-table-column prop="user_type" label="用户类型" width="100">
+      <el-table
+        v-loading="loading"
+        :data="users"
+        stripe
+      >
+        <el-table-column
+          prop="username"
+          label="用户名"
+          width="120"
+        />
+        <el-table-column
+          prop="full_name"
+          label="姓名"
+          width="120"
+        />
+        <el-table-column
+          prop="email"
+          label="邮箱"
+          width="200"
+        />
+        <el-table-column
+          prop="user_type"
+          label="用户类型"
+          width="100"
+        >
           <template #default="{ row }">
             <el-tag :type="getUserTypeTag(row.user_type)">
               {{ getUserTypeText(row.user_type) }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="关联岗位" min-width="200">
+        <el-table-column
+          label="关联岗位"
+          min-width="200"
+        >
           <template #default="{ row }">
             <el-tag
               v-for="role in getUserRoles(row.id)"
@@ -43,16 +69,29 @@
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column prop="is_active" label="状态" width="80">
+        <el-table-column
+          prop="is_active"
+          label="状态"
+          width="80"
+        >
           <template #default="{ row }">
             <el-tag :type="row.is_active ? 'success' : 'danger'">
               {{ row.is_active ? '启用' : '停用' }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="180" fixed="right">
+        <el-table-column
+          label="操作"
+          width="180"
+          fixed="right"
+        >
           <template #default="{ row }">
-            <el-button size="small" @click="handleEdit(row)">编辑</el-button>
+            <el-button
+              size="small"
+              @click="handleEdit(row)"
+            >
+              编辑
+            </el-button>
             <el-button
               size="small"
               :type="row.is_active ? 'danger' : 'success'"
@@ -71,8 +110,16 @@
       :title="editingUser ? '编辑用户' : '新建用户'"
       width="600px"
     >
-      <el-form :model="userForm" :rules="userRules" ref="userFormRef" label-width="100px">
-        <el-form-item label="用户名" prop="username">
+      <el-form
+        ref="userFormRef"
+        :model="userForm"
+        :rules="userRules"
+        label-width="100px"
+      >
+        <el-form-item
+          label="用户名"
+          prop="username"
+        >
           <el-input
             v-model="userForm.username"
             placeholder="请输入用户名"
@@ -80,15 +127,31 @@
           />
         </el-form-item>
 
-        <el-form-item label="姓名" prop="full_name">
-          <el-input v-model="userForm.full_name" placeholder="请输入姓名" />
+        <el-form-item
+          label="姓名"
+          prop="full_name"
+        >
+          <el-input
+            v-model="userForm.full_name"
+            placeholder="请输入姓名"
+          />
         </el-form-item>
 
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="userForm.email" placeholder="请输入邮箱" />
+        <el-form-item
+          label="邮箱"
+          prop="email"
+        >
+          <el-input
+            v-model="userForm.email"
+            placeholder="请输入邮箱"
+          />
         </el-form-item>
 
-        <el-form-item label="密码" prop="password" v-if="!editingUser">
+        <el-form-item
+          v-if="!editingUser"
+          label="密码"
+          prop="password"
+        >
           <el-input
             v-model="userForm.password"
             type="password"
@@ -97,16 +160,35 @@
           />
         </el-form-item>
 
-        <el-form-item label="用户类型" prop="user_type">
-          <el-select v-model="userForm.user_type" placeholder="请选择用户类型">
-            <el-option label="员工" value="employee" />
-            <el-option label="管理者" value="manager" />
-            <el-option label="管理员" value="admin" />
+        <el-form-item
+          label="用户类型"
+          prop="user_type"
+        >
+          <el-select
+            v-model="userForm.user_type"
+            placeholder="请选择用户类型"
+          >
+            <el-option
+              label="员工"
+              value="employee"
+            />
+            <el-option
+              label="管理者"
+              value="manager"
+            />
+            <el-option
+              label="管理员"
+              value="admin"
+            />
           </el-select>
         </el-form-item>
 
         <el-form-item label="部门">
-          <el-select v-model="userForm.department_id" placeholder="请选择部门" clearable>
+          <el-select
+            v-model="userForm.department_id"
+            placeholder="请选择部门"
+            clearable
+          >
             <el-option
               v-for="dept in departments"
               :key="dept.id"
@@ -117,7 +199,11 @@
         </el-form-item>
 
         <el-form-item label="直属上级">
-          <el-select v-model="userForm.manager_id" placeholder="请选择直属上级" clearable>
+          <el-select
+            v-model="userForm.manager_id"
+            placeholder="请选择直属上级"
+            clearable
+          >
             <el-option
               v-for="user in managers"
               :key="user.id"
@@ -129,15 +215,25 @@
       </el-form>
 
       <template #footer>
-        <el-button @click="showCreateDialog = false">取消</el-button>
-        <el-button type="primary" @click="handleSubmit" :loading="submitting">
+        <el-button @click="showCreateDialog = false">
+          取消
+        </el-button>
+        <el-button
+          type="primary"
+          :loading="submitting"
+          @click="handleSubmit"
+        >
           确定
         </el-button>
       </template>
     </el-dialog>
 
     <!-- 岗位关联对话框 -->
-    <el-dialog v-model="showRoleDialog" title="管理用户岗位" width="500px">
+    <el-dialog
+      v-model="showRoleDialog"
+      title="管理用户岗位"
+      width="500px"
+    >
       <div v-if="currentUser">
         <p style="margin-bottom: 15px">
           用户: <strong>{{ currentUser.full_name }}</strong>
@@ -152,8 +248,14 @@
       </div>
 
       <template #footer>
-        <el-button @click="showRoleDialog = false">取消</el-button>
-        <el-button type="primary" @click="handleSaveRoles" :loading="submitting">
+        <el-button @click="showRoleDialog = false">
+          取消
+        </el-button>
+        <el-button
+          type="primary"
+          :loading="submitting"
+          @click="handleSaveRoles"
+        >
           保存
         </el-button>
       </template>
@@ -219,7 +321,7 @@ const availableRoles = computed(() => {
 })
 
 // 加载用户列表
-const loadUsers = async () => {
+const loadUsers = async() => {
   loading.value = true
   try {
     const data = await request({ url: '/users/', method: 'get' })
@@ -237,7 +339,7 @@ const loadUsers = async () => {
 }
 
 // 加载部门列表
-const loadDepartments = async () => {
+const loadDepartments = async() => {
   try {
     const data = await request({ url: '/users/departments/', method: 'get' })
     departments.value = data
@@ -247,7 +349,7 @@ const loadDepartments = async () => {
 }
 
 // 加载岗位列表
-const loadRoles = async () => {
+const loadRoles = async() => {
   try {
     const data = await request({ url: '/roles/', method: 'get' })
     roles.value = data
@@ -257,7 +359,7 @@ const loadRoles = async () => {
 }
 
 // 加载用户的岗位
-const loadUserRoles = async (userId) => {
+const loadUserRoles = async(userId) => {
   try {
     const user = await request({ url: `/users/${userId}`, method: 'get' })
     userRoles.value[userId] = user.roles || []
@@ -297,11 +399,11 @@ const handleEdit = (row) => {
 }
 
 // 提交用户表单
-const handleSubmit = async () => {
-  if (!userFormRef.value) return
+const handleSubmit = async() => {
+  if (!userFormRef.value) {return}
 
-  await userFormRef.value.validate(async (valid) => {
-    if (!valid) return
+  await userFormRef.value.validate(async(valid) => {
+    if (!valid) {return}
 
     submitting.value = true
     try {
@@ -340,7 +442,7 @@ const handleSubmit = async () => {
 }
 
 // 切换用户状态
-const toggleUserStatus = async (row) => {
+const toggleUserStatus = async(row) => {
   try {
     await ElMessageBox.confirm(
       `确定要${row.is_active ? '停用' : '启用'}用户 ${row.full_name} 吗？`,
@@ -364,7 +466,7 @@ const toggleUserStatus = async (row) => {
 }
 
 // 显示岗位关联对话框
-const showRoleLinkDialog = async (row) => {
+const showRoleLinkDialog = async(row) => {
   currentUser.value = row
   const userRoleList = getUserRoles(row.id)
   selectedRoles.value = userRoleList.map(r => r.id)
@@ -372,8 +474,8 @@ const showRoleLinkDialog = async (row) => {
 }
 
 // 保存岗位关联
-const handleSaveRoles = async () => {
-  if (!currentUser.value) return
+const handleSaveRoles = async() => {
+  if (!currentUser.value) {return}
 
   submitting.value = true
   try {

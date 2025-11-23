@@ -2,19 +2,24 @@
 任务和复盘Schemas
 """
 from pydantic import BaseModel, ConfigDict
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 from ..models.task import TaskStatus, TaskSource, FollowUpAction
 
 
 # WeeklyTask Schemas
 class WeeklyTaskBase(BaseModel):
-    """周任务基础Schema"""
+    """周任务基础Schema - 优化版：增加时间属性，强制岗责关联"""
     title: str
     description: Optional[str] = None
     source_type: TaskSource = TaskSource.RESPONSIBILITY
-    linked_task_type_id: Optional[int] = None
+    linked_task_type_id: int  # 改为必填：强制关联岗责
     is_key_task: bool = False
+    
+    # 新增：时间属性
+    planned_start_time: datetime  # 计划开始时间
+    planned_end_time: datetime    # 计划结束时间
+    planned_duration: Optional[int] = None  # 可选，由API自动计算
 
 
 class WeeklyTaskCreate(WeeklyTaskBase):
@@ -24,15 +29,23 @@ class WeeklyTaskCreate(WeeklyTaskBase):
 
 
 class WeeklyTaskUpdate(BaseModel):
-    """更新周任务"""
+    """更新周任务 - 支持时间属性更新"""
     title: Optional[str] = None
     description: Optional[str] = None
     status: Optional[TaskStatus] = None
     is_key_task: Optional[bool] = None
+    
+    # 新增：时间属性更新
+    planned_start_time: Optional[datetime] = None
+    planned_end_time: Optional[datetime] = None
+    
+    # 实际执行时间（复盘时更新）
+    actual_start_time: Optional[datetime] = None
+    actual_end_time: Optional[datetime] = None
 
 
 class WeeklyTask(WeeklyTaskBase):
-    """周任务响应Schema"""
+    """周任务响应Schema - 包含时间属性"""
     model_config = ConfigDict(from_attributes=True)
 
     id: int
@@ -46,6 +59,26 @@ class WeeklyTask(WeeklyTaskBase):
     created_at: datetime
     updated_at: Optional[datetime] = None
     completed_at: Optional[datetime] = None
+    
+    # 新增：时间属性
+    actual_start_time: Optional[datetime] = None
+    actual_end_time: Optional[datetime] = None
+    actual_duration: Optional[int] = None
+
+
+class CarryOverRequest(BaseModel):
+    """延期任务带入请求"""
+    task_ids: List[int]
+    target_week_number: int
+    target_year: int
+
+
+class CarryOverResult(BaseModel):
+    """延期任务带入结果"""
+    model_config = ConfigDict(from_attributes=True)
+
+    created_task_ids: List[int]
+    failed_task_ids: List[int] = []
 
 
 # TaskReview Schemas

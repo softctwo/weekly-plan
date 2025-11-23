@@ -1,6 +1,7 @@
 """
 应用配置模块
 """
+import os
 from typing import List
 from pydantic_settings import BaseSettings
 from pydantic import validator
@@ -35,9 +36,12 @@ class Settings(BaseSettings):
 
     # 时区配置
     TIMEZONE: str = "Asia/Shanghai"
+    
+    # 测试模式
+    TESTING: bool = False
 
     class Config:
-        env_file = ".env"
+        env_file = os.environ.get("ENV_FILE", ".env")
         case_sensitive = True
 
 
