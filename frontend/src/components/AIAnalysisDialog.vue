@@ -20,9 +20,9 @@
         >
           <el-option
             v-for="user in teamMembers"
-            :key="user.id"
-            :label="user.full_name"
-            :value="user.id"
+            :key="user.user_id || user.id"
+            :label="user.user_name || user.full_name"
+            :value="user.user_id || user.id"
           />
         </el-select>
       </el-form-item>
@@ -232,18 +232,23 @@ const validateTeamMembers = () => {
     console.warn('团队数据为空或格式不正确')
     return false
   }
-  
-  // 验证数据结构
-  const requiredFields = ['id', 'full_name']
+
+  // 验证数据结构 - 支持两种格式：团队仪表盘格式和用户列表格式
+  const requiredFields = ['user_id', 'user_name']
+  const alternativeFields = ['id', 'full_name']
   const firstMember = props.teamMembers[0]
-  
-  for (const field of requiredFields) {
-    if (!firstMember.hasOwnProperty(field)) {
-      console.error(`团队成员数据缺少必要字段: ${field}`)
-      return false
-    }
+
+  // 检查是否有至少一种必要的数据结构
+  const hasPrimaryFields = requiredFields.every(field => firstMember.hasOwnProperty(field))
+  const hasAlternativeFields = alternativeFields.every(field => firstMember.hasOwnProperty(field))
+
+  if (!hasPrimaryFields && !hasAlternativeFields) {
+    console.error('团队成员数据缺少必要字段')
+    console.error('可用字段:', Object.keys(firstMember))
+    return false
   }
-  
+
+  console.log('✅ 团队成员数据验证通过')
   return true
 }
 

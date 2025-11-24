@@ -118,8 +118,8 @@ class AIAnalysisService:
         Returns:
             包含任务数据和统计信息的字典
         """
-        # 查询任务
-        query = self.db.query(WeeklyTask).join(User)
+        # 查询任务 - 明确指定join条件
+        query = self.db.query(WeeklyTask).join(User, WeeklyTask.user_id == User.id)
 
         if user_id:
             query = query.filter(WeeklyTask.user_id == user_id)
